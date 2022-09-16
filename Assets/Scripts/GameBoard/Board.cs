@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Catan.GameBoard
 {
@@ -18,8 +19,20 @@ namespace Catan.GameBoard
         /// The active game vertices are stored here.
         /// </summary>
         public TileVertex[][] vertices;
+        /// <summary>
+        /// The active game roads are stored here.
+        /// </summary>
+        public Road[][] roads;
+
         public GameObject hexPrefab;
         public GameObject vertexPrefab;
+        public GameObject roadPrefab;
+
+        public GameObject tileHolder;
+        public GameObject vertexHolder;
+        public GameObject roadHolder;
+
+        
 
         /// <summary>
         /// Clears the tile array and despawns all tiles in tile holder
@@ -71,14 +84,36 @@ namespace Catan.GameBoard
                 return;
             }
 
+            int max = 0;
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                if (tiles[i].Length > max)
+                {
+                    max = tiles[i].Length;
+                }
+            }
+            max += 2;
+
+            Debug.Log("max: " + max);
+
             for (int i = 0; i < tiles.Length; i++)
             {
                 for (int j = 0; j < tiles[i].Length; j++)
                 {
                     float horizontalOffset = i % 2 * H_POS_OFFSET / 2 + ((int)((tiles[i].Length - 1) / 2)) * H_POS_OFFSET;
                     GameObject createdTile = Instantiate(hexPrefab, new Vector3(i * V_POS_OFFSET, 0, j * H_POS_OFFSET - horizontalOffset), Quaternion.identity);
+
+                    tiles[i][j].xCoord = i;
+                    tiles[i][j].yCoord = j + (max - tiles[i].Length) / 2 - 1;
+                        //j + max - (int)(max / 2) - (int)Math.Round(horizontalOffset / H_POS_OFFSET * 2);
+                    tiles[i][j].xDataIndex = i;
+                    tiles[i][j].yDataIndex = j;
+
+                    Debug.Log("" + "" + " = " + tiles[i][j].yCoord);
+
                     createdTile.name = "Tile(" + i + "," + j + ")";
                     createdTile.transform.GetChild(0).GetComponent<Renderer>().material.color = tiles[i][j].color;
+                    createdTile.transform.parent = tileHolder.transform;
                 }
             }
         }
@@ -92,6 +127,16 @@ namespace Catan.GameBoard
             {
                 return;
             }
+
+            int max = 0;
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                if (vertices[i].Length > max)
+                {
+                    max = vertices[i].Length;
+                }
+            }
+            max += 2;
 
             for (int i = 0; i < vertices.Length; i++)
             {
@@ -122,12 +167,78 @@ namespace Catan.GameBoard
                     }
                     // Calculate horizontal offset
                     float horizontalOffset = (count - (count + 1) % 2 + (i + parity) % 2 + sameSizeShift) * H_POS_OFFSET / 2;
+                    
+                    vertices[i][j].xCoord = i;
+                    vertices[i][j].yCoord = j + max - (int)(max / 2) - (int)Math.Round(horizontalOffset / H_POS_OFFSET * 2);
+                    vertices[i][j].xDataIndex = i;
+                    vertices[i][j].yDataIndex = j;
+
+                    float x = i * V_POS_OFFSET + verticalOffset;
+                    float z = j * H_POS_OFFSET / 2 - horizontalOffset;
 
                     // Creates tile GameObject at position
-                    GameObject createdTile = Instantiate(vertexPrefab, new Vector3(i * V_POS_OFFSET + verticalOffset, 0, j * H_POS_OFFSET / 2 - horizontalOffset), Quaternion.identity);
+                    GameObject createdVertex = Instantiate(vertexPrefab, new Vector3(x, 0, z), Quaternion.identity);
 
-                    createdTile.name = "Vertex(" + i + "," + j + ")";
-                    //createdTile.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.blue;
+                    createdVertex.name = "Vertex(" + i + "," + j + ")";
+                    createdVertex.transform.parent = vertexHolder.transform;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Places Road objects on each hexagon side. Responsible for display of roads.
+        /// </summary>
+        public void PlaceRoads()
+        {
+            if (vertices == null || vertices[0] == null || roads == null || roads[0] == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < roads.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    for (int j = 0; j < roads[i].Length; j++)
+                    {
+                        Vector3 first = GameObject.Find("Vertex(" + i / 2 + "," + j + ")").transform.position;
+                        Vector3 second = GameObject.Find("Vertex(" + i / 2 + "," + (j + 1) + ")").transform.position;
+
+                        float x = (first.x + second.x) / 2;
+                        float z = (first.z + second.z) / 2;
+
+                        int angle = vertices[i / 2][j].up ? -1 : 1;
+
+                        GameObject createdRoad = Instantiate(roadPrefab, new Vector3(x, 0, z), Quaternion.Euler(0, 45 * angle, 0));
+                        createdRoad.name = "Road(" + i + "," + j + ")";
+                        //createdRoad.transform.GetChild(0).GetComponent<Renderer>().material.color = tiles[i][j].color;
+                        createdRoad.transform.parent = roadHolder.transform;
+                    }
+                }
+                else
+                {
+                    int parity = vertices[i / 2][0].up ? 1 : 0;
+                    for (int j = 0; j < roads[i].Length * 2 - parity; j++)
+                    {
+                        (int, int) current = ((int)(i / 2), j);
+                        (int, int) below = vertices.VertexBelowVertex(current.Item1, current.Item2);
+                        if (below == (-1, -1))
+                        {
+                            continue;
+                        }
+
+                        Vector3 first = GameObject.Find("Vertex(" + current.Item1 + "," + current.Item2 + ")").transform.position;
+                        Vector3 second = GameObject.Find("Vertex(" + below.Item1 + "," + below.Item2 + ")").transform.position;
+
+                        float x = (first.x + second.x) / 2;
+                        float z = (first.z + second.z) / 2;
+
+                        GameObject createdRoad = Instantiate(roadPrefab, new Vector3(x, 0, z), Quaternion.Euler(0, 90, 0));
+
+                        createdRoad.name = "Road(" + i + "," + j + ")";
+                        //createdRoad.transform.GetChild(0).GetComponent<Renderer>().material.color = tiles[i][j].color;
+                        createdRoad.transform.parent = roadHolder.transform;
+                    }
                 }
             }
         }

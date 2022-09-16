@@ -14,6 +14,7 @@ namespace Catan.GameBoard
         {
             xCoord = x;
             yCoord = y;
+            playerIndex = -1;
         }
     }
 }

@@ -8,15 +8,16 @@ namespace Catan.GameBoard
     {
         public int xCoord;
         public int yCoord;
+        public int xDataIndex;
+        public int yDataIndex;
         public Development development;
         public int playerIndex;
         public bool up;
 
-        public TileVertex(int x, int y, bool isUp)
+        public TileVertex(bool isUp)
         {
-            xCoord = x;
-            yCoord = y;
             up = isUp;
+            playerIndex = -1;
         }
 
         public enum Development

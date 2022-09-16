@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Catan.ResourcePhase;
 
 namespace Catan.Players
 {
@@ -9,5 +10,7 @@ namespace Catan.Players
         public Color playerColor;
         public string playerName;
         public int playerIndex;
+
+        public Resource[] resources;
     }
 }

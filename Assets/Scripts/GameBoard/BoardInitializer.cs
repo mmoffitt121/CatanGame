@@ -29,8 +29,10 @@ namespace Catan.GameBoard
             board.ClearTiles();
             board.tiles = Randomize();
             board.vertices = InitializeVertices(board.tiles);
+            board.roads = InitializeRoads(board.vertices, board.tiles);
             board.PlaceTiles();
             board.PlaceVertices();
+            board.PlaceRoads();
         }
 
         /// <summary>
@@ -97,7 +99,6 @@ namespace Catan.GameBoard
                 }
 
                 // If there are more tiles above the row than below, then the height stagger is reversed.
-                
                 if (i - 1 >= 0 && i < boardHeight && boardShape[i] < boardShape[i - 1] || i == boardHeight)
                 {
                     heightstagger = 0;
@@ -110,11 +111,44 @@ namespace Catan.GameBoard
                 for (int j = 0; j < vertices[i].Length; j++)
                 {
                     bool up = (j + heightstagger) % 2 == 1;
-                    vertices[i][j] = new TileVertex(i, j, up);
+                    vertices[i][j] = new TileVertex(up);
                 }
             }
 
             return vertices;
+        }
+
+        public Road[][] InitializeRoads(TileVertex[][] vertices, Tile[][] tiles)
+        {
+            if (vertices == null || vertices[0] == null)
+            {
+                Debug.LogError("No vertices were found.");
+                return null;
+            }
+
+            int boardHeight = boardShape.Length;
+            Road[][] roads = new Road[boardHeight * 2 + 1][];
+
+            for (int i = 0; i < boardHeight * 2 + 1; i++)
+            {
+                // If on row with two roads per hex
+                if (i % 2 == 0)
+                {
+                    roads[i] = new Road[vertices[i / 2].Length - 1];
+                }
+                // Row with parallel roads
+                else
+                {
+                    roads[i] = new Road[tiles[(i - 1) / 2].Length + 1];
+                }
+
+                for (int j = 0; j < roads[i].Length; j++)
+                {
+                    roads[i][j] = new Road(i, j);
+                }
+            }
+
+            return roads;
         }
 
         /// <summary>

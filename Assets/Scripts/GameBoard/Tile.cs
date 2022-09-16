@@ -9,6 +9,8 @@ namespace Catan.GameBoard
     {
         public TileType type;
         public int diceValue;
+        public int xDataIndex;
+        public int yDataIndex;
         public int xCoord;
         public int yCoord;
 
@@ -38,8 +40,8 @@ namespace Catan.GameBoard
 
         public Tile(int x, int y, TileType tileType)
         {
-            xCoord = x;
-            yCoord = y;
+            xDataIndex = x;
+            yDataIndex = y;
             type = tileType;
         }
 
