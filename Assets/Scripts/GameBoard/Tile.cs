@@ -14,6 +14,8 @@ namespace Catan.GameBoard
         public int xCoord;
         public int yCoord;
 
+        public bool robber;
+
         public Color color
         {
             get

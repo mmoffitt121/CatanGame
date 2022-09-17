@@ -17,5 +17,11 @@ namespace Catan.ResourcePhase
             Brick,
             Ore
         }
+
+        public Resource(ResourceType type, int amount)
+        {
+            this.type = type;
+            this.amount = amount;
+        }
     }
 }

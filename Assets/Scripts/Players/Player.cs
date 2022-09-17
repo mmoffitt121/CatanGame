@@ -5,9 +5,12 @@ using Catan.ResourcePhase;
 
 namespace Catan.Players
 {
-    public class Player : MonoBehaviour
+    public class Player
     {
         public Color playerColor;
+
+        public Color primaryUIColor;
+        public Color secondaryUIColor;
         public string playerName;
         public int playerIndex;
 

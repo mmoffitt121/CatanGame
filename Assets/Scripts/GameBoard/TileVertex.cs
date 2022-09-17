@@ -10,6 +10,7 @@ namespace Catan.GameBoard
         public int yCoord;
         public int xDataIndex;
         public int yDataIndex;
+
         public Development development;
         public int playerIndex;
         public bool up;

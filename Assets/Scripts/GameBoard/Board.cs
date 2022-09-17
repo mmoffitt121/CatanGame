@@ -2,10 +2,19 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace Catan.GameBoard
 {
+    /// <summary>
+    ///     Class for holding, manipulating, and displaying game board information.
+    /// </summary>
+    /// <remarks>
+    ///     The board is divided into three separate disjoint arrays containing tiles, vertices, and roads respectively.
+    ///     Each array uses two forms of index: world coordinates, and data coordinates. World coordinates represent where each point is in the world. Data coordinates represent where each
+    ///     point is stored in its array.
+    /// </remarks>
     public class Board : MonoBehaviour
     {
         private readonly float H_POS_OFFSET = 2 * Mathf.Sqrt(3);
@@ -74,6 +83,17 @@ namespace Catan.GameBoard
             }
         }
 
+        public void PrintTest()
+        {
+            for (int i = 0; i < tiles.Length; i++)
+            { 
+                for (int j = 0; j < tiles[i].Length; j++)
+                {
+                    (int, int)[] t = tiles.GetSurroundingVertices(vertices, i, j);
+                }
+            }
+        }
+
         /// <summary>
         /// Places tiles specified by this class' tile array. Responsible for display of tiles.
         /// </summary>
@@ -94,8 +114,6 @@ namespace Catan.GameBoard
             }
             max += 2;
 
-            Debug.Log("max: " + max);
-
             for (int i = 0; i < tiles.Length; i++)
             {
                 for (int j = 0; j < tiles[i].Length; j++)
@@ -105,15 +123,18 @@ namespace Catan.GameBoard
 
                     tiles[i][j].xCoord = i;
                     tiles[i][j].yCoord = j + (max - tiles[i].Length) / 2 - 1;
-                        //j + max - (int)(max / 2) - (int)Math.Round(horizontalOffset / H_POS_OFFSET * 2);
                     tiles[i][j].xDataIndex = i;
                     tiles[i][j].yDataIndex = j;
-
-                    Debug.Log("" + "" + " = " + tiles[i][j].yCoord);
 
                     createdTile.name = "Tile(" + i + "," + j + ")";
                     createdTile.transform.GetChild(0).GetComponent<Renderer>().material.color = tiles[i][j].color;
                     createdTile.transform.parent = tileHolder.transform;
+
+                    TileGameObject tileObject = createdTile.transform.GetChild(0).GetComponent<TileGameObject>();
+                    tileObject.SetDiceValue(tiles[i][j].diceValue);
+                    tileObject.SetRobber(tiles[i][j].robber);
+                    tileObject.xIndex = i;
+                    tileObject.yIndex = j;
                 }
             }
         }
@@ -178,9 +199,12 @@ namespace Catan.GameBoard
 
                     // Creates tile GameObject at position
                     GameObject createdVertex = Instantiate(vertexPrefab, new Vector3(x, 0, z), Quaternion.identity);
-
                     createdVertex.name = "Vertex(" + i + "," + j + ")";
                     createdVertex.transform.parent = vertexHolder.transform;
+
+                    TileVertexGameObject vertexObject = createdVertex.GetComponent<TileVertexGameObject>();
+                    vertexObject.xIndex = i;
+                    vertexObject.yIndex = j;
                 }
             }
         }
@@ -209,10 +233,13 @@ namespace Catan.GameBoard
 
                         int angle = vertices[i / 2][j].up ? -1 : 1;
 
-                        GameObject createdRoad = Instantiate(roadPrefab, new Vector3(x, 0, z), Quaternion.Euler(0, 45 * angle, 0));
+                        GameObject createdRoad = Instantiate(roadPrefab, new Vector3(x, 0, z), Quaternion.Euler(0, 30 * angle, 0));
                         createdRoad.name = "Road(" + i + "," + j + ")";
-                        //createdRoad.transform.GetChild(0).GetComponent<Renderer>().material.color = tiles[i][j].color;
                         createdRoad.transform.parent = roadHolder.transform;
+
+                        RoadGameObject vertexObject = createdRoad.GetComponent<RoadGameObject>();
+                        vertexObject.xIndex = i;
+                        vertexObject.yIndex = j;
                     }
                 }
                 else
@@ -234,10 +261,12 @@ namespace Catan.GameBoard
                         float z = (first.z + second.z) / 2;
 
                         GameObject createdRoad = Instantiate(roadPrefab, new Vector3(x, 0, z), Quaternion.Euler(0, 90, 0));
-
                         createdRoad.name = "Road(" + i + "," + j + ")";
-                        //createdRoad.transform.GetChild(0).GetComponent<Renderer>().material.color = tiles[i][j].color;
                         createdRoad.transform.parent = roadHolder.transform;
+
+                        RoadGameObject vertexObject = createdRoad.GetComponent<RoadGameObject>();
+                        vertexObject.xIndex = i;
+                        vertexObject.yIndex = (int)(j / 2);
                     }
                 }
             }

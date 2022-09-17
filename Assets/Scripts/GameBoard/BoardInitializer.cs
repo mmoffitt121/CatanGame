@@ -17,13 +17,17 @@ namespace Catan.GameBoard
         /// Each element corresponds to a row on the board, and each number details how many are in each row.
         /// </summary>
         public int[] boardShape;
+        /// <summary>
+        /// Each element corresponds to how many tiles of its index will be placed on the board.
+        /// </summary>
+        public int[] diceValues;
 
         public Board board;
 
         /// <summary>
         /// Is called when the scene loads
         /// </summary>
-        void Start()
+        public void Initialize()
         {
             board = GameObject.Find("Board").GetComponent(typeof(Board)) as Board;
             board.ClearTiles();
@@ -33,6 +37,7 @@ namespace Catan.GameBoard
             board.PlaceTiles();
             board.PlaceVertices();
             board.PlaceRoads();
+            board.PrintTest();
         }
 
         /// <summary>
@@ -51,6 +56,7 @@ namespace Catan.GameBoard
             }
 
             int[] tAmounts = (int[])tileAmount.Clone();
+            int[] dValues = (int[])diceValues.Clone();
 
             for (int i = 0; i < boardHeight; i++)
             {
@@ -58,6 +64,14 @@ namespace Catan.GameBoard
                 for (int j = 0; j < tileArray[i].Length; j++)
                 {
                     tileArray[i][j] = new Tile(i, j, GetRandomTileType(tAmounts, tileTypes));
+                    if (tileArray[i][j].type != Tile.TileType.Desert)
+                    {
+                        tileArray[i][j].diceValue = GetRandomDiceValue(dValues);
+                    }
+                    else
+                    {
+                        tileArray[i][j].robber = true;
+                    }
                 }
             }
             return tileArray;
@@ -175,6 +189,31 @@ namespace Catan.GameBoard
 
             // return desert if none left in data
             return Tile.TileType.Desert;
+        }
+
+        /// <summary>
+        /// Chooses a random dice value based on input data of dice values and corresponding dice value amounts.
+        /// </summary>
+        /// <param name="dValues"></param>
+        /// <returns></returns>
+        public int GetRandomDiceValue(int[] dValues)
+        {
+            int rand = UnityEngine.Random.Range(0, dValues.Length);
+            for (int i = rand; i < rand + dValues.Length; i++)
+            {
+                if (dValues[i % dValues.Length] == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    dValues[i % dValues.Length]--;
+                    return i % dValues.Length;
+                }
+            }
+
+            // return 0 if none left in data
+            return 0;
         }
     }
 }
