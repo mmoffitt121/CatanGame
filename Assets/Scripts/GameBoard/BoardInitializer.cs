@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Catan.ResourcePhase;
 
 namespace Catan.GameBoard
 {
@@ -21,6 +22,14 @@ namespace Catan.GameBoard
         /// Each element corresponds to how many tiles of its index will be placed on the board.
         /// </summary>
         public int[] diceValues;
+        /// <summary>
+        /// A list of resource types that will be used as ports
+        /// </summary>
+        public Resource.ResourceType[] ports;
+        /// <summary>
+        /// Each element corresponds to how many of each type of port corresponding to its index will be placed on the board.
+        /// </summary>
+        public int[] portAmounts;
 
         public Board board;
 
@@ -38,6 +47,8 @@ namespace Catan.GameBoard
             board.PlaceVertices();
             board.PlaceRoads();
             board.PrintTest();
+            InitializePorts(board.vertices, board.tiles);
+            board.PlacePorts();
         }
 
         /// <summary>
@@ -130,6 +141,24 @@ namespace Catan.GameBoard
             }
 
             return vertices;
+        }
+
+        public void InitializePorts(TileVertex[][] vertices, Tile[][] tiles)
+        {
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                for (int j = 0; j < vertices[i].Length; j++)
+                {
+                    bool above = vertices.TileAboveVertex(tiles, i, j) != (-1, -1);
+                    bool below = vertices.TileBelowVertex(tiles, i, j) != (-1, -1);
+                    bool left = vertices.TileLeftOfVertex(tiles, i, j) != (-1, -1);
+                    bool right = vertices.TileRightOfVertex(tiles, i, j) != (-1, -1);
+                    if (!left && !right)
+                    {
+                        vertices[i][j].port = new Port();
+                    }
+                }
+            }
         }
 
         public Road[][] InitializeRoads(TileVertex[][] vertices, Tile[][] tiles)

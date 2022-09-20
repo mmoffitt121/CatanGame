@@ -8,12 +8,15 @@ namespace Catan.GameBoard
     {
         public int xCoord;
         public int yCoord;
+        public int xDataIndex;
+        public int yDataIndex;
+
         public int playerIndex;
 
         public Road(int x, int y)
         {
-            xCoord = x;
-            yCoord = y;
+            xDataIndex = x;
+            yDataIndex = y;
             playerIndex = -1;
         }
     }

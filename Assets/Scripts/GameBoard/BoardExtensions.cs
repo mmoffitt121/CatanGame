@@ -1,6 +1,7 @@
 using Catan.GameBoard;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
@@ -255,6 +256,104 @@ namespace Catan.GameBoard
         }
 
         /// <summary>
+        ///     Takes the location of a vertex in DATA FORM and converts it to the location of the tile above the vertex
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="roads"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns>
+        ///     Integer tuple location of found road in DATA FORM, else (-1, -1)
+        /// </returns>
+        public static (int, int) RoadAboveVertex(this TileVertex[][] vertices, Road[][] roads, int i, int j)
+        {
+            if (vertices[i][j].up) return (-1, -1);
+
+            int xc = vertices[i][j].xCoord;
+            int yc = vertices[i][j].yCoord;
+
+            int x = xc * 2 - 1;
+            int y = yc;
+
+            (int xout, int yout) = roads.GetRoadDataCoord(x, y);
+            return (xout, yout);
+        }
+
+        /// <summary>
+        ///     Takes the location of a vertex in DATA FORM and converts it to the location of the tile below the vertex
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="roads"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns>
+        ///     Integer tuple location of found road in DATA FORM, else (-1, -1)
+        /// </returns>
+        public static (int, int) RoadBelowVertex(this TileVertex[][] vertices, Road[][] roads, int i, int j)
+        {
+            if (!vertices[i][j].up) return (-1, -1);
+
+            int xc = vertices[i][j].xCoord;
+            int yc = vertices[i][j].yCoord;
+
+            int x = xc * 2 + 1;
+            int y = yc;
+
+            (int xout, int yout) = roads.GetRoadDataCoord(x, y);
+            return (xout, yout);
+        }
+
+        /// <summary>
+        ///     Takes the location of a vertex in DATA FORM and converts it to the location of the tile to the right of the vertex
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="roads"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns>
+        ///     Integer tuple location of found road in DATA FORM, else (-1, -1)
+        /// </returns>
+        public static (int, int) RoadRightOfVertex(this TileVertex[][] vertices, Road[][] roads, int i, int j)
+        {
+            if (j >= roads[i * 2].Length)
+            {
+                return (-1, -1);
+            }
+
+            if (roads[i * 2][j] == null)
+            {
+                return (-1, -1);
+            }
+
+            return (i * 2, j);
+        }
+
+        /// <summary>
+        ///     Takes the location of a vertex in DATA FORM and converts it to the location of the tile to the left of the vertex
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="roads"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns>
+        ///     Integer tuple location of found road in DATA FORM, else (-1, -1)
+        /// </returns>
+        public static (int, int) RoadLeftOfVertex(this TileVertex[][] vertices, Road[][] roads, int i, int j)
+        {
+            if (j <= 0)
+            {
+                return (-1, -1);
+            }
+
+            if (roads[i * 2][j - 1] == null)
+            {
+                return (-1, -1);
+            }
+
+            return (i * 2, j - 1);
+        }
+
+        /// <summary>
         ///     Converts a tile coordinate in WORLD FORM to DATA FORM
         /// </summary>
         /// <param name="tiles"></param>
@@ -301,6 +400,29 @@ namespace Catan.GameBoard
         }
 
         /// <summary>
+        ///     Converts a road coordinate in WORLD FORM to DATA FORM
+        /// </summary>
+        /// <param name="tiles"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns>
+        ///     Integer tuple in DATA FORM. If point not found in data, (-1, -1)
+        /// </returns>
+        public static (int, int) GetRoadDataCoord(this Road[][] roads, int i, int j)
+        {
+            int y;
+            try
+            {
+                y = roads[i].Where(k => k.yCoord == j).First().yDataIndex;
+            }
+            catch
+            {
+                return (-1, -1);
+            }
+            return (i, y);
+        }
+
+        /// <summary>
         ///     Gets a tile coordinate in DATA FORM and calculates the surrounding 6 vertices in order: Top left, top, top right, bottom left, bottom, bottom right
         /// </summary>
         /// <param name="tiles"></param>
@@ -325,6 +447,20 @@ namespace Catan.GameBoard
             };
 
             return output;
+        }
+
+        /// <summary>
+        /// Converts polar coordinates to cartesian
+        /// </summary>
+        /// <param name="theta"></param>
+        /// <param name="r"></param>
+        /// <returns>
+        /// Returns a Vector3 object with a y value of 0
+        /// </returns>
+        public static Vector3 PolarToCartesian(float theta, float r)
+        {
+            r = Mathf.Deg2Rad * r;
+            return new Vector3(r * Mathf.Cos(theta), 0, r * Mathf.Sin(theta));
         }
     }
 }

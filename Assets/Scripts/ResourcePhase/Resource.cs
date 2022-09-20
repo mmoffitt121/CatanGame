@@ -11,6 +11,7 @@ namespace Catan.ResourcePhase
 
         public enum ResourceType
         {
+            Any,
             Wool,
             Grain,
             Wood,

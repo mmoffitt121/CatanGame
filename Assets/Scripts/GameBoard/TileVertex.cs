@@ -15,6 +15,8 @@ namespace Catan.GameBoard
         public int playerIndex;
         public bool up;
 
+        public Port port;
+
         public TileVertex(bool isUp)
         {
             up = isUp;

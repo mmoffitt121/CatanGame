@@ -233,13 +233,16 @@ namespace Catan.GameBoard
 
                         int angle = vertices[i / 2][j].up ? -1 : 1;
 
+                        roads[i][j].xCoord = vertices[i/2][j].xCoord * 2;
+                        roads[i][j].yCoord = vertices[i/2][j].yCoord;
+
                         GameObject createdRoad = Instantiate(roadPrefab, new Vector3(x, 0, z), Quaternion.Euler(0, 30 * angle, 0));
                         createdRoad.name = "Road(" + i + "," + j + ")";
                         createdRoad.transform.parent = roadHolder.transform;
 
-                        RoadGameObject vertexObject = createdRoad.GetComponent<RoadGameObject>();
-                        vertexObject.xIndex = i;
-                        vertexObject.yIndex = j;
+                        RoadGameObject roadObject = createdRoad.GetComponent<RoadGameObject>();
+                        roadObject.xIndex = i;
+                        roadObject.yIndex = j;
                     }
                 }
                 else
@@ -260,13 +263,49 @@ namespace Catan.GameBoard
                         float x = (first.x + second.x) / 2;
                         float z = (first.z + second.z) / 2;
 
+                        roads[i][(int)(j / 2)].xCoord = i;
+                        roads[i][(int)(j / 2)].yCoord = vertices[current.Item1][current.Item2].yCoord;
+
                         GameObject createdRoad = Instantiate(roadPrefab, new Vector3(x, 0, z), Quaternion.Euler(0, 90, 0));
                         createdRoad.name = "Road(" + i + "," + j + ")";
                         createdRoad.transform.parent = roadHolder.transform;
 
-                        RoadGameObject vertexObject = createdRoad.GetComponent<RoadGameObject>();
-                        vertexObject.xIndex = i;
-                        vertexObject.yIndex = (int)(j / 2);
+                        RoadGameObject roadObject = createdRoad.GetComponent<RoadGameObject>();
+                        roadObject.xIndex = i;
+                        roadObject.yIndex = (int)(j / 2);
+                    }
+                }
+            }
+        }
+
+        public void PlacePorts()
+        {
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                for (int j = 0; j < vertices[i].Length; j++)
+                {
+                    /*Debug.Log
+                    (
+                        vertices[i][j].xCoord + " " + 
+                        vertices[i][j].yCoord + " " +
+                        " Left: (" + vertices.RoadLeftOfVertex(roads, i, j) + ")," +
+                        " Right: (" + vertices.RoadRightOfVertex(roads, i, j) + "), " +
+                        " Up: (" + vertices.RoadAboveVertex(roads, i, j) + "), " +
+                        " Down: (" + vertices.RoadBelowVertex(roads, i, j) + "), "
+                    );*/
+                }
+            }
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                for (int j = 0; j < vertices[i].Length; j++)
+                {
+                    if (vertices[i][j].port != null)
+                    {
+                        GameObject child = GameObject.Find("Vertex(" + i + "," + j + ")").transform.GetChild(0).gameObject;
+                        child.GetComponent<MeshRenderer>().enabled = true;
+                        Vector3 pos = child.transform.parent.position + BoardExtensions.PolarToCartesian(vertices[i][j].port.direction, 20);
+                        Vector3 ang = new Vector3(0, vertices[i][j].port.direction + 90, 0);
+                        child.transform.SetPositionAndRotation(pos, Quaternion.Euler(ang));
                     }
                 }
             }

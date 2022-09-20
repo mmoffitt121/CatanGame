@@ -6,6 +6,6 @@ namespace Catan.GameBoard
 {
     public class TileVertexGameObject : BoardTokenGameObject
     {
-
+        public GameObject port;
     }
 }
