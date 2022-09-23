@@ -17,6 +17,8 @@ namespace Catan.GameManagement
                 {
                     board.vertices[i][j].playerIndex = gameManager.turn;
                     obj.SetPlayer(gameManager.currentPlayer);
+                    board.vertices[i][j].AdvanceDevelopment();
+                    ((TileVertexGameObject)obj).UpdateMesh();
                 }
                 if (obj is RoadGameObject)
                 {

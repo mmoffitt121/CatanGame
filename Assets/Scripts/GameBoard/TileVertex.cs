@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Catan.GameBoard
@@ -28,6 +29,23 @@ namespace Catan.GameBoard
             Undeveloped = 0,
             Town = 1,
             City = 2
+        }
+
+        public void AdvanceDevelopment()
+        {
+            switch (development)
+            {
+                case Development.Undeveloped:
+                    development = Development.Town;
+                    break;
+                case Development.Town:
+                    development = Development.City;
+                    break;
+                case Development.City:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Catan.GameBoard
             GameObject.Find("Game Manager").GetComponent<InteractionManager>().BoardTokenClicked(this, xIndex, yIndex);
         }
 
-        public void SetPlayer(Player player)
+        public virtual void SetPlayer(Player player)
         {
             playerIndex = player.playerIndex;
             meshRenderer.enabled = true;
