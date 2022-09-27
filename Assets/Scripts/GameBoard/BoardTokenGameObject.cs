@@ -12,6 +12,8 @@ namespace Catan.GameBoard
         public int playerIndex = -1;
         public int xIndex;
         public int yIndex;
+        public int xCoord;
+        public int yCoord;
 
         public void OnMouseEnter()
         {

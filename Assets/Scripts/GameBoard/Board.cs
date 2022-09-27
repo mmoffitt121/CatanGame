@@ -133,8 +133,10 @@ namespace Catan.GameBoard
                     TileGameObject tileObject = createdTile.transform.GetChild(0).GetComponent<TileGameObject>();
                     tileObject.SetDiceValue(tiles[i][j].diceValue);
                     tileObject.SetRobber(tiles[i][j].robber);
-                    tileObject.xIndex = i;
-                    tileObject.yIndex = j;
+                    tileObject.xIndex = tiles[i][j].xDataIndex;
+                    tileObject.yIndex = tiles[i][j].yDataIndex;
+                    tileObject.xCoord = tiles[i][j].xCoord;
+                    tileObject.yCoord = tiles[i][j].yCoord;
                 }
             }
         }
@@ -203,8 +205,10 @@ namespace Catan.GameBoard
                     createdVertex.transform.parent = vertexHolder.transform;
 
                     TileVertexGameObject vertexObject = createdVertex.GetComponent<TileVertexGameObject>();
-                    vertexObject.xIndex = i;
-                    vertexObject.yIndex = j;
+                    vertexObject.xIndex = vertices[i][j].xDataIndex;
+                    vertexObject.yIndex = vertices[i][j].yDataIndex;
+                    vertexObject.xCoord = vertices[i][j].xCoord;
+                    vertexObject.yCoord = vertices[i][j].yCoord;
                 }
             }
         }
@@ -280,21 +284,6 @@ namespace Catan.GameBoard
 
         public void PlacePorts()
         {
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                for (int j = 0; j < vertices[i].Length; j++)
-                {
-                    /*Debug.Log
-                    (
-                        vertices[i][j].xCoord + " " + 
-                        vertices[i][j].yCoord + " " +
-                        " Left: (" + vertices.RoadLeftOfVertex(roads, i, j) + ")," +
-                        " Right: (" + vertices.RoadRightOfVertex(roads, i, j) + "), " +
-                        " Up: (" + vertices.RoadAboveVertex(roads, i, j) + "), " +
-                        " Down: (" + vertices.RoadBelowVertex(roads, i, j) + "), "
-                    );*/
-                }
-            }
             for (int i = 0; i < vertices.Length; i++)
             {
                 for (int j = 0; j < vertices[i].Length; j++)

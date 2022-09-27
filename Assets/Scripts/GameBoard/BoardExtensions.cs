@@ -179,11 +179,17 @@ namespace Catan.GameBoard
 
             int xc = vertices[i][j].xCoord;
             int yc = vertices[i][j].yCoord;
+
+            Debug.Log("xc and yc: " + xc + " " + yc);
             
             int x = xc - 1;
             int y = (int)(yc / 2) - 1;
 
+            Debug.Log("x and y: " + x + " " + y);
+
             (int xout, int yout) = tiles.GetTileDataCoord(x, y);
+
+            Debug.Log("x and y out: " + xout + " " + yout);
             return (xout, yout);
         }
 
@@ -367,7 +373,9 @@ namespace Catan.GameBoard
             int y;
             try
             {
+                Debug.Log("yCoord: " + j);
                 y = tiles[i].Where(k => k.yCoord == j).First().yDataIndex;
+                Debug.Log("coordinate: ( " + i + " " + y);
             }
             catch
             {

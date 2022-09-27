@@ -21,8 +21,8 @@ namespace Catan.GameManagement
             }
         }
 
-        public int turn;
-        public int phase;
+        public int turn = -1;
+        public int phase = -1;
 
         public UIManager UIManager;
         public BoardInitializer boardInitializer;
@@ -86,7 +86,7 @@ namespace Catan.GameManagement
                 turn++;
             }
 
-            if (turn >= players.Length)
+            if (turn >= players.Length || turn == -1)
             {
                 turn = 0;
             }
