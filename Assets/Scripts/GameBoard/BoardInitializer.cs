@@ -182,13 +182,22 @@ namespace Catan.GameBoard
                 foreach (Tile t in t0)
                     Debug.Log(t.xCoord + " " + t.yCoord);*/
 
+            int max = 0;
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                if (tiles[i].Length > max)
+                {
+                    max = tiles[i].Length;
+                }
+            }
+            max += 2;
 
             for (int i = 0; i < vertices.Length; i++)
             {
                 for (int j = 0; j < vertices[i].Length; j++)
                 {
-                    bool above = vertices.TileAboveVertex(tiles, i, j) != (-1, -1);
-                    bool below = vertices.TileBelowVertex(tiles, i, j) != (-1, -1);
+                    bool above = vertices.TileAboveVertex(tiles, i, j, max) != (-1, -1);
+                    bool below = vertices.TileBelowVertex(tiles, i, j, max) != (-1, -1);
                     bool left = vertices.TileLeftOfVertex(tiles, i, j) != (-1, -1);
                     bool right = vertices.TileRightOfVertex(tiles, i, j) != (-1, -1);
 

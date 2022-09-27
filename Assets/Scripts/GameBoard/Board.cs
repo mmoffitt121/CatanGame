@@ -41,8 +41,6 @@ namespace Catan.GameBoard
         public GameObject vertexHolder;
         public GameObject roadHolder;
 
-        
-
         /// <summary>
         /// Clears the tile array and despawns all tiles in tile holder
         /// </summary>
