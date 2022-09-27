@@ -266,7 +266,6 @@ namespace Catan.GameBoard
 
             int x = xc;
             int y = (int)(yc / 2) - 1 - smallOffset;
-            Debug.Log("Yeah");
 
             (int xout, int yout) = tiles.GetTileDataCoord(x, y);
             return (xout, yout);
@@ -428,9 +427,7 @@ namespace Catan.GameBoard
             int y;
             try
             {
-                Debug.Log("yCoord: " + j);
                 y = tiles[i].Where(k => k.yCoord == j).First().yDataIndex;
-                Debug.Log("coordinate: ( " + i + " " + y);
             }
             catch
             {
@@ -524,6 +521,11 @@ namespace Catan.GameBoard
         {
             r = Mathf.Deg2Rad * r;
             return new Vector3(r * Mathf.Cos(theta), 0, r * Mathf.Sin(theta));
+        }
+
+        public static bool Valid(this (int, int) point)
+        {
+            return point != (-1, -1);
         }
     }
 }

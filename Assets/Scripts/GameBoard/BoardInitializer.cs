@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Catan.ResourcePhase;
 using System.Collections.Generic;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 namespace Catan.GameBoard
 {
@@ -34,9 +35,6 @@ namespace Catan.GameBoard
 
         /// <summary>
         /// Dictionary that takes tuple as key, with values representing if there's a tile (above, below, to the left of, and to the right of) the current point.
-        /// 
-        /// A value of -1 represents that the port angle does not exist.
-        /// A value of -2 represents that the angle can be anything.
         /// </summary>
         public static readonly Dictionary<(bool, bool, bool, bool), float> PORT_ANGLES = new Dictionary<(bool, bool, bool, bool), float>()
         {
@@ -47,15 +45,15 @@ namespace Catan.GameBoard
             { (false, true , false, false),  0f },
             { (false, true , false, true ),  0f },
             { (false, true , true , false), 0f },
-            { (false, true , true , true ),   -100f },
+            { (false, true , true , true ),   -90f },
             { (true , false, false, false),    0f },
             { (true , false, false, true ),   0f },
             { (true , false, true , false),  0f },
-            { (true , false, true , true ),   -100f },
-            { (true , true , false, false),   -100f },
-            { (true , true , false, true ),   -100f },
-            { (true , true , true , false),   -100f },
-            { (true , true , true , true ),   -100f }
+            { (true , false, true , true ),   -90f },
+            { (true , true , false, false),   -90f },
+            { (true , true , false, true ),   -90f },
+            { (true , true , true , false),   -90f },
+            { (true , true , true , true ),   -90f }
         };
 
         public Board board;
@@ -174,14 +172,6 @@ namespace Catan.GameBoard
         {
             int[] pAmounts = (int[])portAmounts.Clone();
 
-            /*foreach (TileVertex[] v0 in vertices)
-                foreach (TileVertex v in v0)
-                    Debug.Log(v.xCoord + " " + v.yCoord);
-
-            foreach (Tile[] t0 in tiles)
-                foreach (Tile t in t0)
-                    Debug.Log(t.xCoord + " " + t.yCoord);*/
-
             int max = 0;
             for (int i = 0; i < tiles.Length; i++)
             {
@@ -192,31 +182,111 @@ namespace Catan.GameBoard
             }
             max += 2;
 
-            for (int i = 0; i < vertices.Length; i++)
+            (int, int)[] portPoints = BuildPortPerimeter(vertices);
+
+            foreach ((int, int) point in portPoints)
             {
-                for (int j = 0; j < vertices[i].Length; j++)
+                int i = point.Item1;
+                int j = point.Item2;
+
+                bool above = vertices.TileAboveVertex(tiles, i, j, max) != (-1, -1);
+                bool below = vertices.TileBelowVertex(tiles, i, j, max) != (-1, -1);
+                bool left = vertices.TileLeftOfVertex(tiles, i, j) != (-1, -1);
+                bool right = vertices.TileRightOfVertex(tiles, i, j) != (-1, -1);
+
+                Resource.ResourceType t;
+                try
                 {
-                    bool above = vertices.TileAboveVertex(tiles, i, j, max) != (-1, -1);
-                    bool below = vertices.TileBelowVertex(tiles, i, j, max) != (-1, -1);
-                    bool left = vertices.TileLeftOfVertex(tiles, i, j) != (-1, -1);
-                    bool right = vertices.TileRightOfVertex(tiles, i, j) != (-1, -1);
-
-                    Resource.ResourceType t;
-                    try
-                    {
-                        t = GetRandomPortType(pAmounts, ports);
-                    }
-                    catch
-                    {
-                        return;
-                    }
-
-                    vertices[i][j].port = new Port();
-                    vertices[i][j].port.type = t;
-                    float direction = PORT_ANGLES[(above, below, left, right)];
-                    vertices[i][j].port.direction = direction;
+                    t = GetRandomPortType(pAmounts, ports);
                 }
+                catch
+                {
+                    return;
+                }
+
+                vertices[i][j].port = new Port();
+                vertices[i][j].port.type = t;
+                float direction = PORT_ANGLES[(above, below, left, right)];
+                vertices[i][j].port.direction = direction;
             }
+        }
+
+        public (int, int)[] BuildPortPerimeter(TileVertex[][] vertices)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+
+            // Top
+            for (int j = 0; j < vertices[0].Length; j++)
+            {
+                points.Add((0, j));
+            }
+
+            // Right
+            int x = 0;
+            int y = vertices[x].Length - 1;
+            bool forward = true;
+            while (x < vertices.Length - 1)
+            {
+                points.Add((x, y));
+                if (vertices.VertexRightOfVertex(x, y).Valid() && forward)
+                {
+                    (x, y) = vertices.VertexRightOfVertex(x, y);
+                    continue;
+                }
+                if (vertices.VertexBelowVertex(x, y).Valid())
+                {
+                    (x, y) = vertices.VertexBelowVertex(x, y);
+                    forward = true;
+                    continue;
+                }
+                if (vertices.VertexLeftOfVertex(x, y).Valid())
+                {
+                    (x, y) = vertices.VertexLeftOfVertex(x, y);
+                    forward = false;
+                    continue;
+                }
+                break;
+            }
+
+            // Bottom
+            x = vertices.Length - 1;
+            for (int j = vertices[vertices.Length - 1].Length - 1; j >= 0; j--)
+            {
+                points.Add((x, j));
+            }
+
+            // Left
+            x = vertices.Length - 1;
+            y = 0;
+            bool backward = true;
+            while (x > 0)
+            {
+                Debug.Log(x + ",, " + y);
+                points.Add((x, y));
+                if (vertices.VertexLeftOfVertex(x, y).Valid() && backward)
+                {
+                    Debug.Log("Left");
+                    (x, y) = vertices.VertexLeftOfVertex(x, y);
+                    continue;
+                }
+                if (vertices.VertexAboveVertex(x, y).Valid())
+                {
+                    Debug.Log("Up");
+                    (x, y) = vertices.VertexAboveVertex(x, y); 
+                    backward = true;
+                    continue;
+                }
+                if (vertices.VertexRightOfVertex(x, y).Valid())
+                {
+                    Debug.Log("Right");
+                    (x, y) = vertices.VertexRightOfVertex(x, y);
+                    backward = false;
+                    continue;
+                }
+                break;
+            }
+
+            return points.ToArray();
         }
 
         public Road[][] InitializeRoads(TileVertex[][] vertices, Tile[][] tiles)

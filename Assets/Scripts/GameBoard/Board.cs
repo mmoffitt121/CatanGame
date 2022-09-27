@@ -290,7 +290,7 @@ namespace Catan.GameBoard
                     {
                         GameObject child = GameObject.Find("Vertex(" + i + "," + j + ")").transform.GetChild(0).gameObject;
                         child.GetComponent<MeshRenderer>().enabled = true;
-                        Vector3 pos = child.transform.parent.position + BoardExtensions.PolarToCartesian(vertices[i][j].port.direction, 20);
+                        Vector3 pos = child.transform.parent.position + BoardExtensions.PolarToCartesian(vertices[i][j].port.direction, 50);
                         Vector3 ang = new Vector3(0, vertices[i][j].port.direction + 90, 0);
                         child.transform.SetPositionAndRotation(pos, Quaternion.Euler(ang));
                     }

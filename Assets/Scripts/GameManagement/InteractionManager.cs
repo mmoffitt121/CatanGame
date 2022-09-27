@@ -20,12 +20,7 @@ namespace Catan.GameManagement
                     board.vertices[i][j].AdvanceDevelopment();
                     ((TileVertexGameObject)obj).UpdateMesh();
 
-                    Debug.Log("[ " + board.vertices[i][j].xCoord + " " + board.vertices[i][j].yCoord + " ]: " 
-                        + board.vertices.TileAboveVertex(board.tiles, i, j)
-                        + board.vertices.TileBelowVertex(board.tiles, i, j)
-                        + board.vertices.TileRightOfVertex(board.tiles, i, j)
-                        + board.vertices.TileLeftOfVertex(board.tiles, i, j)
-                        );
+                    DumpTileInfo(i, j);
                 }
                 if (obj is RoadGameObject)
                 {
@@ -33,6 +28,17 @@ namespace Catan.GameManagement
                     obj.SetPlayer(gameManager.currentPlayer);
                 }
             }
+        }
+
+        public void DumpTileInfo(int i, int j)
+        {
+
+            Debug.Log("[ " + board.vertices[i][j].xCoord + " " + board.vertices[i][j].yCoord + " ]: "
+                + board.vertices.TileAboveVertex(board.tiles, i, j)
+                + board.vertices.TileBelowVertex(board.tiles, i, j)
+                + board.vertices.TileRightOfVertex(board.tiles, i, j)
+                + board.vertices.TileLeftOfVertex(board.tiles, i, j)
+                );
         }
     }
 }
