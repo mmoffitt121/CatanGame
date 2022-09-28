@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using Catan.ResourcePhase;
+using System.Collections.Generic;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 namespace Catan.GameBoard
 {
@@ -30,6 +32,29 @@ namespace Catan.GameBoard
         /// Each element corresponds to how many of each type of port corresponding to its index will be placed on the board.
         /// </summary>
         public int[] portAmounts;
+
+        /// <summary>
+        /// Dictionary that takes tuple as key, with values representing if there's a tile (above, below, to the left of, and to the right of) the current point.
+        /// </summary>
+        public static readonly Dictionary<(bool, bool, bool, bool), float> PORT_ANGLES = new Dictionary<(bool, bool, bool, bool), float>()
+        {
+            { (false, false, false, false),     0f },
+            { (false, false, false, true ),   120f },
+            { (false, false, true , false),  -120f },
+            { (false, false, true , true ),   180f },
+            { (false, true , false, false),  -180f },
+            { (false, true , false, true ),  -240f },
+            { (false, true , true , false),   240f },
+            { (false, true , true , true ),   -90f },
+            { (true , false, false, false),     0f },
+            { (true , false, false, true ),    60f },
+            { (true , false, true , false),   -60f },
+            { (true , false, true , true ),   -90f },
+            { (true , true , false, false),   -90f },
+            { (true , true , false, true ),   -90f },
+            { (true , true , true , false),   -90f },
+            { (true , true , true , true ),   -90f }
+        };
 
         public Board board;
 
@@ -145,20 +170,146 @@ namespace Catan.GameBoard
 
         public void InitializePorts(TileVertex[][] vertices, Tile[][] tiles)
         {
-            for (int i = 0; i < vertices.Length; i++)
+            int[] pAmounts = (int[])portAmounts.Clone();
+
+            int max = 0;
+            for (int i = 0; i < tiles.Length; i++)
             {
-                for (int j = 0; j < vertices[i].Length; j++)
+                if (tiles[i].Length > max)
                 {
-                    bool above = vertices.TileAboveVertex(tiles, i, j) != (-1, -1);
-                    bool below = vertices.TileBelowVertex(tiles, i, j) != (-1, -1);
-                    bool left = vertices.TileLeftOfVertex(tiles, i, j) != (-1, -1);
-                    bool right = vertices.TileRightOfVertex(tiles, i, j) != (-1, -1);
-                    if (!left && !right)
-                    {
-                        vertices[i][j].port = new Port();
-                    }
+                    max = tiles[i].Length;
                 }
             }
+            max += 2;
+
+            (int, int)[] portPoints = BuildPortPerimeter(vertices);
+
+            int iteration = 0;
+            (int, int) prevpoint = (-1, -1);
+            bool isSecond = false;
+            Resource.ResourceType t = Resource.ResourceType.Any;
+            foreach ((int, int) point in portPoints)
+            {
+                // Makes sure duplicate points aren't used
+                if (point == prevpoint)
+                {
+                    continue;
+                }
+                prevpoint = point;
+
+                // Causes skipping vertices in a pattern of 1-1-2 like in Catan
+                iteration = ((iteration + 1) % 10);
+                if (iteration == 3 || iteration == 6 || iteration == 9 || iteration == 0)
+                {
+                    continue;
+                }
+
+                int i = point.Item1;
+                int j = point.Item2;
+
+                bool above = vertices.TileAboveVertex(tiles, i, j, max) != (-1, -1);
+                bool below = vertices.TileBelowVertex(tiles, i, j, max) != (-1, -1);
+                bool left = vertices.TileLeftOfVertex(tiles, i, j) != (-1, -1);
+                bool right = vertices.TileRightOfVertex(tiles, i, j) != (-1, -1);
+
+                if (!isSecond)
+                {
+                    try
+                    {
+                        t = GetRandomPortType(pAmounts, ports);
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+                
+
+                vertices[i][j].port = new Port();
+                vertices[i][j].port.type = t;
+                float direction = PORT_ANGLES[(above, below, left, right)];
+
+                if (direction == 180 && !vertices[point.Item1][point.Item2].up) direction = 0;
+                if (direction == 120 && !vertices[point.Item1][point.Item2].up) direction = 60;
+                if (direction == -120 && !vertices[point.Item1][point.Item2].up) direction = -60;
+
+                vertices[i][j].port.direction = direction + (isSecond ? -20 : 20);
+                isSecond = !isSecond;
+            }
+        }
+
+        public (int, int)[] BuildPortPerimeter(TileVertex[][] vertices)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+
+            // Top
+            for (int j = 0; j < vertices[0].Length; j++)
+            {
+                points.Add((0, j));
+            }
+
+            // Right
+            int x = 0;
+            int y = vertices[x].Length - 1;
+            bool forward = true;
+            while (x < vertices.Length - 1)
+            {
+                points.Add((x, y));
+                if (vertices.VertexRightOfVertex(x, y).Valid() && forward)
+                {
+                    (x, y) = vertices.VertexRightOfVertex(x, y);
+                    continue;
+                }
+                if (vertices.VertexBelowVertex(x, y).Valid())
+                {
+                    (x, y) = vertices.VertexBelowVertex(x, y);
+                    forward = true;
+                    continue;
+                }
+                if (vertices.VertexLeftOfVertex(x, y).Valid())
+                {
+                    (x, y) = vertices.VertexLeftOfVertex(x, y);
+                    forward = false;
+                    continue;
+                }
+                break;
+            }
+
+            // Bottom
+            x = vertices.Length - 1;
+            for (int j = vertices[vertices.Length - 1].Length - 1; j >= 0; j--)
+            {
+                points.Add((x, j));
+            }
+
+            // Left
+            x = vertices.Length - 1;
+            y = 0;
+            bool backward = true;
+            while (x > 0)
+            {
+                points.Add((x, y));
+                if (vertices.VertexLeftOfVertex(x, y).Valid() && backward)
+                {
+                    (x, y) = vertices.VertexLeftOfVertex(x, y);
+                    continue;
+                }
+                if (vertices.VertexAboveVertex(x, y).Valid())
+                {
+                    (x, y) = vertices.VertexAboveVertex(x, y); 
+                    backward = true;
+                    continue;
+                }
+                if (vertices.VertexRightOfVertex(x, y).Valid())
+                {
+                    (x, y) = vertices.VertexRightOfVertex(x, y);
+                    backward = false;
+                    continue;
+                }
+                break;
+            }
+
+            return points.ToArray();
         }
 
         public Road[][] InitializeRoads(TileVertex[][] vertices, Tile[][] tiles)
@@ -243,6 +394,32 @@ namespace Catan.GameBoard
 
             // return 0 if none left in data
             return 0;
+        }
+
+        /// <summary>
+        /// Chooses a random tile type based on input data of tile types and corresponding tile amounts.
+        /// </summary>
+        /// <param name="tAmounts"></param>
+        /// <param name="tTypes"></param>
+        /// <returns></returns>
+        public Resource.ResourceType GetRandomPortType(int[] rAmounts, Resource.ResourceType[] rTypes)
+        {
+            int rand = UnityEngine.Random.Range(0, rTypes.Length);
+            for (int i = rand; i < rand + rTypes.Length; i++)
+            {
+                if (rAmounts[i % rTypes.Length] <= 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    rAmounts[i % rTypes.Length]--;
+                    return rTypes[i % rTypes.Length];
+                }
+            }
+
+            // Throw if none left
+            throw new Exception("None");
         }
     }
 }

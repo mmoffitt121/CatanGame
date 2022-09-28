@@ -4,6 +4,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
+using Catan.GameManagement;
+using Catan.ResourcePhase;
+using TMPro;
 
 namespace Catan.GameBoard
 {
@@ -41,7 +44,12 @@ namespace Catan.GameBoard
         public GameObject vertexHolder;
         public GameObject roadHolder;
 
-        
+        public Texture2D[] resourceIcons;
+
+        public void Start()
+        {
+            resourceIcons = GameObject.Find("Game Manager").GetComponent<GameManager>().resourceIcons;
+        }
 
         /// <summary>
         /// Clears the tile array and despawns all tiles in tile holder
@@ -133,8 +141,10 @@ namespace Catan.GameBoard
                     TileGameObject tileObject = createdTile.transform.GetChild(0).GetComponent<TileGameObject>();
                     tileObject.SetDiceValue(tiles[i][j].diceValue);
                     tileObject.SetRobber(tiles[i][j].robber);
-                    tileObject.xIndex = i;
-                    tileObject.yIndex = j;
+                    tileObject.xIndex = tiles[i][j].xDataIndex;
+                    tileObject.yIndex = tiles[i][j].yDataIndex;
+                    tileObject.xCoord = tiles[i][j].xCoord;
+                    tileObject.yCoord = tiles[i][j].yCoord;
                 }
             }
         }
@@ -203,8 +213,10 @@ namespace Catan.GameBoard
                     createdVertex.transform.parent = vertexHolder.transform;
 
                     TileVertexGameObject vertexObject = createdVertex.GetComponent<TileVertexGameObject>();
-                    vertexObject.xIndex = i;
-                    vertexObject.yIndex = j;
+                    vertexObject.xIndex = vertices[i][j].xDataIndex;
+                    vertexObject.yIndex = vertices[i][j].yDataIndex;
+                    vertexObject.xCoord = vertices[i][j].xCoord;
+                    vertexObject.yCoord = vertices[i][j].yCoord;
                 }
             }
         }
@@ -284,28 +296,24 @@ namespace Catan.GameBoard
             {
                 for (int j = 0; j < vertices[i].Length; j++)
                 {
-                    /*Debug.Log
-                    (
-                        vertices[i][j].xCoord + " " + 
-                        vertices[i][j].yCoord + " " +
-                        " Left: (" + vertices.RoadLeftOfVertex(roads, i, j) + ")," +
-                        " Right: (" + vertices.RoadRightOfVertex(roads, i, j) + "), " +
-                        " Up: (" + vertices.RoadAboveVertex(roads, i, j) + "), " +
-                        " Down: (" + vertices.RoadBelowVertex(roads, i, j) + "), "
-                    );*/
-                }
-            }
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                for (int j = 0; j < vertices[i].Length; j++)
-                {
                     if (vertices[i][j].port != null)
                     {
                         GameObject child = GameObject.Find("Vertex(" + i + "," + j + ")").transform.GetChild(0).gameObject;
                         child.GetComponent<MeshRenderer>().enabled = true;
-                        Vector3 pos = child.transform.parent.position + BoardExtensions.PolarToCartesian(vertices[i][j].port.direction, 20);
+                        Vector3 pos = child.transform.parent.position + BoardExtensions.PolarToCartesian(-vertices[i][j].port.direction * Mathf.Deg2Rad, 25);
                         Vector3 ang = new Vector3(0, vertices[i][j].port.direction + 90, 0);
                         child.transform.SetPositionAndRotation(pos, Quaternion.Euler(ang));
+                        child.GetComponent<Renderer>().material.color = new Color(130f/255f, 81f/255f, 40f/255f);
+
+                        GameObject label = GameObject.Find("Vertex(" + i + "," + j + ")").transform.GetChild(2).gameObject;
+                        Vector3 posLabel = child.transform.parent.position + BoardExtensions.PolarToCartesian(-vertices[i][j].port.direction * Mathf.Deg2Rad, 50);
+                        label.GetComponent<MeshRenderer>().enabled = true;
+                        label.transform.SetPositionAndRotation(posLabel + new Vector3(0, 0.3f, 0), Quaternion.Euler(90, -90, 0));
+                        label.GetComponent<Renderer>().material.mainTexture = resourceIcons[(int)vertices[i][j].port.type];
+
+                        TextMeshProUGUI labelText = label.transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+                        labelText.enabled = true;
+                        labelText.text = vertices[i][j].port.type == Resource.ResourceType.Any ? "3:1" : "2:1";
                     }
                 }
             }

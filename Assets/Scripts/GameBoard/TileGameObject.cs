@@ -16,6 +16,8 @@ namespace Catan.GameBoard
 
         public int xIndex;
         public int yIndex;
+        public int xCoord;
+        public int yCoord;
 
         public void SetDiceValue(int value)
         {

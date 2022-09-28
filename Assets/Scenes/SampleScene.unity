@@ -663,7 +663,7 @@ MonoBehaviour:
   boardShape: 0300000004000000050000000400000003000000
   diceValues: 00000000000000000100000002000000020000000200000002000000000000000200000002000000020000000200000001000000
   ports: 000000000100000002000000030000000400000005000000
-  portAmounts: 040000000100000001000000010000000100000001000000
+  portAmounts: 900100000100000001000000010000000100000001000000
   board: {fileID: 0}
 --- !u!1 &508867528
 GameObject:
@@ -723,7 +723,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Next
+  m_text: Start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1077,8 +1077,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a076cd923d33864dbecc2cdb18d4fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turn: 0
-  phase: 0
+  turn: -1
+  phase: -1
   UIManager: {fileID: 1263147210}
   boardInitializer: {fileID: 461662172}
 --- !u!114 &1402203380
@@ -1153,7 +1153,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Roll Resources
+  m_text: Begin Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1288,7 +1288,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player 1
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

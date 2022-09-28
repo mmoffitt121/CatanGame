@@ -16,6 +16,12 @@ namespace Catan.UI
         public TextMeshProUGUI nextDisplay;
         public Button nextButton;
 
+        public TextMeshProUGUI oreDisplay;
+        public TextMeshProUGUI brickDisplay;
+        public TextMeshProUGUI woodDisplay;
+        public TextMeshProUGUI grainDisplay;
+        public TextMeshProUGUI sheepDisplay;
+
         public void AdvanceTurn()
         {
             gameManager.AdvanceTurn();
@@ -29,7 +35,13 @@ namespace Catan.UI
             phaseDisplay.color = gameManager.currentPlayer.primaryUIColor;
             nextDisplay.color = gameManager.currentPlayer.secondaryUIColor;
             nextButton.GetComponent<Image>().color = gameManager.currentPlayer.primaryUIColor;
-            
+
+            grainDisplay.text = gameManager.currentPlayer.resources[0].amount.ToString();
+            sheepDisplay.text = gameManager.currentPlayer.resources[1].amount.ToString();
+            woodDisplay.text = gameManager.currentPlayer.resources[2].amount.ToString();
+            brickDisplay.text = gameManager.currentPlayer.resources[3].amount.ToString();
+            oreDisplay.text = gameManager.currentPlayer.resources[4].amount.ToString();
+
 
             switch (gameManager.phase)
             {

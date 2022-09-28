@@ -27,5 +27,16 @@ namespace Catan.GameManagement
                 }
             }
         }
+
+        public void DumpVertexInfo(int i, int j)
+        {
+            Debug.Log("Vertex ( " + board.vertices[i][j].xCoord + " " + board.vertices[i][j].yCoord + " ): "
+                + "\nData Index: " + board.vertices[i][j].xDataIndex + " " + board.vertices[i][j].yDataIndex
+                + "\nAbove: " + board.vertices.TileAboveVertex(board.tiles, i, j)
+                + "\nBelow: " + board.vertices.TileBelowVertex(board.tiles, i, j)
+                + "\nTo Right: " + board.vertices.TileRightOfVertex(board.tiles, i, j)
+                + "\nTo Left: " + board.vertices.TileLeftOfVertex(board.tiles, i, j)
+                );
+        }
     }
 }

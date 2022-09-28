@@ -15,6 +15,7 @@ namespace Catan.GameBoard
         {
             base.SetPlayer(player);
             port.GetComponent<Renderer>().material.color = player.playerColor;
+            city.GetComponent<Renderer>().material.color = player.playerColor;
         }
 
         public void UpdateMesh()
