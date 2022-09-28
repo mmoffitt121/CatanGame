@@ -23,13 +23,13 @@ namespace Catan.GameBoard
                 switch (type)
                 {
                     case TileType.Pasture:
-                        return new Color(120 / 255f / 255f, 190 / 255f, 70 / 255f);
+                        return new Color(120 / 255f, 255 / 255f, 70 / 255f);
                     case TileType.Field:
-                        return new Color(190 / 255f, 190 / 255f, 20 / 255f);
+                        return new Color(255 / 255f, 255 / 255f, 100 / 255f);
                     case TileType.Forest:
-                        return new Color(10 / 255f, 90 / 255f, 20 / 255f);
+                        return new Color(50 / 255f, 150 / 255f, 70 / 255f);
                     case TileType.Hills:
-                        return new Color(200 / 255f, 50 / 255f, 20 / 255f);
+                        return new Color(255 / 255f, 100 / 255f, 50 / 255f);
                     case TileType.Mountains:
                         return new Color(200 / 255f, 200 / 255f, 230 / 255f);
                     case TileType.Desert:

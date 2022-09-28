@@ -8,6 +8,7 @@ namespace Catan.ResourcePhase
     {
         public ResourceType type;
         public int amount;
+        public Texture2D texture;
 
         public enum ResourceType
         {

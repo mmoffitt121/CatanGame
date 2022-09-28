@@ -12,7 +12,7 @@ namespace Catan.GameManagement
     public class GameManager : MonoBehaviour
     {
         public Player[] players;
-
+        public Texture2D[] resourceIcons;
         public Player currentPlayer
         {
             get
@@ -68,11 +68,11 @@ namespace Catan.GameManagement
             foreach (Player p in players)
             {
                 p.resources = new Resource[6];
-                p.resources[0] = new Resource(Resource.ResourceType.Grain, 0);
-                p.resources[1] = new Resource(Resource.ResourceType.Wool, 0);
-                p.resources[2] = new Resource(Resource.ResourceType.Wood, 0);
-                p.resources[3] = new Resource(Resource.ResourceType.Brick, 0);
-                p.resources[4] = new Resource(Resource.ResourceType.Ore, 0);
+                p.resources[0] = new Resource(Resource.ResourceType.Grain, p.playerIndex);
+                p.resources[1] = new Resource(Resource.ResourceType.Wool, p.playerIndex + 5);
+                p.resources[2] = new Resource(Resource.ResourceType.Wood, p.playerIndex + 10);
+                p.resources[3] = new Resource(Resource.ResourceType.Brick, p.playerIndex + 15);
+                p.resources[4] = new Resource(Resource.ResourceType.Ore, p.playerIndex + 20);
             }
         }
 

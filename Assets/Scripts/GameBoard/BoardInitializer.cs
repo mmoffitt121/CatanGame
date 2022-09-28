@@ -38,17 +38,17 @@ namespace Catan.GameBoard
         /// </summary>
         public static readonly Dictionary<(bool, bool, bool, bool), float> PORT_ANGLES = new Dictionary<(bool, bool, bool, bool), float>()
         {
-            { (false, false, false, false),   0f },
-            { (false, false, false, true ),  0f },
-            { (false, false, true , false),   0f },
-            { (false, false, true , true ),    0f },
-            { (false, true , false, false),  0f },
-            { (false, true , false, true ),  0f },
-            { (false, true , true , false), 0f },
+            { (false, false, false, false),     0f },
+            { (false, false, false, true ),   120f },
+            { (false, false, true , false),  -120f },
+            { (false, false, true , true ),   180f },
+            { (false, true , false, false),  -180f },
+            { (false, true , false, true ),  -240f },
+            { (false, true , true , false),   240f },
             { (false, true , true , true ),   -90f },
-            { (true , false, false, false),    0f },
-            { (true , false, false, true ),   0f },
-            { (true , false, true , false),  0f },
+            { (true , false, false, false),     0f },
+            { (true , false, false, true ),    60f },
+            { (true , false, true , false),   -60f },
             { (true , false, true , true ),   -90f },
             { (true , true , false, false),   -90f },
             { (true , true , false, true ),   -90f },
@@ -184,8 +184,26 @@ namespace Catan.GameBoard
 
             (int, int)[] portPoints = BuildPortPerimeter(vertices);
 
+            int iteration = 0;
+            (int, int) prevpoint = (-1, -1);
+            bool isSecond = false;
+            Resource.ResourceType t = Resource.ResourceType.Any;
             foreach ((int, int) point in portPoints)
             {
+                // Makes sure duplicate points aren't used
+                if (point == prevpoint)
+                {
+                    continue;
+                }
+                prevpoint = point;
+
+                // Causes skipping vertices in a pattern of 1-1-2 like in Catan
+                iteration = ((iteration + 1) % 10);
+                if (iteration == 3 || iteration == 6 || iteration == 9 || iteration == 0)
+                {
+                    continue;
+                }
+
                 int i = point.Item1;
                 int j = point.Item2;
 
@@ -194,20 +212,29 @@ namespace Catan.GameBoard
                 bool left = vertices.TileLeftOfVertex(tiles, i, j) != (-1, -1);
                 bool right = vertices.TileRightOfVertex(tiles, i, j) != (-1, -1);
 
-                Resource.ResourceType t;
-                try
+                if (!isSecond)
                 {
-                    t = GetRandomPortType(pAmounts, ports);
+                    try
+                    {
+                        t = GetRandomPortType(pAmounts, ports);
+                    }
+                    catch
+                    {
+                        return;
+                    }
                 }
-                catch
-                {
-                    return;
-                }
+                
 
                 vertices[i][j].port = new Port();
                 vertices[i][j].port.type = t;
                 float direction = PORT_ANGLES[(above, below, left, right)];
-                vertices[i][j].port.direction = direction;
+
+                if (direction == 180 && !vertices[point.Item1][point.Item2].up) direction = 0;
+                if (direction == 120 && !vertices[point.Item1][point.Item2].up) direction = 60;
+                if (direction == -120 && !vertices[point.Item1][point.Item2].up) direction = -60;
+
+                vertices[i][j].port.direction = direction + (isSecond ? -20 : 20);
+                isSecond = !isSecond;
             }
         }
 
@@ -261,24 +288,20 @@ namespace Catan.GameBoard
             bool backward = true;
             while (x > 0)
             {
-                Debug.Log(x + ",, " + y);
                 points.Add((x, y));
                 if (vertices.VertexLeftOfVertex(x, y).Valid() && backward)
                 {
-                    Debug.Log("Left");
                     (x, y) = vertices.VertexLeftOfVertex(x, y);
                     continue;
                 }
                 if (vertices.VertexAboveVertex(x, y).Valid())
                 {
-                    Debug.Log("Up");
                     (x, y) = vertices.VertexAboveVertex(x, y); 
                     backward = true;
                     continue;
                 }
                 if (vertices.VertexRightOfVertex(x, y).Valid())
                 {
-                    Debug.Log("Right");
                     (x, y) = vertices.VertexRightOfVertex(x, y);
                     backward = false;
                     continue;

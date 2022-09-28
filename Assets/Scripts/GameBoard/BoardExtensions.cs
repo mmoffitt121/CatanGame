@@ -25,7 +25,7 @@ namespace Catan.GameBoard
         /// <remarks></remarks>
         public static (int, int) VertexAboveVertex(this TileVertex[][] vertices, int i, int j)
         {
-            if (!vertices[i][j].up)
+            if (vertices[i][j].up)
             {
                 return (-1, -1);
             }
@@ -39,10 +39,10 @@ namespace Catan.GameBoard
 
             try
             {
-                TileVertex test = vertices[i + 1][v];
+                TileVertex test = vertices[i - 1][v];
                 if (test != null)
                 {
-                    return (i + 1, v);
+                    return (i - 1, v);
                 }
             }
             catch { }
@@ -75,7 +75,7 @@ namespace Catan.GameBoard
 
             try
             {
-                TileVertex test = vertices[i+1][v];
+                TileVertex test = vertices[i + 1][v];
                 if (test != null)
                 {
                     return (i + 1, v);
