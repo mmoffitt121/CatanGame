@@ -19,12 +19,28 @@ namespace Catan.GameManagement
                     obj.SetPlayer(gameManager.currentPlayer);
                     board.vertices[i][j].AdvanceDevelopment();
                     ((TileVertexGameObject)obj).UpdateMesh();
+                    gameManager.UpdateScores();
                 }
                 if (obj is RoadGameObject)
                 {
                     board.roads[i][j].playerIndex = gameManager.turn;
                     obj.SetPlayer(gameManager.currentPlayer);
+                    gameManager.UpdateScores();
                 }
+            }
+        }
+
+        public void TileClicked(TileGameObject obj, int i, int j)
+        {
+            if (gameManager.movingRobber)
+            {
+                board.tiles[gameManager.robberLocation.Item1][gameManager.robberLocation.Item2].robber = false;
+                board.tiles[i][j].robber = true;
+
+                GameObject.Find("Tile(" + gameManager.robberLocation.Item1 + "," + gameManager.robberLocation.Item2 + ")").transform.GetChild(0).GetComponent<TileGameObject>().SetRobber(false);
+                GameObject.Find("Tile(" + i + "," + j + ")").transform.GetChild(0).GetComponent<TileGameObject>().SetRobber(true);
+
+                gameManager.robberLocation = (i, j);
             }
         }
 

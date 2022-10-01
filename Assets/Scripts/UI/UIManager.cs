@@ -22,13 +22,38 @@ namespace Catan.UI
         public TextMeshProUGUI grainDisplay;
         public TextMeshProUGUI sheepDisplay;
 
+        public TextMeshProUGUI vPDisplay;
+
         public void AdvanceTurn()
         {
             gameManager.AdvanceTurn();
-            UpdateTurnUI();
+            UpdateUI();
         }
 
-        public void UpdateTurnUI()
+        public void DisableAdvancement()
+        {
+            nextButton.interactable = false;
+        }
+
+        public void EnableAdvancement()
+        {
+            nextButton.interactable = true;
+        }
+
+        public void StartMoveRobber()
+        {
+            DisableAdvancement();
+            gameManager.movingRobber = true;
+        }
+
+        public void EndMoveRobber()
+        {
+            EnableAdvancement();
+            gameManager.AdvanceTurn();
+            gameManager.movingRobber = false;
+        }
+
+        public void UpdateUI()
         {
             playerDisplay.text = gameManager.currentPlayer.playerName;
             playerDisplay.color = gameManager.currentPlayer.primaryUIColor;
@@ -41,7 +66,6 @@ namespace Catan.UI
             woodDisplay.text = gameManager.currentPlayer.resources[2].amount.ToString();
             brickDisplay.text = gameManager.currentPlayer.resources[3].amount.ToString();
             oreDisplay.text = gameManager.currentPlayer.resources[4].amount.ToString();
-
 
             switch (gameManager.phase)
             {
@@ -62,6 +86,8 @@ namespace Catan.UI
                     nextDisplay.text = "Waiting...";
                     break;
             }
+
+            vPDisplay.text = "VP: " + gameManager.currentPlayer.victoryPoints.ToString();
         }
     }
 

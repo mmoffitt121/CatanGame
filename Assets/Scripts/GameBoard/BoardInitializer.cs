@@ -3,6 +3,7 @@ using UnityEngine;
 using Catan.ResourcePhase;
 using System.Collections.Generic;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
+using Catan.GameManagement;
 
 namespace Catan.GameBoard
 {
@@ -94,6 +95,7 @@ namespace Catan.GameBoard
             int[] tAmounts = (int[])tileAmount.Clone();
             int[] dValues = (int[])diceValues.Clone();
 
+            bool placedRobber = false;
             for (int i = 0; i < boardHeight; i++)
             {
                 tileArray[i] = new Tile[boardShape[i]];
@@ -104,9 +106,11 @@ namespace Catan.GameBoard
                     {
                         tileArray[i][j].diceValue = GetRandomDiceValue(dValues);
                     }
-                    else
+                    else if (!placedRobber)
                     {
+                        placedRobber = true;
                         tileArray[i][j].robber = true;
+                        GameObject.Find("Game Manager").GetComponent<GameManager>().robberLocation = (i, j);
                     }
                 }
             }

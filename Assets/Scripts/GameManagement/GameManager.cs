@@ -6,6 +6,7 @@ using Catan.GameBoard;
 using Catan.UI;
 using Catan.ResourcePhase;
 using TMPro;
+using Catan.Scoring;
 
 namespace Catan.GameManagement
 {
@@ -24,8 +25,13 @@ namespace Catan.GameManagement
         public int turn = -1;
         public int phase = -1;
 
+        public bool movingRobber = false;
+        public (int, int) robberLocation;
+
         public UIManager UIManager;
         public BoardInitializer boardInitializer;
+
+        public ScoreBuilder scoreBuilder;
 
         public void Start()
         {
@@ -68,16 +74,23 @@ namespace Catan.GameManagement
             foreach (Player p in players)
             {
                 p.resources = new Resource[6];
-                p.resources[0] = new Resource(Resource.ResourceType.Grain, p.playerIndex);
-                p.resources[1] = new Resource(Resource.ResourceType.Wool, p.playerIndex + 5);
-                p.resources[2] = new Resource(Resource.ResourceType.Wood, p.playerIndex + 10);
-                p.resources[3] = new Resource(Resource.ResourceType.Brick, p.playerIndex + 15);
-                p.resources[4] = new Resource(Resource.ResourceType.Ore, p.playerIndex + 20);
+                p.resources[0] = new Resource(Resource.ResourceType.Grain, 0);
+                p.resources[1] = new Resource(Resource.ResourceType.Wool, 0);
+                p.resources[2] = new Resource(Resource.ResourceType.Wood, 0);
+                p.resources[3] = new Resource(Resource.ResourceType.Brick, 0);
+                p.resources[4] = new Resource(Resource.ResourceType.Ore, 0);
             }
+        }
+
+        public void UpdateScores()
+        {
+            scoreBuilder.CalculateScores(players);
+            UIManager.UpdateUI();
         }
 
         public void AdvanceTurn()
         {
+            scoreBuilder.CalculateScores(players);
             phase++;
 
             if (phase > 2)
