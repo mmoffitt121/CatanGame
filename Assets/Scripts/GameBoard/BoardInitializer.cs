@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using Catan.ResourcePhase;
 using System.Collections.Generic;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 using Catan.GameManagement;
 
 namespace Catan.GameBoard

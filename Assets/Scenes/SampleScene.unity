@@ -2238,8 +2238,10 @@ MonoBehaviour:
   - {fileID: 2800000, guid: a177293a905c03946b8d1af2dd78a4aa, type: 3}
   - {fileID: 2800000, guid: a71ec769201207042a59f69c7e13e105, type: 3}
   - {fileID: 2800000, guid: 53451499766238946b6251546ba9339c, type: 3}
-  turn: -1
+  turn: 0
   phase: -1
+  starting: 1
+  reverseTurnOrder: 0
   movingRobber: 0
   UIManager: {fileID: 1263147210}
   boardInitializer: {fileID: 461662172}

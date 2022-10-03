@@ -65,7 +65,7 @@ namespace Catan.GameBoard
             {
                 return (-1, -1);
             }
-
+            
             int v = vertices.ConvertVertical(j, i, i + 1);
 
             if (v == -1)
@@ -149,7 +149,14 @@ namespace Catan.GameBoard
         {
             int ycoord = vertices[i0][x].yCoord;
 
-            if (vertices[i1].Count() < 1)
+            try
+            {
+                if (vertices[i1].Count() < 1)
+                {
+                    return -1;
+                }
+            }
+            catch
             {
                 return -1;
             }
@@ -411,6 +418,71 @@ namespace Catan.GameBoard
             }
 
             return (i * 2, j - 1);
+        }
+
+        public static (int, int)[] AdjacentRoadsToVertex(this TileVertex[][] vertices, Road[][] roads, (int, int) vertex)
+        {
+            (int, int) above = vertices.RoadAboveVertex(roads, vertex.Item1, vertex.Item2);
+            (int, int) below = vertices.RoadBelowVertex(roads, vertex.Item1, vertex.Item2);
+            (int, int) left = vertices.RoadLeftOfVertex(roads, vertex.Item1, vertex.Item2);
+            (int, int) right = vertices.RoadRightOfVertex(roads, vertex.Item1, vertex.Item2);
+
+            List<(int, int)> output = new List<(int, int)>();
+            if (above != (-1, -1)) output.Add(above);
+            if (below != (-1, -1)) output.Add(below);
+            if (left != (-1, -1)) output.Add(left);
+            if (right != (-1, -1)) output.Add(right);
+
+            return output.ToArray();
+        }
+
+        public static (int, int)[] AdjacentVerticesToRoad(this Road[][] roads, TileVertex[][] vertices, (int, int) road)
+        {
+            int i = road.Item1;
+            int j = road.Item2;
+            (int, int)[] arr = new (int, int)[2];
+
+            if (j >= vertices[i / 2].Length)
+            {
+                arr[0] = (-1, -1);
+                arr[1] = (-1, -1);
+            }
+
+            if (vertices[i / 2][j] == null)
+            {
+                arr[0] = (-1, -1);
+                arr[1] = (-1, -1);
+            }
+
+            // Case when road is running left-right
+            if (i % 2 == 0)
+            {
+                arr[0] = (i / 2, j);
+                arr[1] = (i / 2, j + 1);
+            }
+            // Case when road is running up-down
+            else
+            {
+                arr[0] = (-1, -1);
+                arr[1] = (-1, -1);
+                for (int k = 0; k < vertices[i / 2].Length; k++)
+                {
+                    if (vertices.RoadBelowVertex(roads, i/2, k) == road)
+                    {
+                        arr[0] = (i / 2, k);
+                    }
+                }
+
+                for (int k = 0; k < vertices[i / 2 + 1].Length; k++)
+                {
+                    if (vertices.RoadAboveVertex(roads, i / 2 + 1, k) == road)
+                    {
+                        arr[1] = (i / 2 + 1, k);
+                    }
+                }
+            }
+
+            return arr;
         }
 
         /// <summary>

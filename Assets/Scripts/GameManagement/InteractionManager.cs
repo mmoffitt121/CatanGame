@@ -1,6 +1,9 @@
+using Catan.BuildPhase;
 using Catan.GameBoard;
+using Catan.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Catan.GameManagement
@@ -9,23 +12,46 @@ namespace Catan.GameManagement
     {
         public GameManager gameManager;
         public Board board;
+
+        public (int, int) tempVertex;
         public void BoardTokenClicked(BoardTokenGameObject obj, int i, int j)
         {
-            if (gameManager.phase == 2)
+            // Build phase
+            if (gameManager.phase == 2 && !gameManager.starting)
             {
                 if (obj is TileVertexGameObject)
                 {
-                    board.vertices[i][j].playerIndex = gameManager.turn;
-                    obj.SetPlayer(gameManager.currentPlayer);
-                    board.vertices[i][j].AdvanceDevelopment();
-                    ((TileVertexGameObject)obj).UpdateMesh();
+                    board.BuildVertex(gameManager.currentPlayer, (i, j), (TileVertexGameObject)obj);
                     gameManager.UpdateScores();
                 }
                 if (obj is RoadGameObject)
                 {
-                    board.roads[i][j].playerIndex = gameManager.turn;
-                    obj.SetPlayer(gameManager.currentPlayer);
+                    board.BuildRoad(gameManager.currentPlayer, (i, j), (RoadGameObject)obj);
                     gameManager.UpdateScores();
+                }
+            }
+
+            // Starting phase
+            if (gameManager.phase == 0 && gameManager.starting && obj is TileVertexGameObject)
+            {
+                if (!board.BuildVertex(gameManager.currentPlayer, (i, j), (TileVertexGameObject)obj, true))
+                {
+                    return;
+                }
+                tempVertex = (i, j);
+
+                if (!gameManager.reverseTurnOrder)
+                {
+                    board.DistributeResourcesFromVertex(gameManager.players, tempVertex);
+                }
+
+                gameManager.UIManager.AdvanceTurn();
+            }
+            if (gameManager.phase == 1 && gameManager.starting && obj is RoadGameObject && board.vertices.AdjacentRoadsToVertex(board.roads, tempVertex).Contains((i, j)))
+            {
+                if (board.BuildRoad(gameManager.currentPlayer, (i, j), (RoadGameObject)obj, true))
+                {
+                    gameManager.UIManager.AdvanceTurn();
                 }
             }
         }

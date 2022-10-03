@@ -17,7 +17,8 @@ namespace Catan.ResourcePhase
             Grain,
             Wood,
             Brick,
-            Ore
+            Ore,
+            None
         }
 
         public Resource(ResourceType type, int amount)

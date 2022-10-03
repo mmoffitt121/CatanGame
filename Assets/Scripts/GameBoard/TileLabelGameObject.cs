@@ -10,9 +10,7 @@ namespace Catan.GameBoard
         private void OnMouseDown()
         {
             transform.parent.parent.GetChild(0).GetComponent<TileGameObject>().OnMouseDown();
-            Debug.Log("clicked!");
         }
     }
-
 }
 

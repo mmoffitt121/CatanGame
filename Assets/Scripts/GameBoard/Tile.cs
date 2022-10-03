@@ -1,3 +1,4 @@
+using Catan.ResourcePhase;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,30 @@ namespace Catan.GameBoard
         public int yCoord;
 
         public bool robber;
+
+        public Resource.ResourceType resourceType
+        { 
+            get
+            {
+                switch (type)
+                {
+                    case TileType.Pasture:
+                        return Resource.ResourceType.Wool;
+                    case TileType.Field:
+                        return Resource.ResourceType.Grain;
+                    case TileType.Forest:
+                        return Resource.ResourceType.Wood;
+                    case TileType.Hills:
+                        return Resource.ResourceType.Brick;
+                    case TileType.Mountains:
+                        return Resource.ResourceType.Ore;
+                    case TileType.Desert:
+                        return Resource.ResourceType.None;
+                    default:
+                        return Resource.ResourceType.Any;
+                }
+            }
+        }
 
         public Color color
         {

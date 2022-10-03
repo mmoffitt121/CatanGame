@@ -67,24 +67,50 @@ namespace Catan.UI
             brickDisplay.text = gameManager.currentPlayer.resources[3].amount.ToString();
             oreDisplay.text = gameManager.currentPlayer.resources[4].amount.ToString();
 
-            switch (gameManager.phase)
+            if (gameManager.starting)
             {
-                case 0:
-                    phaseDisplay.text = "Roll Resources";
-                    nextDisplay.text = "Next";
-                    break;
-                case 1:
-                    phaseDisplay.text = "Trade";
-                    nextDisplay.text = "End Trading";
-                    break;
-                case 2:
-                    phaseDisplay.text = "Build";
-                    nextDisplay.text = "End Building";
-                    break;
-                default:
-                    phaseDisplay.text = "Waiting...";
-                    nextDisplay.text = "Waiting...";
-                    break;
+                switch (gameManager.phase)
+                {
+                    case 0:
+                        phaseDisplay.text = "Place Settlement";
+                        nextDisplay.text = "Next";
+                        nextButton.interactable = false;
+                        break;
+                    case 1:
+                        phaseDisplay.text = "Place Road";
+                        nextDisplay.text = "Next";
+                        nextButton.interactable = false;
+                        break;
+                    default:
+                        phaseDisplay.text = "Waiting...";
+                        nextDisplay.text = "Waiting...";
+                        break;
+                }
+            }
+            else
+            {
+                switch (gameManager.phase)
+                {
+                    case 0:
+                        phaseDisplay.text = "Roll Resources";
+                        nextDisplay.text = "Roll";
+                        nextButton.interactable = true;
+                        break;
+                    case 1:
+                        phaseDisplay.text = "Trade";
+                        nextDisplay.text = "End Trading";
+                        nextButton.interactable = true;
+                        break;
+                    case 2:
+                        phaseDisplay.text = "Build";
+                        nextDisplay.text = "End Building";
+                        nextButton.interactable = true;
+                        break;
+                    default:
+                        phaseDisplay.text = "Waiting...";
+                        nextDisplay.text = "Waiting...";
+                        break;
+                }
             }
 
             vPDisplay.text = "VP: " + gameManager.currentPlayer.victoryPoints.ToString();

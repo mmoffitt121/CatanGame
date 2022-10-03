@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Catan.ResourcePhase;
+using Catan.AI;
+using System.Linq;
 
 namespace Catan.Players
 {
@@ -15,9 +17,21 @@ namespace Catan.Players
         public int playerIndex;
         public int victoryPoints;
 
+        public bool isAI;
+        public Agent agent;
+
         public int longestRoadLength;
         public bool longestRoad;
 
         public Resource[] resources;
+
+        public void AddResource(Resource.ResourceType resource, int amount)
+        {
+            if (resource == Resource.ResourceType.None || resource == Resource.ResourceType.Any)
+            {
+                return;
+            }
+            resources.Where(rs => rs.type == resource).First().amount += amount;
+        }
     }
 }
