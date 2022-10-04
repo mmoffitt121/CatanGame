@@ -1,4 +1,6 @@
 using Catan.GameBoard;
+using Catan.Players;
+using Catan.ResourcePhase;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -420,6 +422,15 @@ namespace Catan.GameBoard
             return (i * 2, j - 1);
         }
 
+        /// <summary>
+        /// Takes the location of a vertex in DATA FORM and grabs all adjacent roads
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="roads"></param>
+        /// <param name="vertex"></param>
+        /// <returns>
+        /// A list of roads adjacent to the specified vertex
+        /// </returns>
         public static (int, int)[] AdjacentRoadsToVertex(this TileVertex[][] vertices, Road[][] roads, (int, int) vertex)
         {
             (int, int) above = vertices.RoadAboveVertex(roads, vertex.Item1, vertex.Item2);
@@ -436,6 +447,15 @@ namespace Catan.GameBoard
             return output.ToArray();
         }
 
+        /// <summary>
+        /// Gets both vertices adjacent to a particular vertex.
+        /// </summary>
+        /// <param name="roads"></param>
+        /// <param name="vertices"></param>
+        /// <param name="road"></param>
+        /// <returns>
+        /// An array of tuples specifying the locations of the two vertices.
+        /// </returns>
         public static (int, int)[] AdjacentVerticesToRoad(this Road[][] roads, TileVertex[][] vertices, (int, int) road)
         {
             int i = road.Item1;
@@ -595,9 +615,60 @@ namespace Catan.GameBoard
             return new Vector3(r * Mathf.Cos(theta), 0, r * Mathf.Sin(theta));
         }
 
+        /// <summary>
+        /// Returns true if a tuple does not equal (-1, -1). Compliments other functions that search for tiles, vertices, etc.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         public static bool Valid(this (int, int) point)
         {
             return point != (-1, -1);
+        }
+
+        /// <summary>
+        /// Returns a list of ports the specified player controls on the board
+        /// </summary>
+        /// <param name="tiles"></param>
+        /// <param name="player"></param>
+        /// <returns>
+        /// A list of ports the specified player controls on the board
+        /// </returns>
+        public static Resource.ResourceType[] GetPlayerPorts(this TileVertex[][] tiles, Player player)
+        {
+            List<Resource.ResourceType> ports = new List<Resource.ResourceType>();
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                for (int j = 0; j < tiles[i].Length; j++)
+                {
+                    if (tiles[i][j].playerIndex == player.playerIndex && tiles[i][j].port != null)
+                    {
+                        ports.Add(tiles[i][j].port.type);
+                    }
+                }
+            }
+            return ports.ToArray();
+        }
+
+        /// <summary>
+        /// Returns whether a specified port resource type exists under a specified player's control
+        /// </summary>
+        /// <param name="tiles"></param>
+        /// <param name="player"></param>
+        /// <param name="resource"></param>
+        /// <returns></returns>
+        public static bool HasPort(this TileVertex[][] tiles, Player player, Resource.ResourceType resource)
+        {
+            Resource.ResourceType[] ports = GetPlayerPorts(tiles, player);
+
+            foreach (Resource.ResourceType port in ports)
+            {
+                if (port == resource)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

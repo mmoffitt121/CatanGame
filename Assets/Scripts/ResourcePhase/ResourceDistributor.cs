@@ -6,15 +6,24 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
+/// <summary>
+/// Class responsible for distributing resources to all players.
+/// </summary>
 public static class ResourceDistributor
 {
+    /// <summary>
+    /// Distributes resources among players for a rolled dice value.
+    /// </summary>
+    /// <param name="board"></param>
+    /// <param name="players"></param>
+    /// <param name="diceValue"></param>
     public static void DistributeResources(this Board board, Player[] players, int diceValue)
     {
         for (int i = 0; i < board.tiles.Length; i++)
         {
             for (int j = 0; j < board.tiles[i].Length; j++)
             {
-                if (board.tiles[i][j].diceValue == diceValue)
+                if (board.tiles[i][j].diceValue == diceValue && !board.tiles[i][j].robber)
                 {
                     (int, int)[] sVertices = board.tiles.GetSurroundingVertices(board.vertices, i, j);
                     for (int k = 0; k < sVertices.Length; k++)
@@ -32,6 +41,12 @@ public static class ResourceDistributor
         }
     }
 
+    /// <summary>
+    /// Specifies a certain vertex and distributes to the specified player the resources of the tiles surrounding that vertex.
+    /// </summary>
+    /// <param name="board"></param>
+    /// <param name="players"></param>
+    /// <param name="vertex"></param>
     public static void DistributeResourcesFromVertex(this Board board, Player[] players, (int, int) vertex)
     {
         (int, int) above = board.vertices.TileAboveVertex(board.tiles, vertex.Item1, vertex.Item2);

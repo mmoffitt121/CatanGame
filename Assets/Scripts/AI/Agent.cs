@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Catan.AI
 {
+    /// <summary>
+    /// AI agent class
+    /// </summary>
     public class Agent : MonoBehaviour
     {
         

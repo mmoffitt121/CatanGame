@@ -6,6 +6,12 @@ using Catan.GameManagement;
 
 namespace Catan.GameBoard
 {
+    /// <summary>
+    /// Class that handles the initialization and creation of the game board.
+    /// </summary>
+    /// <remarks>
+    /// Uses input data set in the unity inspector. To see in Unity, click the Board object in the heiarchy, and the settings will be in the inspector.
+    /// </remarks>
     public class BoardInitializer : MonoBehaviour
     {
         /// <summary>
@@ -171,6 +177,11 @@ namespace Catan.GameBoard
             return vertices;
         }
 
+        /// <summary>
+        /// Initializes ports for placement on the board
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="tiles"></param>
         public void InitializePorts(TileVertex[][] vertices, Tile[][] tiles)
         {
             int[] pAmounts = (int[])portAmounts.Clone();
@@ -241,6 +252,11 @@ namespace Catan.GameBoard
             }
         }
 
+        /// <summary>
+        /// Creates a list of all perimeter points of the board
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <returns></returns>
         public (int, int)[] BuildPortPerimeter(TileVertex[][] vertices)
         {
             List<(int, int)> points = new List<(int, int)>();
@@ -315,6 +331,12 @@ namespace Catan.GameBoard
             return points.ToArray();
         }
 
+        /// <summary>
+        /// Initializes roads based on vertices and tiles input.
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="tiles"></param>
+        /// <returns></returns>
         public Road[][] InitializeRoads(TileVertex[][] vertices, Tile[][] tiles)
         {
             if (vertices == null || vertices[0] == null)
