@@ -11,8 +11,20 @@ using UnityEngine;
 
 namespace Catan.BuildPhase
 {
+    /// <summary>
+    /// Class responsible for placing vertices and roads on the board
+    /// </summary>
     public static class Builder
     {
+        /// <summary>
+        /// Function that places a vertex for a specified player at a specified location
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="player"></param>
+        /// <param name="location"></param>
+        /// <param name="obj"></param>
+        /// <param name="starting"></param>
+        /// <returns> Boolean success of operation </returns>
         public static bool BuildVertex(this Board board, Player player, (int, int) location, TileVertexGameObject obj, bool starting = false)
         {
             // Check if adjacent to the player's roads
@@ -93,6 +105,15 @@ namespace Catan.BuildPhase
             return true;
         }
 
+        /// <summary>
+        /// Function that places a road on the board for a specified player at a specified location
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="player"></param>
+        /// <param name="location"></param>
+        /// <param name="obj"></param>
+        /// <param name="starting"></param>
+        /// <returns> Boolean success of operation </returns>
         public static bool BuildRoad(this Board board, Player player, (int, int) location, RoadGameObject obj, bool starting = false)
         {
             if (board.roads[location.Item1][location.Item2].playerIndex != -1)

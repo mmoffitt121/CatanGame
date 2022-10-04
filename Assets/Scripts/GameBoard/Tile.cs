@@ -6,6 +6,9 @@ using static UnityEngine.Mesh;
 
 namespace Catan.GameBoard
 {
+    /// <summary>
+    /// Class that holds information for one board tile. NOT A GAMEOBJECT.
+    /// </summary>
     public class Tile
     {
         public TileType type;

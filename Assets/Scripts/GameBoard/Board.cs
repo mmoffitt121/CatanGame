@@ -91,6 +91,9 @@ namespace Catan.GameBoard
             }
         }
 
+        /// <summary>
+        /// Function for debugging
+        /// </summary>
         public void PrintTest()
         {
             for (int i = 0; i < tiles.Length; i++)
@@ -290,6 +293,9 @@ namespace Catan.GameBoard
             }
         }
 
+        /// <summary>
+        /// Places all ports specified in the board intializer
+        /// </summary>
         public void PlacePorts()
         {
             for (int i = 0; i < vertices.Length; i++)

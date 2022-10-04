@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Catan.Camera
 {
+    /// <summary>
+    /// Class responsible for camera movement
+    /// </summary>
     public class CameraControl : MonoBehaviour
     {
         public float sens = 0.02f;
