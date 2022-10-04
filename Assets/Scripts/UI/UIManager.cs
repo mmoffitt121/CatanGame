@@ -1,3 +1,8 @@
+/// AUTHOR: Wuraola Alli, Jett Graham, Evan Griffin, Matthew Moffitt, Alex Rizzo, Brandon Villalobos
+/// FILENAME: UIManager.cs
+/// SPECIFICATION: File containing UI Information
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameManagement;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,6 +31,18 @@ namespace Catan.UI
 
         public void AdvanceTurn()
         {
+            if (gameManager.phase == 0 && !gameManager.starting && !gameManager.movingRobber)
+            {
+                gameManager.Roll();
+                DisableAdvancement();
+                return;
+            }
+            gameManager.AdvanceTurn();
+            UpdateUI();
+        }
+
+        public void Rolled()
+        {
             gameManager.AdvanceTurn();
             UpdateUI();
         }
@@ -43,6 +60,9 @@ namespace Catan.UI
         public void StartMoveRobber()
         {
             DisableAdvancement();
+            phaseDisplay.text = "Move The Robber!";
+            nextDisplay.text = "Next";
+            nextButton.interactable = false;
             gameManager.movingRobber = true;
         }
 

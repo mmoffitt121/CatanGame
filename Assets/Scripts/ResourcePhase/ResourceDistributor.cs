@@ -1,3 +1,8 @@
+/// AUTHOR: Alex Rizzo, Matthew Moffitt
+/// FILENAME: ResourceDistributor.cs
+/// SPECIFICATION: File that distributes resources to players
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameBoard;
 using Catan.GameManagement;
 using Catan.Players;

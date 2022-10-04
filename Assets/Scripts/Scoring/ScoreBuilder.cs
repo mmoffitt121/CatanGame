@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt, Wuraola Alli
+/// FILENAME: ScoreBuilder.cs
+/// SPECIFICATION: File that determines a player's score
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameBoard;
 using Catan.Players;
 using Catan.Util;

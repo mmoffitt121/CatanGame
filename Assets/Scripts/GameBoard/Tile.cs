@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: Tile.cs
+/// SPECIFICATION: File containing board info
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.ResourcePhase;
 using System.Collections;
 using System.Collections.Generic;

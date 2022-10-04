@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt, Alex Rizzo
+/// FILENAME: Builder.cs
+/// SPECIFICATION: File containing scripts for Catan's build phase
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameBoard;
 using Catan.GameManagement;
 using Catan.Players;

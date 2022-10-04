@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: Board.cs
+/// SPECIFICATION: File containing board info
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System;
 using System.Collections.Generic;
 using UnityEditor;

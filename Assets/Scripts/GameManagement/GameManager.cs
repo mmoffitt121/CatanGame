@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt, Evan Griffin, Alex Rizzo, Brandon Villalobos
+/// FILENAME: GameManager.cs
+/// SPECIFICATION: File that manages turns and game data
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +14,7 @@ using TMPro;
 using Catan.Scoring;
 using Catan.AI;
 using System.Linq;
+using UnityEngine.UIElements;
 
 namespace Catan.GameManagement
 {
@@ -34,8 +40,11 @@ namespace Catan.GameManagement
 
         public UIManager UIManager;
         public BoardInitializer boardInitializer;
+        public Board board;
 
         public ScoreBuilder scoreBuilder;
+
+        public GameObject diceRoller;
 
         public void Start()
         {
@@ -92,10 +101,30 @@ namespace Catan.GameManagement
             UIManager.UpdateUI();
         }
 
+        public void Roll()
+        {
+            diceRoller.SetActive(true);
+            diceRoller.transform.GetChild(7).GetComponent<DiceCheckZoneScript>().Roll();
+        }
+
+        public void Rolled(int result)
+        {
+            diceRoller.SetActive(false);
+            if (result == 7)
+            {
+                UIManager.StartMoveRobber();
+                movingRobber = true;
+                return;
+            }
+            board.DistributeResources(players, result);
+            UIManager.Rolled();
+        }
+
         public void AdvanceTurn()
         {
             scoreBuilder.CalculateScores(players);
             phase++;
+
             if (starting)
             {
                 if (phase > 1 && !reverseTurnOrder)
@@ -138,6 +167,8 @@ namespace Catan.GameManagement
             }
             else
             {
+                
+
                 if (phase > 2)
                 {
                     phase = 0;
@@ -166,11 +197,6 @@ namespace Catan.GameManagement
                             AdvanceTurn();
                             break;
                     }
-                }
-                else if (phase == 0)
-                {
-                    // diceroller.roll
-                    // GameObject.Find("Board").GetComponent<Board>().DistributeResources(players, 8);
                 }
             }
             

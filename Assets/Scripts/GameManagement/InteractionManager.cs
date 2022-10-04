@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: InteractionManager.cs
+/// SPECIFICATION: File that manages player interaction
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.BuildPhase;
 using Catan.GameBoard;
 using Catan.UI;
@@ -67,6 +72,8 @@ namespace Catan.GameManagement
                 GameObject.Find("Tile(" + i + "," + j + ")").transform.GetChild(0).GetComponent<TileGameObject>().SetRobber(true);
 
                 gameManager.robberLocation = (i, j);
+                gameManager.UIManager.AdvanceTurn();
+                gameManager.movingRobber = false;
             }
         }
 

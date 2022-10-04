@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: Resource.cs
+/// SPECIFICATION: File that manages resource data
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

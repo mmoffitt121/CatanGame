@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: Utilities.cs
+/// SPECIFICATION: File containing helpful utilities for general use
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System;
 using System.Collections;
 using System.Collections.Generic;

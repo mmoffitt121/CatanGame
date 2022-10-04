@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt, Evan Griffin
+/// FILENAME: Player.cs
+/// SPECIFICATION: File that holds player data
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

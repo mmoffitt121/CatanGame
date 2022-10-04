@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: TileVertexGameObject.cs
+/// SPECIFICATION: File containing tile gameobject info
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

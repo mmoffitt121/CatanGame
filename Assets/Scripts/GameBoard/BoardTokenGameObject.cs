@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: BoardTokenGameObject.cs
+/// SPECIFICATION: File containing board info
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameManagement;
 using Catan.Players;
 using System.Collections;

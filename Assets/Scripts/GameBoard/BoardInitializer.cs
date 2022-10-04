@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: BoardInitializer.cs
+/// SPECIFICATION: File containing board info
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System;
 using UnityEngine;
 using Catan.ResourcePhase;
