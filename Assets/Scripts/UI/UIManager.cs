@@ -4,11 +4,17 @@
 /// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
 
 using Catan.GameManagement;
+using Catan.Players;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Net;
 
 namespace Catan.UI
 {
@@ -29,12 +35,14 @@ namespace Catan.UI
 
         public TextMeshProUGUI vPDisplay;
 
+        public GameObject rSplit;
+
         public void AdvanceTurn()
         {
             if (gameManager.phase == 0 && !gameManager.starting && !gameManager.movingRobber)
             {
                 gameManager.Roll();
-                DisableAdvancement();
+                if (!gameManager.quickRolling) DisableAdvancement();
                 return;
             }
             gameManager.AdvanceTurn();
@@ -64,6 +72,10 @@ namespace Catan.UI
             nextDisplay.text = "Next";
             nextButton.interactable = false;
             gameManager.movingRobber = true;
+            if (gameManager.currentPlayer.isAI)
+            {
+                gameManager.currentPlayer.agent.ChooseRobberLocation();
+            }
         }
 
         public void EndMoveRobber()
@@ -71,6 +83,20 @@ namespace Catan.UI
             EnableAdvancement();
             gameManager.AdvanceTurn();
             gameManager.movingRobber = false;
+        }
+
+        public void SplitResources(Stack<Player> players)
+        {
+            if (players.Count > 0)
+            {
+                rSplit.SetActive(true);
+                ResourceSplit splitter = rSplit.GetComponent<ResourceSplit>();
+                splitter.InitializePlayer(players);
+            }
+            else
+            {
+                StartMoveRobber();
+            } 
         }
 
         public void UpdateUI()
@@ -131,6 +157,11 @@ namespace Catan.UI
                         nextDisplay.text = "Waiting...";
                         break;
                 }
+            }
+
+            if (gameManager.currentPlayer.isAI)
+            {
+                nextButton.interactable = false;
             }
 
             vPDisplay.text = "VP: " + gameManager.currentPlayer.victoryPoints.ToString();

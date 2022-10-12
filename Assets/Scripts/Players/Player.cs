@@ -30,6 +30,19 @@ namespace Catan.Players
 
         public Resource[] resources;
 
+        public int resourceSum
+        {
+            get
+            {
+                int sum = 0;
+                foreach (Resource r in resources)
+                {
+                    if (r != null) sum += r.amount;
+                }
+                return sum;
+            }
+        }
+
         public void AddResource(Resource.ResourceType resource, int amount)
         {
             if (resource == Resource.ResourceType.None || resource == Resource.ResourceType.Any)
@@ -37,6 +50,15 @@ namespace Catan.Players
                 return;
             }
             resources.Where(rs => rs.type == resource).First().amount += amount;
+        }
+
+        public Player(bool ai = false)
+        {
+            isAI = ai;
+            if (ai)
+            {
+                agent = new Agent(this);
+            }
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Catan.GameManagement
 
                 if (!gameManager.reverseTurnOrder)
                 {
-                    board.DistributeResourcesFromVertex(gameManager.players, tempVertex);
+                    board.DistributeResourcesFromVertex(tempVertex);
                 }
 
                 gameManager.UIManager.AdvanceTurn();

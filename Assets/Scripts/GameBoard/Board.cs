@@ -287,7 +287,7 @@ namespace Catan.GameBoard
                         roads[i][(int)(j / 2)].yCoord = vertices[current.Item1][current.Item2].yCoord;
 
                         GameObject createdRoad = Instantiate(roadPrefab, new Vector3(x, 0, z), Quaternion.Euler(0, 90, 0));
-                        createdRoad.name = "Road(" + i + "," + j + ")";
+                        createdRoad.name = "Road(" + i + "," + j/2 + ")";
                         createdRoad.transform.parent = roadHolder.transform;
 
                         RoadGameObject roadObject = createdRoad.GetComponent<RoadGameObject>();
