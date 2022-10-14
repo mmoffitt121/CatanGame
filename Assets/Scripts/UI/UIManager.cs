@@ -15,6 +15,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Net;
+using Catan.GameBoard;
 
 namespace Catan.UI
 {
@@ -36,6 +37,7 @@ namespace Catan.UI
         public TextMeshProUGUI vPDisplay;
 
         public GameObject rSplit;
+        public GameObject rSteal;
 
         public void AdvanceTurn()
         {
@@ -46,13 +48,11 @@ namespace Catan.UI
                 return;
             }
             gameManager.AdvanceTurn();
-            UpdateUI();
         }
 
         public void Rolled()
         {
             gameManager.AdvanceTurn();
-            UpdateUI();
         }
 
         public void DisableAdvancement()
@@ -63,6 +63,21 @@ namespace Catan.UI
         public void EnableAdvancement()
         {
             nextButton.interactable = true;
+        }
+
+        public void SplitResources(Stack<Player> players)
+        {
+            if (players.Count > 0)
+            {
+                DisableAdvancement();
+                rSplit.SetActive(true);
+                ResourceSplit splitter = rSplit.GetComponent<ResourceSplit>();
+                splitter.InitializePlayer(players);
+            }
+            else
+            {
+                StartMoveRobber();
+            }
         }
 
         public void StartMoveRobber()
@@ -78,25 +93,48 @@ namespace Catan.UI
             }
         }
 
-        public void EndMoveRobber()
+        public void EndMoveRobber((int, int) loc)
         {
-            EnableAdvancement();
-            gameManager.AdvanceTurn();
+            gameManager.robberLocation = loc;
             gameManager.movingRobber = false;
+            StartSteal(loc);
         }
 
-        public void SplitResources(Stack<Player> players)
+        public void StartSteal((int, int) loc)
         {
-            if (players.Count > 0)
+            (int, int)[] vertices = gameManager.board.tiles.GetSurroundingVertices(gameManager.board.vertices, loc.Item1, loc.Item2);
+
+            // Calculate steal candidates
+            List<Player> players = new List<Player>();
+            foreach ((int, int) v in vertices)
             {
-                rSplit.SetActive(true);
-                ResourceSplit splitter = rSplit.GetComponent<ResourceSplit>();
-                splitter.InitializePlayer(players);
+                if (gameManager.board.vertices[v.Item1][v.Item2].development > 0)
+                {
+                    int index = gameManager.board.vertices[v.Item1][v.Item2].playerIndex;
+                    if (players.Where(p => p.playerIndex == index).Count() == 0 && index != gameManager.currentPlayer.playerIndex && gameManager.players[index].resourceSum > 0)
+                    {
+                        players.Add(gameManager.players[index]);
+                    }
+                }
             }
-            else
+
+            if (players.Count() == 0)
             {
-                StartMoveRobber();
-            } 
+                EndSteal();
+                return;
+            }
+
+            DisableAdvancement();
+            rSteal.SetActive(true);
+            ResourceSteal stealer = rSteal.GetComponent<ResourceSteal>();
+            stealer.InitializePlayers(gameManager.currentPlayer, players.ToArray());
+        }
+
+        public void EndSteal()
+        {
+            rSteal.SetActive(false);
+            gameManager.AdvanceTurn();
+            UpdateUI();
         }
 
         public void UpdateUI()

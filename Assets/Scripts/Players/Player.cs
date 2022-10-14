@@ -9,6 +9,7 @@ using UnityEngine;
 using Catan.ResourcePhase;
 using Catan.AI;
 using System.Linq;
+using System.Text;
 
 namespace Catan.Players
 {
@@ -59,6 +60,18 @@ namespace Catan.Players
             {
                 agent = new Agent(this);
             }
+        }
+
+        public override string ToString()
+        {
+            string sb = "";
+            sb += "'" + playerName + "' with resources: ";
+            foreach (Resource r in resources)
+            {
+                sb += r.ToString();
+            }
+
+            return sb;
         }
     }
 }

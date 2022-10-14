@@ -35,6 +35,8 @@ namespace Catan.GameManagement
         public bool starting = true;
         public bool reverseTurnOrder = false;
 
+        public bool nextTurn = false;
+
         public bool movingRobber = false;
         public (int, int) robberLocation;
 
@@ -88,7 +90,7 @@ namespace Catan.GameManagement
 
             foreach (Player p in players)
             {
-                p.resources = new Resource[6];
+                p.resources = new Resource[5];
                 p.resources[0] = new Resource(Resource.ResourceType.Grain, 0);
                 p.resources[1] = new Resource(Resource.ResourceType.Wool, 0);
                 p.resources[2] = new Resource(Resource.ResourceType.Wood, 0);
@@ -134,6 +136,11 @@ namespace Catan.GameManagement
         }
 
         public void AdvanceTurn()
+        {
+            nextTurn = true;
+        }
+
+        public void ToNextTurn()
         {
             scoreBuilder.CalculateScores(players);
             phase++;
@@ -213,10 +220,11 @@ namespace Catan.GameManagement
                             currentPlayer.agent?.api.Roll();
                             break;
                         case 1:
+                            currentPlayer.agent?.StartTrading();
                             AdvanceTurn();
-                            // Catan.AI.Agent.Trade()
                             break;
                         case 2:
+                            currentPlayer.agent?.StartBuilding();
                             AdvanceTurn();
                             // Catan.AI.Agent.Build()
                             break;
@@ -224,6 +232,16 @@ namespace Catan.GameManagement
                 }
             }
 
+            UIManager.UpdateUI();
+        }
+
+        public void Update()
+        {
+            if (nextTurn)
+            {
+                nextTurn = false;
+                ToNextTurn();
+            }
         }
     }
 }

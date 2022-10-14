@@ -50,6 +50,11 @@ namespace Catan.AI
             ,new Resource(Resource.ResourceType.Grain, 0)};
         }
 
+        public int ChooseSteal(Player[] stealFrom)
+        {
+            return UnityEngine.Random.Range(0, stealFrom.Length);
+        }
+
         public void PlaceStartingPiece(bool first = false)
         {
             int i;
