@@ -6,6 +6,7 @@
 using Catan.GameBoard;
 using Catan.Players;
 using Catan.ResourcePhase;
+using Catan.Util;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -588,8 +589,10 @@ namespace Catan.GameBoard
         /// <returns>An array of 6 vertices in DATA FORM</returns>
         public static (int, int)[] GetSurroundingVertices(this Tile[][] tiles, TileVertex[][] vertices, int i, int j)
         {
+            int maxIsEven = (tiles.SelectMax(tArr => tArr.Length).Length + 1) % 2;
+
             int x0 = tiles[i][j].xCoord;
-            int y0 = (int)(tiles[i][j].yCoord + 1) * 2 + i % 2;
+            int y0 = (int)(tiles[i][j].yCoord + 1) * 2 + i % 2 + maxIsEven * (int)Mathf.Pow(-1, i);
 
             (int, int) top = vertices.GetVertexDataCoord(x0, y0);
             (int, int) bottom = vertices.GetVertexDataCoord(x0 + 1, y0);
@@ -776,7 +779,6 @@ namespace Catan.GameBoard
                         (int, int)[] adjacentVertices = board.roads.AdjacentVerticesToRoad(board.vertices, (r.xDataIndex, r.yDataIndex));
 
                         // If neighboring vertex owned, add.
-
                         int dir1VertexOwner = board.vertices[adjacentVertices[0].Item1][adjacentVertices[0].Item2].playerIndex;
                         if (dir1VertexOwner == player.playerIndex) break;
 

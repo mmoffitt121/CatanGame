@@ -58,7 +58,7 @@ namespace Catan.GameManagement
 
         public void SetDefaultPlayers()
         {
-            players = new Player[4];
+            players = new Player[6];
             
             players[0] = new Player(true);
             players[0].playerColor = new Color(100 / 255f, 100 / 255f, 255 / 255f);
@@ -87,6 +87,20 @@ namespace Catan.GameManagement
             players[3].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
             players[3].playerName = "Player 4";
             players[3].playerIndex = 3;
+
+            players[4] = new Player(true);
+            players[4].playerColor = new Color(205 / 255f, 255 / 255f, 12 / 255f);
+            players[4].primaryUIColor = new Color(250 / 255f, 250 / 255f, 100 / 255f);
+            players[4].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            players[4].playerName = "Jim the AI";
+            players[4].playerIndex = 4;
+
+            players[5] = new Player(true);
+            players[5].playerColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
+            players[5].primaryUIColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
+            players[5].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            players[5].playerName = "Kevin";
+            players[5].playerIndex = 5;
 
             foreach (Player p in players)
             {

@@ -6,6 +6,7 @@
 using Catan.GameBoard;
 using Catan.GameManagement;
 using Catan.Players;
+using Catan.Util;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;

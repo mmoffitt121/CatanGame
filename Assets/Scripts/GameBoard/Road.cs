@@ -24,5 +24,10 @@ namespace Catan.GameBoard
             yDataIndex = y;
             playerIndex = -1;
         }
+
+        public override string ToString()
+        {
+            return xDataIndex + ", " + yDataIndex;
+        }
     }
 }
