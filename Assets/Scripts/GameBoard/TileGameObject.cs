@@ -14,6 +14,7 @@ namespace Catan.GameBoard
     public class TileGameObject : MonoBehaviour
     {
         public TextMeshProUGUI text;
+        public GameObject mesh;
         public MeshRenderer tokenRenderer;
         public MeshRenderer robberRenderer;
 
@@ -51,6 +52,14 @@ namespace Catan.GameBoard
         public void UpdateRobberMesh()
         {
             robberRenderer.enabled = robber;
+        }
+
+        public void SetAppearance(Tile.TileType type)
+        {
+            mesh = Instantiate(GameObject.Find("Tile Asset Holder").transform.GetChild((int)type)).gameObject;
+            mesh.transform.position = transform.position;
+            mesh.transform.rotation = Quaternion.Euler(0, 30 + 60 * UnityEngine.Random.Range(0, 6), 0);
+            mesh.transform.parent = transform;
         }
     }
 }

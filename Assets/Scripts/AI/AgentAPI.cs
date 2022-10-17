@@ -30,11 +30,6 @@ namespace Catan.AI
             interactionManager.TileClicked(obj, i, j);
         }
 
-        public void StealFrom(Player p0, Player p1)
-        {
-
-        }
-
         public void Trade(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
         {
             Trader.Trade(p1, p2, p1Offer, p2Offer);
@@ -46,6 +41,14 @@ namespace Catan.AI
             if (obj == null) return false;
             if (board.vertices[i][j].development > 0) return false;
             return board.BuildVertex(p, (i, j), obj, starting);
+        }
+
+        public bool UpgradeSettlement(Player p, int i, int j)
+        {
+            TileVertexGameObject obj = GameObject.Find("Vertex(" + i + "," + j + ")")?.GetComponent<TileVertexGameObject>();
+            if (obj == null) return false;
+            if (board.vertices[i][j].development != TileVertex.Development.Town) return false;
+            return board.BuildVertex(p, (i, j), obj);
         }
 
         public bool BuildRoad(Player p, int i, int j, bool starting = false)

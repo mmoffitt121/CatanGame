@@ -21,9 +21,12 @@ public class ResourceSteal : MonoBehaviour
 
     public void ClearItems()
     {
-        for (int i = transform.childCount; i > 0; i--)
+        foreach (Transform child in transform)
         {
-            Destroy(transform.GetChild(i));
+            if (child.name != "TopLabel")
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 
@@ -71,6 +74,7 @@ public class ResourceSteal : MonoBehaviour
         stealer = initialPlayer;
         candidates = players;
 
+        ClearItems();
         AddItems();
 
         if (initialPlayer.isAI)

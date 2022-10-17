@@ -1,27 +1,21 @@
-/// AUTHOR: Wuraola Alli, Jett Graham, Evan Griffin, Matthew Moffitt, Alex Rizzo, Brandon Villalobos
-/// FILENAME: Agent.cs
-/// SPECIFICATION: File containing agent activities and information
-/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
-
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using Catan.Players;
 using Catan.ResourcePhase;
 using Catan.TradePhase;
 using Catan.BuildPhase;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+using System.Linq;
 using Catan.GameBoard;
 
 namespace Catan.AI
 {
-    /// <summary>
-    /// AI agent class
-    /// </summary>
-    public class Agent
+    public abstract class Agent
     {
         public Player player;
         public AgentAPI api;
+
+        public int maxTrades = 3;
 
         public Agent(Player plyr)
         {
@@ -29,33 +23,52 @@ namespace Catan.AI
             api = GameObject.Find("AI Manager").GetComponent<AgentAPI>();
         }
 
-        public void Roll()
+        public virtual void Roll()
         {
             api.Roll();
         }
 
-        public void ChooseRobberLocation()
+        public virtual void ChooseRobberLocation()
         {
             int i = UnityEngine.Random.Range(0, api.board.tiles.Length);
             int j = UnityEngine.Random.Range(0, api.board.tiles[i].Length);
             api.MoveRobber(i, j);
         }
 
-        public Resource[] ChooseDiscard(int discardAmount)
+        public virtual Resource[] ChooseDiscard(int discardAmount)
         {
-            return new Resource[] { new Resource(Resource.ResourceType.Wool, discardAmount)
+            Resource[] discard = new Resource[] { new Resource(Resource.ResourceType.Wool, 0)
             ,new Resource(Resource.ResourceType.Wood, 0)
             ,new Resource(Resource.ResourceType.Ore, 0)
             ,new Resource(Resource.ResourceType.Brick, 0)
             ,new Resource(Resource.ResourceType.Grain, 0)};
+
+            int count = 0;
+            while (count != discardAmount)
+            {
+                int rIndex = UnityEngine.Random.Range(0, discard.Length);
+                int rMax = rIndex + discard.Length;
+                for (int i = 0; i < rMax; i++)
+                {
+                    // If we're discarding less of the randomly chosen resource than the player has, add one to the total. Else, continue searching.
+                    if (discard[i % discard.Length].amount < player.resources.Where(r => r.type == discard[i % discard.Length].type).First().amount)
+                    {
+                        discard[i % discard.Length].amount += 1;
+                        count++;
+                        break;
+                    }
+                }
+            }
+
+            return discard;
         }
 
-        public int ChooseSteal(Player[] stealFrom)
+        public virtual int ChooseSteal(Player[] stealFrom)
         {
             return UnityEngine.Random.Range(0, stealFrom.Length);
         }
 
-        public void PlaceStartingPiece(bool first = false)
+        public virtual void PlaceStartingPiece(bool first = false)
         {
             int i;
             int j;
@@ -86,14 +99,19 @@ namespace Catan.AI
             if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;
         }
 
-        public void StartTrading()
+        public virtual void StartTrading()
         {
-
+            api.gameManager.AdvanceTurn();
         }
 
-        public void StartBuilding()
+        public virtual bool ChooseAcceptTradeDeal(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
         {
+            return true;
+        }
 
+        public virtual void StartBuilding()
+        {
+            
         }
     }
 }

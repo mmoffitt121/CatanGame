@@ -20,13 +20,15 @@ namespace Catan.TradePhase
         {
             foreach (Resource r in p1Offer)
             {
-                p1.resources.Where(rs => rs.type == r.type).First().amount -= r.amount;
-                p2.resources.Where(rs => rs.type == r.type).First().amount += r.amount;
+                int amount = r.amount;
+                p1.resources.Where(rs => rs.type == r.type).First().amount -= amount;
+                p2.resources.Where(rs => rs.type == r.type).First().amount += amount;
             }
             foreach (Resource r in p2Offer)
             {
-                p2.resources.Where(rs => rs.type == r.type).First().amount -= r.amount;
-                p1.resources.Where(rs => rs.type == r.type).First().amount += r.amount;
+                int amount = r.amount;
+                p2.resources.Where(rs => rs.type == r.type).First().amount -= amount;
+                p1.resources.Where(rs => rs.type == r.type).First().amount += amount;
             }
         }
 
@@ -40,6 +42,21 @@ namespace Catan.TradePhase
             foreach (Resource r in offer)
             {
                 p.resources.Where(rs => rs.type == r.type).First().amount -= r.amount;
+            }
+        }
+
+        public static void Request(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
+        {
+            if (p2.isAI)
+            {
+                if (p2.agent.ChooseAcceptTradeDeal(p1, p2, p1Offer, p2Offer))
+                {
+                    Trade(p1, p2, p1Offer, p2Offer);
+                }
+            }
+            else
+            {
+                // Entry point to accept trade request here
             }
         }
     }

@@ -221,7 +221,6 @@ namespace Catan.GameManagement
                             break;
                         case 1:
                             currentPlayer.agent?.StartTrading();
-                            AdvanceTurn();
                             break;
                         case 2:
                             currentPlayer.agent?.StartBuilding();
