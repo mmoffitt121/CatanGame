@@ -15,6 +15,9 @@ namespace Catan.AI
         public Player player;
         public AgentAPI api;
 
+        public string agentName = "Unnamed Agent";
+        public Difficulty difficulty = Difficulty.Medium;
+
         public int maxTrades = 3;
 
         public Agent(Player plyr)
@@ -112,6 +115,13 @@ namespace Catan.AI
         public virtual void StartBuilding()
         {
             
+        }
+
+        public enum Difficulty
+        {
+            Easy,
+            Medium,
+            Hard
         }
     }
 }

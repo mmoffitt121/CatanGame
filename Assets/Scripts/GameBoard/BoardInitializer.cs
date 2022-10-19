@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Catan.GameManagement;
 using Catan.Camera;
 using Catan.Util;
+using Catan.Settings;
 
 namespace Catan.GameBoard
 {
@@ -76,6 +77,8 @@ namespace Catan.GameBoard
         /// </summary>
         public void Initialize()
         {
+            LoadPreset();
+
             board = GameObject.Find("Board").GetComponent(typeof(Board)) as Board;
             board.ClearTiles();
             board.tiles = Randomize();
@@ -461,6 +464,17 @@ namespace Catan.GameBoard
 
             // Throw if none left
             throw new Exception("None");
+        }
+
+        public void LoadPreset()
+        {
+            BoardPreset preset = GameSettings.presets[GameSettings.chosenPreset];
+            tileTypes = preset.tileTypes;
+            tileAmount = preset.tileAmounts;
+            boardShape = preset.boardShape;
+            diceValues = preset.diceValues;
+            ports = preset.portTypes;
+            portAmounts = preset.portAmounts;
         }
     }
 }

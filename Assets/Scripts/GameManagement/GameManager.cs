@@ -15,6 +15,7 @@ using Catan.Scoring;
 using Catan.AI;
 using System.Linq;
 using UnityEngine.UIElements;
+using Catan.Settings;
 
 namespace Catan.GameManagement
 {
@@ -53,56 +54,57 @@ namespace Catan.GameManagement
         public void Start()
         {
             SetDefaultPlayers();
+            LoadPlayers();
             boardInitializer.Initialize();
         }
 
         public void SetDefaultPlayers()
         {
-            players = new Player[6];
+            Player[] gplayers = new Player[6];
             
-            players[0] = new Player(true);
-            players[0].playerColor = new Color(100 / 255f, 100 / 255f, 255 / 255f);
-            players[0].primaryUIColor = new Color(190 / 255f, 200 / 255f, 255 / 255f);
-            players[0].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[0].playerName = "Player 1";
-            players[0].playerIndex = 0;
+            gplayers[0] = new Player(true);
+            gplayers[0].playerColor = new Color(100 / 255f, 100 / 255f, 255 / 255f);
+            gplayers[0].primaryUIColor = new Color(190 / 255f, 200 / 255f, 255 / 255f);
+            gplayers[0].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[0].playerName = "Player 1";
+            gplayers[0].playerIndex = 0;
 
-            players[1] = new Player(true);
-            players[1].playerColor = new Color(255 / 255f, 100 / 255f, 100 / 255f);
-            players[1].primaryUIColor = new Color(255 / 255f, 150 / 255f, 150 / 255f);
-            players[1].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[1].playerName = "Player 2";
-            players[1].playerIndex = 1;
+            gplayers[1] = new Player(true);
+            gplayers[1].playerColor = new Color(255 / 255f, 100 / 255f, 100 / 255f);
+            gplayers[1].primaryUIColor = new Color(255 / 255f, 150 / 255f, 150 / 255f);
+            gplayers[1].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[1].playerName = "Player 2";
+            gplayers[1].playerIndex = 1;
 
-            players[2] = new Player(true);
-            players[2].playerColor = new Color(240 / 255f, 240 / 255f, 240 / 255f);
-            players[2].primaryUIColor = new Color(250 / 255f, 250 / 255f, 250 / 255f);
-            players[2].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[2].playerName = "Player 3";
-            players[2].playerIndex = 2;
+            gplayers[2] = new Player(true);
+            gplayers[2].playerColor = new Color(240 / 255f, 240 / 255f, 240 / 255f);
+            gplayers[2].primaryUIColor = new Color(250 / 255f, 250 / 255f, 250 / 255f);
+            gplayers[2].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[2].playerName = "Player 3";
+            gplayers[2].playerIndex = 2;
 
-            players[3] = new Player(true);
-            players[3].playerColor = new Color(255 / 255f, 150 / 255f, 100 / 255f);
-            players[3].primaryUIColor = new Color(255 / 255f, 200 / 255f, 150 / 255f);
-            players[3].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[3].playerName = "Player 4";
-            players[3].playerIndex = 3;
+            gplayers[3] = new Player(true);
+            gplayers[3].playerColor = new Color(255 / 255f, 150 / 255f, 100 / 255f);
+            gplayers[3].primaryUIColor = new Color(255 / 255f, 200 / 255f, 150 / 255f);
+            gplayers[3].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[3].playerName = "Player 4";
+            gplayers[3].playerIndex = 3;
 
-            players[4] = new Player(true);
-            players[4].playerColor = new Color(205 / 255f, 255 / 255f, 12 / 255f);
-            players[4].primaryUIColor = new Color(250 / 255f, 250 / 255f, 100 / 255f);
-            players[4].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[4].playerName = "Jim the AI";
-            players[4].playerIndex = 4;
+            gplayers[4] = new Player(true);
+            gplayers[4].playerColor = new Color(205 / 255f, 255 / 255f, 12 / 255f);
+            gplayers[4].primaryUIColor = new Color(250 / 255f, 250 / 255f, 100 / 255f);
+            gplayers[4].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[4].playerName = "Jim the AI";
+            gplayers[4].playerIndex = 4;
 
-            players[5] = new Player(true);
-            players[5].playerColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
-            players[5].primaryUIColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
-            players[5].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[5].playerName = "Kevin";
-            players[5].playerIndex = 5;
+            gplayers[5] = new Player(true);
+            gplayers[5].playerColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
+            gplayers[5].primaryUIColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
+            gplayers[5].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[5].playerName = "Kevin";
+            gplayers[5].playerIndex = 5;
 
-            foreach (Player p in players)
+            foreach (Player p in gplayers)
             {
                 p.resources = new Resource[5];
                 p.resources[0] = new Resource(Resource.ResourceType.Grain, 0);
@@ -111,6 +113,13 @@ namespace Catan.GameManagement
                 p.resources[3] = new Resource(Resource.ResourceType.Brick, 0);
                 p.resources[4] = new Resource(Resource.ResourceType.Ore, 0);
             }
+
+            GameSettings.players = gplayers;
+        }
+
+        public void LoadPlayers()
+        {
+            players = GameSettings.players;
         }
 
         public void UpdateScores()
