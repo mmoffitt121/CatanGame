@@ -100,13 +100,13 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Scale1: 10360
-    - _Scale2: 5180
+    - _Scale2: 10350
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Strength1: 0.01
-    - _Strength2: 0.01
+    - _Strength1: 0.015
+    - _Strength2: 0.015
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1

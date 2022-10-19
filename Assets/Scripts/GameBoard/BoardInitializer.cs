@@ -8,6 +8,8 @@ using UnityEngine;
 using Catan.ResourcePhase;
 using System.Collections.Generic;
 using Catan.GameManagement;
+using Catan.Camera;
+using Catan.Util;
 
 namespace Catan.GameBoard
 {
@@ -85,6 +87,15 @@ namespace Catan.GameBoard
             board.PrintTest();
             InitializePorts(board.vertices, board.tiles);
             board.PlacePorts();
+
+            CameraControl cam = GameObject.Find("Camera Rig").GetComponent<CameraControl>();
+            cam.xBound0 = 0;
+            cam.xBound1 = GameObject.Find("Vertex(" + (board.tiles.Length - 1) + "," + 0 + ")").transform.position.x + 6;
+
+            Tile[] widest = board.tiles.SelectMax(t => t.Length);
+            int widestLevel = widest[0].xDataIndex;
+            cam.zBound0 = GameObject.Find("Vertex(" + widestLevel + "," + 0 + ")").transform.position.z - 2;
+            cam.zBound1 = -cam.zBound0;
         }
 
         /// <summary>
