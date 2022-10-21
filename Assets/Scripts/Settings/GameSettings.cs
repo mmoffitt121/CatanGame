@@ -21,7 +21,7 @@ namespace Catan.Settings
         public static Player[] players;
 
         // Board Settings
-        public static int chosenPreset = 2;
+        public static int chosenPreset = 0;
         public static BoardPreset[] presets = new BoardPreset[]
         {
             // ---
@@ -29,6 +29,7 @@ namespace Catan.Settings
             new BoardPreset()
             {
                 name = "Classic",
+                desc = "The classic Catan experience. 3-4 players recommended.",
                 tileTypes = new Tile.TileType[]
                 {
                     Tile.TileType.Pasture,
@@ -101,6 +102,7 @@ namespace Catan.Settings
             new BoardPreset()
             {
                 name = "Expanded",
+                desc = "Classic Catan with the 5-6 player expansion. 5-6 players recommended.",
                 tileTypes = new Tile.TileType[]
                 {
                     Tile.TileType.Pasture,
@@ -179,6 +181,7 @@ namespace Catan.Settings
             new BoardPreset()
             {
                 name = "Tiny",
+                desc = "Small and disjoint, this version of Catan is not recommended for any amount of players.",
                 tileTypes = new Tile.TileType[]
                 {
                     Tile.TileType.Pasture,

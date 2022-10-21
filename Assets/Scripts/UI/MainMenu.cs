@@ -2,6 +2,7 @@ using Catan.Camera;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Catan.UI
 {
@@ -42,6 +43,11 @@ namespace Catan.UI
         {
             DisableUI();
             cam.ToAITest();
+        }
+
+        public void StartGame()
+        {
+            SceneManager.LoadScene("Game");
         }
 
         public void ExitGame()

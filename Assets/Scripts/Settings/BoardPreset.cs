@@ -10,6 +10,7 @@ namespace Catan.Settings
     public class BoardPreset
     {
         public string name;
+        public string desc;
         public Tile.TileType[] tileTypes;
         public int[] tileAmounts;
         public int[] boardShape;
@@ -22,9 +23,10 @@ namespace Catan.Settings
 
         }
 
-        public BoardPreset(string name, Tile.TileType[] tileTypes, int[] tileAmounts, int[] boardShape, int[] diceValues, Resource.ResourceType[] portTypes, int[] portAmounts)
+        public BoardPreset(string name, string desc, Tile.TileType[] tileTypes, int[] tileAmounts, int[] boardShape, int[] diceValues, Resource.ResourceType[] portTypes, int[] portAmounts)
         {
             this.name = name;
+            this.desc = desc;
             this.tileTypes = tileTypes;
             this.tileAmounts = tileAmounts;
             this.boardShape = boardShape;
