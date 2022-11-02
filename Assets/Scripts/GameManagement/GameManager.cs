@@ -53,7 +53,6 @@ namespace Catan.GameManagement
 
         public void Start()
         {
-            SetDefaultPlayers();
             LoadPlayers();
             boardInitializer.Initialize();
         }
@@ -120,6 +119,11 @@ namespace Catan.GameManagement
         public void LoadPlayers()
         {
             players = GameSettings.players;
+
+            foreach (Player p in players)
+            {
+                if (p.isAI) { p.agent.Initialize(); }
+            }
         }
 
         public void UpdateScores()
@@ -172,6 +176,7 @@ namespace Catan.GameManagement
             if (winner != null)
             {
                 Debug.Log("Winner! " + winner.playerName + " has won!");
+                Start();
                 return;
             }
 
