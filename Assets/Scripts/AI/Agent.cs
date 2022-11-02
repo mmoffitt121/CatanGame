@@ -23,6 +23,10 @@ namespace Catan.AI
         public Agent(Player plyr)
         {
             player = plyr;
+        }
+
+        public void Initialize()
+        {
             api = GameObject.Find("AI Manager").GetComponent<AgentAPI>();
         }
 

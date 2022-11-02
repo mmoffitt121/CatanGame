@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Catan.Camera;
 using Catan.Settings;
+using Catan.Players;
 
 namespace Catan.UI
 {
@@ -16,53 +17,75 @@ namespace Catan.UI
         public GameObject playerSettings;
         public GameObject options;
 
-        public MenuState menuState = MenuState.MainMenu;
+        public void ToBoardSettings(bool testing)
+        {
+            GameSettings.testing = testing;
+            UpdateUI(MenuState.BoardSettings);
+            cam.ToBoardSettings();
+        }
 
         public void ToBoardSettings()
         {
-            GameSettings.testing = false;
-            menuState = MenuState.BoardSettings;
             UpdateUI(MenuState.BoardSettings);
             cam.ToBoardSettings();
         }
 
         public void ToPlayerSettings()
         {
-            menuState = MenuState.PlayerSettings;
             UpdateUI(MenuState.PlayerSettings);
             cam.ToPlayerSettings();
         }
 
         public void ToMainMenu()
         {
-            menuState = MenuState.MainMenu;
             UpdateUI(MenuState.MainMenu);
             cam.ToMainMenu();
         }
 
         public void ToOptions()
         {
-            menuState = MenuState.Settings;
             UpdateUI(MenuState.Settings);
             cam.ToOptions();
         }
 
-        public void ToAITest()
-        {
-            menuState = MenuState.AITest;
-            GameSettings.testing = true;
-            UpdateUI(MenuState.BoardSettings);
-            cam.ToBoardSettings();
-        }
-
         public void StartGame()
         {
-            SceneManager.LoadScene("Game");
+            if (SetPlayers())
+            {
+                SceneManager.LoadScene("Game");
+            }
         }
 
         public void ExitGame()
         {
             Application.Quit();
+        }
+
+        public bool SetPlayers()
+        {
+            Player p0 = GameObject.Find("PlayerPanel0").GetComponent<PlayerSettings>().GetPlayer();
+            Player p1 = GameObject.Find("PlayerPanel1").GetComponent<PlayerSettings>().GetPlayer();
+            Player p2 = GameObject.Find("PlayerPanel2").GetComponent<PlayerSettings>().GetPlayer();
+            Player p3 = GameObject.Find("PlayerPanel3").GetComponent<PlayerSettings>().GetPlayer();
+            Player p4 = GameObject.Find("PlayerPanel4").GetComponent<PlayerSettings>().GetPlayer();
+            Player p5 = GameObject.Find("PlayerPanel5").GetComponent<PlayerSettings>().GetPlayer();
+
+            List<Player> players = new List<Player>();
+
+            if (p0 != null) players.Add(p0);
+            if (p1 != null) players.Add(p1);
+            if (p2 != null) players.Add(p2);
+            if (p3 != null) players.Add(p3);
+            if (p4 != null) players.Add(p4);
+            if (p5 != null) players.Add(p5);
+
+            if (players.Count < 3)
+            {
+                return false;
+            }
+
+            GameSettings.players = players.ToArray();
+            return true;
         }
 
         public void UpdateUI(MenuState state)
