@@ -15,6 +15,7 @@ using Catan.Scoring;
 using Catan.AI;
 using System.Linq;
 using UnityEngine.UIElements;
+using Catan.Settings;
 
 namespace Catan.GameManagement
 {
@@ -35,6 +36,8 @@ namespace Catan.GameManagement
         public bool starting = true;
         public bool reverseTurnOrder = false;
 
+        public bool nextTurn = false;
+
         public bool movingRobber = false;
         public (int, int) robberLocation;
 
@@ -46,53 +49,77 @@ namespace Catan.GameManagement
 
         public GameObject diceRoller;
 
+        public bool quickRolling;
+
         public void Start()
         {
             SetDefaultPlayers();
+            LoadPlayers();
             boardInitializer.Initialize();
         }
 
         public void SetDefaultPlayers()
         {
-            players = new Player[4];
+            Player[] gplayers = new Player[6];
             
-            players[0] = new Player();
-            players[0].playerColor = new Color(100 / 255f, 100 / 255f, 255 / 255f);
-            players[0].primaryUIColor = new Color(190 / 255f, 200 / 255f, 255 / 255f);
-            players[0].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[0].playerName = "Player 1";
-            players[0].playerIndex = 0;
+            gplayers[0] = new Player(true);
+            gplayers[0].playerColor = new Color(100 / 255f, 100 / 255f, 255 / 255f);
+            gplayers[0].primaryUIColor = new Color(190 / 255f, 200 / 255f, 255 / 255f);
+            gplayers[0].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[0].playerName = "Player 1";
+            gplayers[0].playerIndex = 0;
 
-            players[1] = new Player();
-            players[1].playerColor = new Color(255 / 255f, 100 / 255f, 100 / 255f);
-            players[1].primaryUIColor = new Color(255 / 255f, 150 / 255f, 150 / 255f);
-            players[1].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[1].playerName = "Player 2";
-            players[1].playerIndex = 1;
+            gplayers[1] = new Player(true);
+            gplayers[1].playerColor = new Color(255 / 255f, 100 / 255f, 100 / 255f);
+            gplayers[1].primaryUIColor = new Color(255 / 255f, 150 / 255f, 150 / 255f);
+            gplayers[1].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[1].playerName = "Player 2";
+            gplayers[1].playerIndex = 1;
 
-            players[2] = new Player();
-            players[2].playerColor = new Color(240 / 255f, 240 / 255f, 240 / 255f);
-            players[2].primaryUIColor = new Color(250 / 255f, 250 / 255f, 250 / 255f);
-            players[2].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[2].playerName = "Player 3";
-            players[2].playerIndex = 2;
+            gplayers[2] = new Player(true);
+            gplayers[2].playerColor = new Color(240 / 255f, 240 / 255f, 240 / 255f);
+            gplayers[2].primaryUIColor = new Color(250 / 255f, 250 / 255f, 250 / 255f);
+            gplayers[2].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[2].playerName = "Player 3";
+            gplayers[2].playerIndex = 2;
 
-            players[3] = new Player();
-            players[3].playerColor = new Color(255 / 255f, 150 / 255f, 100 / 255f);
-            players[3].primaryUIColor = new Color(255 / 255f, 200 / 255f, 150 / 255f);
-            players[3].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            players[3].playerName = "Player 4";
-            players[3].playerIndex = 3;
+            gplayers[3] = new Player(true);
+            gplayers[3].playerColor = new Color(255 / 255f, 150 / 255f, 100 / 255f);
+            gplayers[3].primaryUIColor = new Color(255 / 255f, 200 / 255f, 150 / 255f);
+            gplayers[3].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[3].playerName = "Player 4";
+            gplayers[3].playerIndex = 3;
 
-            foreach (Player p in players)
+            gplayers[4] = new Player(true);
+            gplayers[4].playerColor = new Color(205 / 255f, 255 / 255f, 12 / 255f);
+            gplayers[4].primaryUIColor = new Color(250 / 255f, 250 / 255f, 100 / 255f);
+            gplayers[4].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[4].playerName = "Jim the AI";
+            gplayers[4].playerIndex = 4;
+
+            gplayers[5] = new Player(true);
+            gplayers[5].playerColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
+            gplayers[5].primaryUIColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
+            gplayers[5].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
+            gplayers[5].playerName = "Kevin";
+            gplayers[5].playerIndex = 5;
+
+            foreach (Player p in gplayers)
             {
-                p.resources = new Resource[6];
+                p.resources = new Resource[5];
                 p.resources[0] = new Resource(Resource.ResourceType.Grain, 0);
                 p.resources[1] = new Resource(Resource.ResourceType.Wool, 0);
                 p.resources[2] = new Resource(Resource.ResourceType.Wood, 0);
                 p.resources[3] = new Resource(Resource.ResourceType.Brick, 0);
                 p.resources[4] = new Resource(Resource.ResourceType.Ore, 0);
             }
+
+            GameSettings.players = gplayers;
+        }
+
+        public void LoadPlayers()
+        {
+            players = GameSettings.players;
         }
 
         public void UpdateScores()
@@ -103,6 +130,13 @@ namespace Catan.GameManagement
 
         public void Roll()
         {
+            if (quickRolling)
+            {
+                int r0 = Random.Range(0, 7);
+                int r1 = Random.Range(0, 7);
+                Rolled(r0 + r1);
+                return;
+            }
             diceRoller.SetActive(true);
             diceRoller.transform.GetChild(7).GetComponent<DiceCheckZoneScript>().Roll();
         }
@@ -112,19 +146,36 @@ namespace Catan.GameManagement
             diceRoller.SetActive(false);
             if (result == 7)
             {
-                UIManager.StartMoveRobber();
-                movingRobber = true;
+                RolledSeven();
                 return;
             }
             board.DistributeResources(players, result);
             UIManager.Rolled();
         }
 
+        public void RolledSeven()
+        {
+            UIManager.SplitResources(new Stack<Player>(ResourceDistributor.GetSplittingPlayers(players)));
+        }
+
         public void AdvanceTurn()
+        {
+            nextTurn = true;
+        }
+
+        public void ToNextTurn()
         {
             scoreBuilder.CalculateScores(players);
             phase++;
 
+            Player winner = players.GetWinner();
+            if (winner != null)
+            {
+                Debug.Log("Winner! " + winner.playerName + " has won!");
+                return;
+            }
+
+            // In starting phase
             if (starting)
             {
                 if (phase > 1 && !reverseTurnOrder)
@@ -149,57 +200,70 @@ namespace Catan.GameManagement
                     reverseTurnOrder = false;
                     turn = 0;
                 }
-
-                if (currentPlayer.isAI)
-                {
-                    switch (phase)
-                    {
-                        case 0:
-                            // Catan.AI.Agent.Roll()
-                            AdvanceTurn();
-                            break;
-                        case 1:
-                            // Catan.AI.Agent.Trade()
-                            AdvanceTurn();
-                            break;
-                    }
-                }
             }
+            // Normal gameplay loop
             else
             {
-                
-
+                // Next player
                 if (phase > 2)
                 {
                     phase = 0;
                     turn++;
                 }
 
+                // Reset turn
                 if (turn >= players.Length || turn == -1)
                 {
                     turn = 0;
                 }
 
-                if (currentPlayer.isAI)
+                // AI actions
+            }
+
+            if (currentPlayer.isAI)
+            {
+                if (starting)
                 {
                     switch (phase)
                     {
                         case 0:
-                            // Catan.AI.Agent.Roll()
+                            currentPlayer.agent?.PlaceStartingPiece(!reverseTurnOrder);
                             AdvanceTurn();
                             break;
                         case 1:
-                            // Catan.AI.Agent.Trade()
-                            AdvanceTurn();
-                            break;
-                        case 2:
-                            // Catan.AI.Agent.Build()
                             AdvanceTurn();
                             break;
                     }
                 }
+                else
+                {
+                    switch (phase)
+                    {
+                        case 0:
+                            currentPlayer.agent?.api.Roll();
+                            break;
+                        case 1:
+                            currentPlayer.agent?.StartTrading();
+                            break;
+                        case 2:
+                            currentPlayer.agent?.StartBuilding();
+                            AdvanceTurn();
+                            // Catan.AI.Agent.Build()
+                            break;
+                    }
+                }
             }
-            
+
+            UIManager.UpdateUI();
+        }
+
+        public void Update()
+        {
+            if (nextTurn)
+            {
+                nextTurn = false;
+                ToNextTurn();
+            }
         }
     }
 }

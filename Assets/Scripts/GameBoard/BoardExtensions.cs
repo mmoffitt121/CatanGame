@@ -6,6 +6,7 @@
 using Catan.GameBoard;
 using Catan.Players;
 using Catan.ResourcePhase;
+using Catan.Util;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -459,7 +460,7 @@ namespace Catan.GameBoard
         /// <param name="vertices"></param>
         /// <param name="road"></param>
         /// <returns>
-        /// An array of tuples specifying the locations of the two vertices.
+        /// An array of tuples specifying the locations of the two vertices. Will always return an array of size 2, as all roads have two bounding vertices.
         /// </returns>
         public static (int, int)[] AdjacentVerticesToRoad(this Road[][] roads, TileVertex[][] vertices, (int, int) road)
         {
@@ -588,8 +589,10 @@ namespace Catan.GameBoard
         /// <returns>An array of 6 vertices in DATA FORM</returns>
         public static (int, int)[] GetSurroundingVertices(this Tile[][] tiles, TileVertex[][] vertices, int i, int j)
         {
+            int maxIsEven = (tiles.SelectMax(tArr => tArr.Length).Length + 1) % 2;
+
             int x0 = tiles[i][j].xCoord;
-            int y0 = (int)(tiles[i][j].yCoord + 1) * 2 + i % 2;
+            int y0 = (int)(tiles[i][j].yCoord + 1) * 2 + i % 2 + maxIsEven * (int)Mathf.Pow(-1, i);
 
             (int, int) top = vertices.GetVertexDataCoord(x0, y0);
             (int, int) bottom = vertices.GetVertexDataCoord(x0 + 1, y0);
@@ -674,6 +677,158 @@ namespace Catan.GameBoard
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Gets every possible settlement a player could build at current board state.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="player"></param>
+        /// <returns>(int, int) array of vertex locations representing settlements the specified player can develop</returns>
+        public static (int, int)[] GetPossibleSettlements(this Board board, Player player)
+        {
+            List<(int, int)> possible = new List<(int, int)>();
+            foreach (TileVertex[] vArr in board.vertices)
+            {
+                foreach (TileVertex v in vArr)
+                {
+                    // Eliminate developed vertex
+
+                    if (v.development > 0) continue;
+
+                    // Eliminate vertex where adjacent vertex is developed
+
+                    (int, int) vAbove = board.vertices.VertexAboveVertex(v.xDataIndex, v.yDataIndex);
+                    if (vAbove.Valid() && board.vertices[vAbove.Item1][vAbove.Item2].development > 0) continue;
+
+                    (int, int) vBelow = board.vertices.VertexBelowVertex(v.xDataIndex, v.yDataIndex);
+                    if (vBelow.Valid() && board.vertices[vBelow.Item1][vBelow.Item2].development > 0) continue;
+
+                    (int, int) vLeft = board.vertices.VertexLeftOfVertex(v.xDataIndex, v.yDataIndex);
+                    if (vLeft.Valid() && board.vertices[vLeft.Item1][vLeft.Item2].development > 0) continue;
+
+                    (int, int) vRight = board.vertices.VertexRightOfVertex(v.xDataIndex, v.yDataIndex);
+                    if (vRight.Valid() && board.vertices[vRight.Item1][vRight.Item2].development > 0) continue;
+
+                    // Eliminate vertex where a player-owned road is not adjacent
+
+                    (int, int) rAbove = board.vertices.RoadAboveVertex(board.roads, v.xDataIndex, v.yDataIndex);
+                    bool rAboveExists = rAbove.Valid() && board.roads[rAbove.Item1][rAbove.Item2].playerIndex == player.playerIndex;
+
+                    (int, int) rBelow = board.vertices.RoadBelowVertex(board.roads, v.xDataIndex, v.yDataIndex);
+                    bool rBelowExists = rBelow.Valid() && board.roads[rBelow.Item1][rBelow.Item2].playerIndex == player.playerIndex;
+
+                    (int, int) rLeft = board.vertices.RoadLeftOfVertex(board.roads, v.xDataIndex, v.yDataIndex);
+                    bool rLeftExists = rLeft.Valid() && board.roads[rLeft.Item1][rLeft.Item2].playerIndex == player.playerIndex;
+
+                    (int, int) rRight = board.vertices.RoadRightOfVertex(board.roads, v.xDataIndex, v.yDataIndex);
+                    bool rRightExists = rRight.Valid() && board.roads[rRight.Item1][rRight.Item2].playerIndex == player.playerIndex;
+
+                    if (!(rAboveExists || rBelowExists || rLeftExists || rRightExists)) continue;
+
+                    possible.Add((v.xDataIndex, v.yDataIndex));
+                }
+            }
+
+            return possible.ToArray();
+        }
+
+        /// <summary>
+        /// Gets every possible city a player could upgrade at current board state.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="player"></param>
+        /// <returns>(int, int) array of vertex locations representing cities the specified player can develop</returns>
+        public static (int, int)[] GetPossibleCities(this Board board, Player player)
+        {
+            List<(int, int)> possible = new List<(int, int)>();
+            foreach (TileVertex[] vArr in board.vertices)
+            {
+                foreach (TileVertex v in vArr)
+                {
+                    if (v.playerIndex == player.playerIndex && v.development == TileVertex.Development.Town)
+                    {
+                        possible.Add((v.xDataIndex, v.yDataIndex));
+                    }
+                }
+            }
+
+            return possible.ToArray();
+        }
+
+        /// <summary>
+        /// Gets every possible road a player could build at current board state.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="player"></param>
+        /// <returns>(int, int) array of road locations representing roads the specified player can develop</returns>
+        public static (int, int)[] GetPossibleRoads(this Board board, Player player)
+        {
+            List<(int, int)> possible = new List<(int, int)>();
+            foreach (Road[] rArr in board.roads)
+            {
+                foreach (Road r in rArr)
+                {
+                    // If road already owned, do not add.
+                    if (r.playerIndex != -1) continue;
+
+                    // This while loop doesn't serve as a loop, but rather a construct to easily break out of to save calculation time.
+                    bool adding = true;
+                    while (true)
+                    {
+                        (int, int)[] adjacentVertices = board.roads.AdjacentVerticesToRoad(board.vertices, (r.xDataIndex, r.yDataIndex));
+
+                        // If neighboring vertex owned, add.
+                        int dir1VertexOwner = board.vertices[adjacentVertices[0].Item1][adjacentVertices[0].Item2].playerIndex;
+                        if (dir1VertexOwner == player.playerIndex) break;
+
+                        int dir2VertexOwner = board.vertices[adjacentVertices[1].Item1][adjacentVertices[1].Item2].playerIndex;
+                        if (dir2VertexOwner == player.playerIndex) break;
+
+                        // If unobstructed neighboring road owned, add.
+
+                        if (dir1VertexOwner == -1)
+                        {
+                            (int, int) above1 = board.vertices.RoadAboveVertex(board.roads, adjacentVertices[0].Item1, adjacentVertices[0].Item2);
+                            if (above1.Valid() && board.roads[above1.Item1][above1.Item2].playerIndex == player.playerIndex) break;
+
+                            (int, int) below1 = board.vertices.RoadBelowVertex(board.roads, adjacentVertices[0].Item1, adjacentVertices[0].Item2);
+                            if (below1.Valid() && board.roads[below1.Item1][below1.Item2].playerIndex == player.playerIndex) break;
+
+                            (int, int) left1 = board.vertices.RoadLeftOfVertex(board.roads, adjacentVertices[0].Item1, adjacentVertices[0].Item2);
+                            if (left1.Valid() && board.roads[left1.Item1][left1.Item2].playerIndex == player.playerIndex) break;
+
+                            (int, int) right1 = board.vertices.RoadRightOfVertex(board.roads, adjacentVertices[0].Item1, adjacentVertices[0].Item2);
+                            if (right1.Valid() && board.roads[right1.Item1][right1.Item2].playerIndex == player.playerIndex) break;
+                        }
+
+                        if (dir2VertexOwner == -1)
+                        {
+                            (int, int) above2 = board.vertices.RoadAboveVertex(board.roads, adjacentVertices[1].Item1, adjacentVertices[1].Item2);
+                            if (above2.Valid() && board.roads[above2.Item1][above2.Item2].playerIndex == player.playerIndex) break;
+
+                            (int, int) below2 = board.vertices.RoadBelowVertex(board.roads, adjacentVertices[1].Item1, adjacentVertices[1].Item2);
+                            if (below2.Valid() && board.roads[below2.Item1][below2.Item2].playerIndex == player.playerIndex) break;
+
+                            (int, int) left2 = board.vertices.RoadLeftOfVertex(board.roads, adjacentVertices[1].Item1, adjacentVertices[1].Item2);
+                            if (left2.Valid() && board.roads[left2.Item1][left2.Item2].playerIndex == player.playerIndex) break;
+
+                            (int, int) right2 = board.vertices.RoadRightOfVertex(board.roads, adjacentVertices[1].Item1, adjacentVertices[1].Item2);
+                            if (right2.Valid() && board.roads[right2.Item1][right2.Item2].playerIndex == player.playerIndex) break;
+                        }
+
+                        adding = false;
+                        break;
+                    }
+
+                    if (adding)
+                    {
+                        possible.Add((r.xDataIndex, r.yDataIndex));
+                    }
+                }
+            }
+
+            return possible.ToArray();
         }
     }
 }

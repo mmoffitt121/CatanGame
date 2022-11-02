@@ -143,7 +143,6 @@ namespace Catan.GameBoard
                     tiles[i][j].yDataIndex = j;
 
                     createdTile.name = "Tile(" + i + "," + j + ")";
-                    createdTile.transform.GetChild(0).GetComponent<Renderer>().material.color = tiles[i][j].color;
                     createdTile.transform.parent = tileHolder.transform;
 
                     TileGameObject tileObject = createdTile.transform.GetChild(0).GetComponent<TileGameObject>();
@@ -153,6 +152,7 @@ namespace Catan.GameBoard
                     tileObject.yIndex = tiles[i][j].yDataIndex;
                     tileObject.xCoord = tiles[i][j].xCoord;
                     tileObject.yCoord = tiles[i][j].yCoord;
+                    tileObject.SetAppearance(tiles[i][j].type);
                 }
             }
         }
@@ -287,7 +287,7 @@ namespace Catan.GameBoard
                         roads[i][(int)(j / 2)].yCoord = vertices[current.Item1][current.Item2].yCoord;
 
                         GameObject createdRoad = Instantiate(roadPrefab, new Vector3(x, 0, z), Quaternion.Euler(0, 90, 0));
-                        createdRoad.name = "Road(" + i + "," + j + ")";
+                        createdRoad.name = "Road(" + i + "," + j/2 + ")";
                         createdRoad.transform.parent = roadHolder.transform;
 
                         RoadGameObject roadObject = createdRoad.GetComponent<RoadGameObject>();
@@ -311,13 +311,13 @@ namespace Catan.GameBoard
                     {
                         GameObject child = GameObject.Find("Vertex(" + i + "," + j + ")").transform.GetChild(0).gameObject;
                         child.GetComponent<MeshRenderer>().enabled = true;
-                        Vector3 pos = child.transform.parent.position + BoardExtensions.PolarToCartesian(-vertices[i][j].port.direction * Mathf.Deg2Rad, 25);
+                        Vector3 pos = child.transform.parent.position + BoardExtensions.PolarToCartesian(-vertices[i][j].port.direction * Mathf.Deg2Rad, 40);
                         Vector3 ang = new Vector3(0, vertices[i][j].port.direction + 90, 0);
                         child.transform.SetPositionAndRotation(pos, Quaternion.Euler(ang));
                         child.GetComponent<Renderer>().material.color = new Color(130f/255f, 81f/255f, 40f/255f);
 
                         GameObject label = GameObject.Find("Vertex(" + i + "," + j + ")").transform.GetChild(2).gameObject;
-                        Vector3 posLabel = child.transform.parent.position + BoardExtensions.PolarToCartesian(-vertices[i][j].port.direction * Mathf.Deg2Rad, 50);
+                        Vector3 posLabel = child.transform.parent.position + BoardExtensions.PolarToCartesian(-vertices[i][j].port.direction * Mathf.Deg2Rad, 80);
                         label.GetComponent<MeshRenderer>().enabled = true;
                         label.transform.SetPositionAndRotation(posLabel + new Vector3(0, 0.3f, 0), Quaternion.Euler(90, -90, 0));
                         label.GetComponent<Renderer>().material.mainTexture = resourceIcons[(int)vertices[i][j].port.type];

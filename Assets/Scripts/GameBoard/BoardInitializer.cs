@@ -8,6 +8,9 @@ using UnityEngine;
 using Catan.ResourcePhase;
 using System.Collections.Generic;
 using Catan.GameManagement;
+using Catan.Camera;
+using Catan.Util;
+using Catan.Settings;
 
 namespace Catan.GameBoard
 {
@@ -74,6 +77,8 @@ namespace Catan.GameBoard
         /// </summary>
         public void Initialize()
         {
+            LoadPreset();
+
             board = GameObject.Find("Board").GetComponent(typeof(Board)) as Board;
             board.ClearTiles();
             board.tiles = Randomize();
@@ -85,6 +90,15 @@ namespace Catan.GameBoard
             board.PrintTest();
             InitializePorts(board.vertices, board.tiles);
             board.PlacePorts();
+
+            CameraControl cam = GameObject.Find("Camera Rig").GetComponent<CameraControl>();
+            cam.xBound0 = 0;
+            cam.xBound1 = GameObject.Find("Vertex(" + (board.tiles.Length - 1) + "," + 0 + ")").transform.position.x + 6;
+
+            Tile[] widest = board.tiles.SelectMax(t => t.Length);
+            int widestLevel = widest[0].xDataIndex;
+            cam.zBound0 = GameObject.Find("Vertex(" + widestLevel + "," + 0 + ")").transform.position.z - 2;
+            cam.zBound1 = -cam.zBound0;
         }
 
         /// <summary>
@@ -450,6 +464,17 @@ namespace Catan.GameBoard
 
             // Throw if none left
             throw new Exception("None");
+        }
+
+        public void LoadPreset()
+        {
+            BoardPreset preset = GameSettings.presets[GameSettings.chosenPreset];
+            tileTypes = preset.tileTypes;
+            tileAmount = preset.tileAmounts;
+            boardShape = preset.boardShape;
+            diceValues = preset.diceValues;
+            ports = preset.portTypes;
+            portAmounts = preset.portAmounts;
         }
     }
 }

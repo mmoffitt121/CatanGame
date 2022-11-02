@@ -6,6 +6,8 @@
 using Catan.GameBoard;
 using Catan.GameManagement;
 using Catan.Players;
+using Catan.Util;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
@@ -52,7 +54,7 @@ public static class ResourceDistributor
     /// <param name="board"></param>
     /// <param name="players"></param>
     /// <param name="vertex"></param>
-    public static void DistributeResourcesFromVertex(this Board board, Player[] players, (int, int) vertex)
+    public static void DistributeResourcesFromVertex(this Board board, (int, int) vertex)
     {
         (int, int) above = board.vertices.TileAboveVertex(board.tiles, vertex.Item1, vertex.Item2);
         (int, int) below = board.vertices.TileBelowVertex(board.tiles, vertex.Item1, vertex.Item2);
@@ -64,5 +66,18 @@ public static class ResourceDistributor
         if (below != (-1, -1)) gm.currentPlayer.AddResource(board.tiles[below.Item1][below.Item2].resourceType, 1);
         if (left != (-1, -1)) gm.currentPlayer.AddResource(board.tiles[left.Item1][left.Item2].resourceType, 1);
         if (right != (-1, -1)) gm.currentPlayer.AddResource(board.tiles[right.Item1][right.Item2].resourceType, 1);
+    }
+
+    public static Player[] GetSplittingPlayers(Player[] players)
+    {
+        List<Player> output = new List<Player>();
+        foreach (Player player in players)
+        {
+            if (player.resourceSum > 7)
+            {
+                output.Add(player);
+            }
+        }
+        return output.ToArray();
     }
 }

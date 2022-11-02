@@ -4,11 +4,18 @@
 /// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
 
 using Catan.GameManagement;
+using Catan.Players;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Net;
+using Catan.GameBoard;
 
 namespace Catan.UI
 {
@@ -29,22 +36,23 @@ namespace Catan.UI
 
         public TextMeshProUGUI vPDisplay;
 
+        public GameObject rSplit;
+        public GameObject rSteal;
+
         public void AdvanceTurn()
         {
             if (gameManager.phase == 0 && !gameManager.starting && !gameManager.movingRobber)
             {
                 gameManager.Roll();
-                DisableAdvancement();
+                if (!gameManager.quickRolling) DisableAdvancement();
                 return;
             }
             gameManager.AdvanceTurn();
-            UpdateUI();
         }
 
         public void Rolled()
         {
             gameManager.AdvanceTurn();
-            UpdateUI();
         }
 
         public void DisableAdvancement()
@@ -57,6 +65,21 @@ namespace Catan.UI
             nextButton.interactable = true;
         }
 
+        public void SplitResources(Stack<Player> players)
+        {
+            if (players.Count > 0)
+            {
+                DisableAdvancement();
+                rSplit.SetActive(true);
+                ResourceSplit splitter = rSplit.GetComponent<ResourceSplit>();
+                splitter.InitializePlayer(players);
+            }
+            else
+            {
+                StartMoveRobber();
+            }
+        }
+
         public void StartMoveRobber()
         {
             DisableAdvancement();
@@ -64,13 +87,54 @@ namespace Catan.UI
             nextDisplay.text = "Next";
             nextButton.interactable = false;
             gameManager.movingRobber = true;
+            if (gameManager.currentPlayer.isAI)
+            {
+                gameManager.currentPlayer.agent.ChooseRobberLocation();
+            }
         }
 
-        public void EndMoveRobber()
+        public void EndMoveRobber((int, int) loc)
         {
-            EnableAdvancement();
-            gameManager.AdvanceTurn();
+            gameManager.robberLocation = loc;
             gameManager.movingRobber = false;
+            StartSteal(loc);
+        }
+
+        public void StartSteal((int, int) loc)
+        {
+            (int, int)[] vertices = gameManager.board.tiles.GetSurroundingVertices(gameManager.board.vertices, loc.Item1, loc.Item2);
+
+            // Calculate steal candidates
+            List<Player> players = new List<Player>();
+            foreach ((int, int) v in vertices)
+            {
+                if (gameManager.board.vertices[v.Item1][v.Item2].development > 0)
+                {
+                    int index = gameManager.board.vertices[v.Item1][v.Item2].playerIndex;
+                    if (players.Where(p => p.playerIndex == index).Count() == 0 && index != gameManager.currentPlayer.playerIndex && gameManager.players[index].resourceSum > 0)
+                    {
+                        players.Add(gameManager.players[index]);
+                    }
+                }
+            }
+
+            if (players.Count() == 0)
+            {
+                EndSteal();
+                return;
+            }
+
+            DisableAdvancement();
+            rSteal.SetActive(true);
+            ResourceSteal stealer = rSteal.GetComponent<ResourceSteal>();
+            stealer.InitializePlayers(gameManager.currentPlayer, players.ToArray());
+        }
+
+        public void EndSteal()
+        {
+            rSteal.SetActive(false);
+            gameManager.AdvanceTurn();
+            UpdateUI();
         }
 
         public void UpdateUI()
@@ -131,6 +195,11 @@ namespace Catan.UI
                         nextDisplay.text = "Waiting...";
                         break;
                 }
+            }
+
+            if (gameManager.currentPlayer.isAI)
+            {
+                nextButton.interactable = false;
             }
 
             vPDisplay.text = "VP: " + gameManager.currentPlayer.victoryPoints.ToString();

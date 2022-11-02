@@ -52,5 +52,10 @@ namespace Catan.GameBoard
                     break;
             }
         }
+
+        public override string ToString()
+        {
+            return xDataIndex + ", " + yDataIndex;
+        }
     }
 }

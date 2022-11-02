@@ -47,7 +47,7 @@ namespace Catan.GameManagement
 
                 if (!gameManager.reverseTurnOrder)
                 {
-                    board.DistributeResourcesFromVertex(gameManager.players, tempVertex);
+                    board.DistributeResourcesFromVertex(tempVertex);
                 }
 
                 gameManager.UIManager.AdvanceTurn();
@@ -70,10 +70,8 @@ namespace Catan.GameManagement
 
                 GameObject.Find("Tile(" + gameManager.robberLocation.Item1 + "," + gameManager.robberLocation.Item2 + ")").transform.GetChild(0).GetComponent<TileGameObject>().SetRobber(false);
                 GameObject.Find("Tile(" + i + "," + j + ")").transform.GetChild(0).GetComponent<TileGameObject>().SetRobber(true);
-
-                gameManager.robberLocation = (i, j);
-                gameManager.UIManager.AdvanceTurn();
-                gameManager.movingRobber = false;
+                
+                gameManager.UIManager.EndMoveRobber((i, j));
             }
         }
 

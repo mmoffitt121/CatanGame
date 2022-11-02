@@ -31,5 +31,10 @@ namespace Catan.ResourcePhase
             this.type = type;
             this.amount = amount;
         }
+
+        public override string ToString()
+        {
+            return "(" + type.ToString() + ": " + amount + ")";
+        }
     }
 }

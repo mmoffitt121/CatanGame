@@ -89,5 +89,10 @@ namespace Catan.GameBoard
             Mountains,
             Desert
         }
+
+        public override string ToString()
+        {
+            return xDataIndex + ", " + yDataIndex;
+        }
     }
 }
