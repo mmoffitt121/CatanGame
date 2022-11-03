@@ -176,7 +176,6 @@ namespace Catan.GameManagement
             if (winner != null)
             {
                 Debug.Log("Winner! " + winner.playerName + " has won!");
-                Start();
                 return;
             }
 
