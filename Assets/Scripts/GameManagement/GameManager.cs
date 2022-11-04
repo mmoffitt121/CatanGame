@@ -118,6 +118,10 @@ namespace Catan.GameManagement
 
         public void LoadPlayers()
         {
+            if (GameSettings.players == null)
+            {
+                SetDefaultPlayers();
+            }
             players = GameSettings.players;
 
             foreach (Player p in players)
@@ -251,8 +255,6 @@ namespace Catan.GameManagement
                             break;
                         case 2:
                             currentPlayer.agent?.StartBuilding();
-                            AdvanceTurn();
-                            // Catan.AI.Agent.Build()
                             break;
                     }
                 }

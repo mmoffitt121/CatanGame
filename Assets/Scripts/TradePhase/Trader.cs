@@ -45,18 +45,21 @@ namespace Catan.TradePhase
             }
         }
 
-        public static void Request(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
+        public static bool Request(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
         {
             if (p2.isAI)
             {
                 if (p2.agent.ChooseAcceptTradeDeal(p1, p2, p1Offer, p2Offer))
                 {
                     Trade(p1, p2, p1Offer, p2Offer);
+                    return true;
                 }
+                return false;
             }
             else
             {
                 // Entry point to accept trade request here
+                return false;
             }
         }
     }

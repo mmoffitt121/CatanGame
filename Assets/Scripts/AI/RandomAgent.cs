@@ -30,7 +30,7 @@ namespace Catan.AI
         {
             for (int i = 0; i < maxTrades; i++)
             {
-                Player p = api.gameManager.players[UnityEngine.Random.Range(0, api.gameManager.players.Length)];
+                Player p = api.Players[UnityEngine.Random.Range(0, api.Players.Length)];
                 if (p.resourceSum > 0 && p.playerIndex != player.playerIndex)
                 {
                     Resource[] senderOffer = new Resource[] { player.RandomResource() };

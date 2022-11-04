@@ -108,7 +108,7 @@ namespace Catan.AI
 
         public virtual void StartTrading()
         {
-            api.gameManager.AdvanceTurn();
+            api.AdvanceTurn();
         }
 
         public virtual bool ChooseAcceptTradeDeal(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
@@ -118,7 +118,7 @@ namespace Catan.AI
 
         public virtual void StartBuilding()
         {
-            
+            api.AdvanceTurn();
         }
 
         public enum Difficulty

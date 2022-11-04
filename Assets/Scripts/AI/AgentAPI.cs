@@ -19,6 +19,35 @@ namespace Catan.AI
         public InteractionManager interactionManager;
         public Board board;
 
+        public Tile[][] Tiles
+        {
+            get
+            {
+                return board.tiles;
+            }
+        }
+        public TileVertex[][] Vertices
+        {
+            get
+            {
+                return board.vertices;
+            }
+        }
+        public Road[][] Roads
+        {
+            get
+            {
+                return board.roads;
+            }
+        }
+        public Player[] Players
+        {
+            get
+            {
+                return gameManager.players;
+            }
+        }
+
         public void Roll()
         {
             gameManager.Roll();
@@ -33,6 +62,11 @@ namespace Catan.AI
         public void Trade(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
         {
             Trader.Trade(p1, p2, p1Offer, p2Offer);
+        }
+
+        public bool RequestTrade(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
+        {
+            return Trader.Request(p1, p2, p1Offer, p2Offer);
         }
 
         public bool BuildSettlement(Player p, int i, int j, bool starting = false)
