@@ -1,8 +1,10 @@
+![alt text](https://i.imgur.com/IbPOcrQ.png)
+
 # For Graders
 
 To see our code, go to Assets/Scripts.
 
-If it's absolutely necessary to see our code in Unity, refer to the "For Devs" section.
+If it's necessary to see our code in Unity, refer to the "For Devs" section.
 
 # For Devs
 
