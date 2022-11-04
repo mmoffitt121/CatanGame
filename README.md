@@ -1,3 +1,5 @@
+![alt text](https://i.imgur.com/SHaWNsw.png)
+
 # For Graders
 
 To see our code, go to Assets/Scripts.
