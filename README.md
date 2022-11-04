@@ -1,4 +1,4 @@
-![alt text](https://i.imgur.com/EP33lTp.png)
+![alt text](https://i.imgur.com/IbPOcrQ.png)
 
 # For Graders
 
