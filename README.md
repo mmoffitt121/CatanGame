@@ -6,8 +6,6 @@ To see our code, go to Assets/Scripts.
 
 If it's necessary to see our code in Unity, refer to the "For Devs" section.
 
-![alt text](https://i.imgur.com/ktdA6YJ.png)
-
 # For Devs
 
 ## Setting Up
