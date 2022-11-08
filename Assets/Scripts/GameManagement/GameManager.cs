@@ -69,7 +69,7 @@ namespace Catan.GameManagement
         {
             Player[] gplayers = new Player[4];
             
-            gplayers[0] = new Player(true);
+            gplayers[0] = new Player(false);
             gplayers[0].agent = new HasBrosAgent(gplayers[0]);
             gplayers[0].playerColor = new Color(100 / 255f, 100 / 255f, 255 / 255f);
             gplayers[0].primaryUIColor = new Color(190 / 255f, 200 / 255f, 255 / 255f);
@@ -77,7 +77,7 @@ namespace Catan.GameManagement
             gplayers[0].playerName = "Player 1";
             gplayers[0].playerIndex = 0;
 
-            gplayers[1] = new Player(true);
+            gplayers[1] = new Player(false);
             gplayers[1].agent = new HasBrosAgent(gplayers[1]);
             gplayers[1].playerColor = new Color(255 / 255f, 100 / 255f, 100 / 255f);
             gplayers[1].primaryUIColor = new Color(255 / 255f, 150 / 255f, 150 / 255f);
