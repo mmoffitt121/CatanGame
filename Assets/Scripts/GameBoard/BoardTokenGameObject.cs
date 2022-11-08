@@ -42,6 +42,14 @@ namespace Catan.GameBoard
             GetComponent<Renderer>().material.color = player.playerColor;
             meshRenderer.material.SetColor("_BaseColor", player.playerColor);
         }
+
+        public virtual void ResetBoardTokenObject()
+        {
+            playerIndex = -1;
+            meshRenderer.enabled = false;
+            GetComponent<Renderer>().material.color = Color.white;
+            meshRenderer.material.SetColor("_BaseColor", Color.white);
+        }
     }
 }
 

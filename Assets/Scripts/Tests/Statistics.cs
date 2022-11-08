@@ -4,6 +4,8 @@ using UnityEngine;
 using Catan.GameManagement;
 using Catan.Settings;
 using Catan.Players;
+using System;
+using System.Linq;
 
 namespace Catan.Tests
 {
@@ -12,6 +14,7 @@ namespace Catan.Tests
         private GameManager gm;
         public List<Game> games;
 
+        #region Saving
         public void SaveGame()
         {
             Game game = new Game();
@@ -34,7 +37,9 @@ namespace Catan.Tests
             }
             games.Add(game);
         }
+        #endregion
 
+        #region Derived Data
         public int NumberOfGames
         {
             get
@@ -43,6 +48,80 @@ namespace Catan.Tests
             }
         }
 
+        public float MeanTurns
+        {
+            get
+            {
+                float result = 0f;
+                float count = games.Count;
+                foreach (Game g in games)
+                {
+                    result += g.turns / count;
+                }
+                return result;
+            }
+        }
+
+        public float MedianTurns
+        {
+            get
+            {
+                if (games == null || games.Count == 0) { return 0f; }
+
+                games.Sort((x, y) => x.turns.CompareTo(y.turns));
+                return games[(int)games.Count / 2].turns;
+            }
+        }
+
+        public float AverageVPDisparity
+        {
+            get
+            {
+                float result = 0f;
+                float count = games.Count;
+                foreach (Game g in games)
+                {
+                    float vpDisp = g.victoryPoints.Max() - g.victoryPoints.Min();
+                    result += vpDisp / count;
+                }
+                return result;
+            }
+        }
+
+        public int StaleMates
+        {
+            get
+            {
+                int result = 0;
+                foreach (Game g in games)
+                {
+                    bool victory = false;
+                    foreach (int vp in g.victoryPoints)
+                    {
+                        if (vp >= GameSettings.vpWinCondition)
+                        {
+                            victory = true;
+                            break;
+                        }
+                    }
+
+                    if (!victory) { result++; }
+                }
+                return result;
+            }
+        }
+
+        public float StaleMateRatio
+        {
+            get
+            {
+                if (games == null || games.Count == 0) { return 0; }
+                return ((float)StaleMates) / games.Count;
+            }
+        }
+        #endregion
+
+        #region Start
         void Start()
         {
             if (GameSettings.testing)
@@ -55,5 +134,6 @@ namespace Catan.Tests
                 Destroy(this);
             }
         }
+        #endregion
     }
 }

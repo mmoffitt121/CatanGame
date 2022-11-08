@@ -87,7 +87,6 @@ namespace Catan.GameBoard
             board.PlaceTiles();
             board.PlaceVertices();
             board.PlaceRoads();
-            board.PrintTest();
             InitializePorts(board.vertices, board.tiles);
             board.PlacePorts();
 
@@ -99,6 +98,21 @@ namespace Catan.GameBoard
             int widestLevel = widest[0].xDataIndex;
             cam.zBound0 = GameObject.Find("Vertex(" + widestLevel + "," + 0 + ")").transform.position.z - 2;
             cam.zBound1 = -cam.zBound0;
+        }
+
+        /// <summary>
+        /// Is called when the game resets
+        /// </summary>
+        public void Reinitialize()
+        {
+            board = GameObject.Find("Board").GetComponent(typeof(Board)) as Board;
+            board.ClearTiles();
+            board.ResetVertices();
+            board.ResetRoads();
+            board.tiles = Randomize();
+            board.PlaceTiles();
+            InitializePorts(board.vertices, board.tiles);
+            board.PlacePorts();
         }
 
         /// <summary>

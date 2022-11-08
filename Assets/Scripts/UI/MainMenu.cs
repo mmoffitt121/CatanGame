@@ -20,6 +20,7 @@ namespace Catan.UI
         public void ToBoardSettings(bool testing)
         {
             GameSettings.testing = testing;
+            GameSettings.quickrolling = testing;
             UpdateUI(MenuState.BoardSettings);
             cam.ToBoardSettings();
         }

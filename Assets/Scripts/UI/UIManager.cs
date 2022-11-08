@@ -137,6 +137,27 @@ namespace Catan.UI
             UpdateUI();
         }
 
+        public void ResetUI()
+        {
+            playerDisplay.text = "Game Start";
+            playerDisplay.color = Color.white;
+            phaseDisplay.color = Color.white;
+            nextDisplay.color = Color.black;
+            nextButton.GetComponent<Image>().color = Color.white;
+
+            grainDisplay.text = "0";
+            sheepDisplay.text = "0";
+            woodDisplay.text = "0";
+            brickDisplay.text = "0";
+            oreDisplay.text = "0";
+
+            phaseDisplay.text = "Begin Game";
+            nextDisplay.text = "Start";
+            nextButton.interactable = true;
+
+            vPDisplay.text = "VP: 0";
+        }
+
         public void UpdateUI()
         {
             playerDisplay.text = gameManager.currentPlayer.playerName;

@@ -61,12 +61,13 @@ namespace Catan.GameManagement
         public void Start()
         {
             LoadPlayers();
+            quickRolling = GameSettings.quickrolling;
             boardInitializer.Initialize();
         }
 
         public void SetDefaultPlayers()
         {
-            Player[] gplayers = new Player[6];
+            Player[] gplayers = new Player[4];
             
             gplayers[0] = new Player(true);
             gplayers[0].agent = new HasBrosAgent(gplayers[0]);
@@ -98,20 +99,6 @@ namespace Catan.GameManagement
             gplayers[3].playerName = "Player 4";
             gplayers[3].playerIndex = 3;
 
-            gplayers[4] = new Player(true);
-            gplayers[4].playerColor = new Color(205 / 255f, 255 / 255f, 12 / 255f);
-            gplayers[4].primaryUIColor = new Color(250 / 255f, 250 / 255f, 100 / 255f);
-            gplayers[4].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            gplayers[4].playerName = "Jim the AI";
-            gplayers[4].playerIndex = 4;
-
-            gplayers[5] = new Player(true);
-            gplayers[5].playerColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
-            gplayers[5].primaryUIColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
-            gplayers[5].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            gplayers[5].playerName = "Kevin";
-            gplayers[5].playerIndex = 5;
-
             foreach (Player p in gplayers)
             {
                 p.resources = new Resource[5];
@@ -139,10 +126,11 @@ namespace Catan.GameManagement
             }
         }
 
-        public void UpdateScores()
+        public void UpdateScores(bool updateUI = true)
         {
             scoreBuilder.CalculateScores(players);
-            UIManager.UpdateUI();
+
+            if (updateUI) { UIManager.UpdateUI(); }
         }
 
         public void Roll()
@@ -186,7 +174,12 @@ namespace Catan.GameManagement
 
             if (stats != null)
             {
-                stats.SaveGame();
+                testSuite.SaveGame();
+            }
+
+            if (GameSettings.testing)
+            {
+                ResetGameAndBegin();
             }
         }
 
@@ -198,6 +191,33 @@ namespace Catan.GameManagement
             {
                 testSuite.SaveGame();
             }
+
+            if (GameSettings.testing)
+            {
+                ResetGameAndBegin();
+            }
+        }
+
+        public void ResetGameAndBegin()
+        {
+            ResetGame();
+            UIManager.AdvanceTurn();
+        }
+
+        public void ResetGame()
+        {
+            boardInitializer.Reinitialize();
+            turn = 0;
+            phase = -1;
+            starting = true;
+            reverseTurnOrder = false;
+            nextTurn = false;
+            movingRobber = false;
+            totalRounds = 0;
+            totalTurns = 0;
+
+            UpdateScores(false);
+            UIManager.ResetUI();
         }
 
         public void ToNextTurn()

@@ -10,12 +10,14 @@ namespace Catan.Settings
     public static class GameSettings
     {
         // Game Settings
-        public static int maxTurns = 3000;
+        public static int maxTurns = 1000;
         public static int maxTradeAttempts;
         public static int maxBuildAttempts;
 
+        public static int vpWinCondition = 10;
+
         public static bool animations;
-        public static bool quickrolling;
+        public static bool quickrolling = true;
 
         public static bool testing = true;
 

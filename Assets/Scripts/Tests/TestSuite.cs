@@ -37,9 +37,10 @@ public class TestSuite : MonoBehaviour
     {
         testStatisticsBox.text =
             "Number of Games: " + stats.NumberOfGames + "\n" +
-            "Mean # of Turns/Game: " + "___" + "\n" +
-            "Median # of Turns/Game: " + "___" + "\n" +
-            "Average VP Disparity: " + "___" + "\n";
+            "Mean # of Turns/Game: " + stats.MeanTurns + "\n" +
+            "Median # of Turns/Game: " + stats.MedianTurns + "\n" +
+            "Average VP Disparity: " + stats.AverageVPDisparity + "\n" +
+            "Stalemates: " + stats.StaleMates + ", " + stats.StaleMateRatio * 100 + "%\n";
 
     }
 
@@ -54,6 +55,7 @@ public class TestSuite : MonoBehaviour
         {
             gm = GameObject.Find("Game Manager").GetComponent<GameManager>();
             gm.testSuite = this;
+            UpdateStatistics();
         }
     }
 }

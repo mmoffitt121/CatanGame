@@ -67,9 +67,52 @@ namespace Catan.GameBoard
             }
 
             DespawnTiles();
-            DespawnVertices();
 
             tiles = null;
+        }
+
+        /// <summary>
+        /// Resets the vertex array and resets the GameObjects to invisible
+        /// </summary>
+        public void ResetVertices()
+        {
+            if (vertices == null) return;
+
+            foreach (TileVertex[] varr in vertices)
+            {
+                foreach (TileVertex v in varr)
+                {
+                    v.development = TileVertex.Development.Undeveloped;
+                    v.playerIndex = -1;
+                    v.port = null;
+                }
+            }
+
+            foreach (Transform child in vertexHolder.transform)
+            {
+                child.gameObject.GetComponent<TileVertexGameObject>().ResetBoardTokenObject();
+            }
+        }
+
+        /// <summary>
+        /// Resets the road array and resets the GameObjects to invisible
+        /// </summary>
+        public void ResetRoads()
+        {
+            if (roads == null) return;
+
+            foreach (Road[] rarr in roads)
+            {
+                foreach (Road r in rarr)
+                {
+                    r.playerIndex = -1;
+                }
+            }
+
+            foreach (Transform child in roadHolder.transform)
+            {
+                child.gameObject.GetComponent<RoadGameObject>().ResetBoardTokenObject();
+            }
         }
 
         /// <summary>
@@ -93,20 +136,6 @@ namespace Catan.GameBoard
             foreach (Transform child in tileHolder.transform)
             {
                 GameObject.Destroy(child.gameObject);
-            }
-        }
-
-        /// <summary>
-        /// Function for debugging
-        /// </summary>
-        public void PrintTest()
-        {
-            for (int i = 0; i < tiles.Length; i++)
-            { 
-                for (int j = 0; j < tiles[i].Length; j++)
-                {
-                    (int, int)[] t = tiles.GetSurroundingVertices(vertices, i, j);
-                }
             }
         }
 

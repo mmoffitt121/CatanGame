@@ -24,6 +24,14 @@ namespace Catan.GameBoard
             city.GetComponent<Renderer>().material.color = player.playerColor;
         }
 
+        public override void ResetBoardTokenObject()
+        {
+            base.ResetBoardTokenObject();
+            city.GetComponent<Renderer>().material.color = Color.white;
+            port.GetComponent<MeshRenderer>().enabled = false;
+            UpdateMesh();
+        }
+
         public void UpdateMesh()
         {
             switch (GameObject.Find("Board").GetComponent<Board>().vertices[xIndex][yIndex].development)
