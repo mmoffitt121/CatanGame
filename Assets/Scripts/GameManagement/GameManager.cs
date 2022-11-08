@@ -16,6 +16,8 @@ using Catan.AI;
 using System.Linq;
 using UnityEngine.UIElements;
 using Catan.Settings;
+using Catan.Tests;
+using System.Reflection;
 
 namespace Catan.GameManagement
 {
@@ -51,17 +53,24 @@ namespace Catan.GameManagement
 
         public bool quickRolling;
 
+        public int totalTurns = 0;
+        public int totalRounds = 0;
+        public Statistics stats;
+        public TestSuite testSuite;
+
         public void Start()
         {
             LoadPlayers();
+            quickRolling = GameSettings.quickrolling;
             boardInitializer.Initialize();
         }
 
         public void SetDefaultPlayers()
         {
-            Player[] gplayers = new Player[6];
+            Player[] gplayers = new Player[4];
             
             gplayers[0] = new Player(true);
+            gplayers[0].agent = new HasBrosAgent(gplayers[0]);
             gplayers[0].playerColor = new Color(100 / 255f, 100 / 255f, 255 / 255f);
             gplayers[0].primaryUIColor = new Color(190 / 255f, 200 / 255f, 255 / 255f);
             gplayers[0].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
@@ -69,6 +78,7 @@ namespace Catan.GameManagement
             gplayers[0].playerIndex = 0;
 
             gplayers[1] = new Player(true);
+            gplayers[1].agent = new HasBrosAgent(gplayers[1]);
             gplayers[1].playerColor = new Color(255 / 255f, 100 / 255f, 100 / 255f);
             gplayers[1].primaryUIColor = new Color(255 / 255f, 150 / 255f, 150 / 255f);
             gplayers[1].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
@@ -88,20 +98,6 @@ namespace Catan.GameManagement
             gplayers[3].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
             gplayers[3].playerName = "Player 4";
             gplayers[3].playerIndex = 3;
-
-            gplayers[4] = new Player(true);
-            gplayers[4].playerColor = new Color(205 / 255f, 255 / 255f, 12 / 255f);
-            gplayers[4].primaryUIColor = new Color(250 / 255f, 250 / 255f, 100 / 255f);
-            gplayers[4].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            gplayers[4].playerName = "Jim the AI";
-            gplayers[4].playerIndex = 4;
-
-            gplayers[5] = new Player(true);
-            gplayers[5].playerColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
-            gplayers[5].primaryUIColor = new Color(10 / 255f, 200 / 255f, 200 / 255f);
-            gplayers[5].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            gplayers[5].playerName = "Kevin";
-            gplayers[5].playerIndex = 5;
 
             foreach (Player p in gplayers)
             {
@@ -130,10 +126,11 @@ namespace Catan.GameManagement
             }
         }
 
-        public void UpdateScores()
+        public void UpdateScores(bool updateUI = true)
         {
             scoreBuilder.CalculateScores(players);
-            UIManager.UpdateUI();
+
+            if (updateUI) { UIManager.UpdateUI(); }
         }
 
         public void Roll()
@@ -171,6 +168,58 @@ namespace Catan.GameManagement
             nextTurn = true;
         }
 
+        public void OnVictory(Player winner)
+        {
+            Debug.Log("Winner! " + winner.playerName + " has won!");
+
+            if (stats != null)
+            {
+                testSuite.SaveGame();
+            }
+
+            if (GameSettings.testing)
+            {
+                ResetGameAndBegin();
+            }
+        }
+
+        public void OnStaleMate()
+        {
+            Debug.Log("Stalemate.");
+
+            if (stats != null)
+            {
+                testSuite.SaveGame();
+            }
+
+            if (GameSettings.testing)
+            {
+                ResetGameAndBegin();
+            }
+        }
+
+        public void ResetGameAndBegin()
+        {
+            ResetGame();
+            UIManager.AdvanceTurn();
+        }
+
+        public void ResetGame()
+        {
+            boardInitializer.Reinitialize();
+            turn = 0;
+            phase = -1;
+            starting = true;
+            reverseTurnOrder = false;
+            nextTurn = false;
+            movingRobber = false;
+            totalRounds = 0;
+            totalTurns = 0;
+
+            UpdateScores(false);
+            UIManager.ResetUI();
+        }
+
         public void ToNextTurn()
         {
             scoreBuilder.CalculateScores(players);
@@ -179,7 +228,13 @@ namespace Catan.GameManagement
             Player winner = players.GetWinner();
             if (winner != null)
             {
-                Debug.Log("Winner! " + winner.playerName + " has won!");
+                OnVictory(winner);
+                return;
+            }
+
+            if (totalTurns > GameSettings.maxTurns)
+            {
+                OnStaleMate();
                 return;
             }
 
@@ -217,15 +272,15 @@ namespace Catan.GameManagement
                 {
                     phase = 0;
                     turn++;
+                    totalTurns += 1;
                 }
 
                 // Reset turn
                 if (turn >= players.Length || turn == -1)
                 {
                     turn = 0;
+                    totalRounds += 1;
                 }
-
-                // AI actions
             }
 
             if (currentPlayer.isAI)

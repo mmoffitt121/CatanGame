@@ -6,6 +6,7 @@ using TMPro;
 using Catan.AI;
 using Catan.Players;
 using Catan.ResourcePhase;
+using System;
 
 namespace Catan.UI
 {
@@ -127,12 +128,33 @@ namespace Catan.UI
 
         public void AgentLeft()
         {
-
+            chosenAgent = (AgentType)(((int)chosenAgent + 1) % Enum.GetNames(typeof(AgentType)).Length);
+            UpdateAgentDisplay();
         }
 
         public void AgentRight()
         {
+            chosenAgent = (AgentType)((int)chosenAgent - 1);
+            if (chosenAgent < 0)
+            {
+                chosenAgent = (AgentType)(Enum.GetNames(typeof(AgentType)).Length - 1);
+            }
+            UpdateAgentDisplay();
+        }
 
+        public void UpdateAgentDisplay()
+        {
+            switch (chosenAgent)
+            {
+                case AgentType.HasBrosAI:
+                    chooseAgent.text = "Has Bros";
+                    break;
+                case AgentType.Random:
+                    chooseAgent.text = "Random";
+                    break;
+                default:
+                    break;
+            }
         }
 
         public Player GetPlayer()
@@ -175,10 +197,11 @@ namespace Catan.UI
 
         public void Start()
         {
-            
+            chosenAgent = AgentType.HasBrosAI;
             colorPanel.color = uiColors[color];
             playerName.GetComponent<TextMeshProUGUI>().text = pName;
             UpdateDisplayColors();
+            UpdateAgentDisplay();
         }
 
         public enum PlayerMode
