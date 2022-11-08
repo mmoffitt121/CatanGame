@@ -16,6 +16,8 @@ using Catan.AI;
 using System.Linq;
 using UnityEngine.UIElements;
 using Catan.Settings;
+using Catan.Tests;
+using System.Reflection;
 
 namespace Catan.GameManagement
 {
@@ -51,6 +53,11 @@ namespace Catan.GameManagement
 
         public bool quickRolling;
 
+        public int totalTurns = 0;
+        public int totalRounds = 0;
+        public Statistics stats;
+        public TestSuite testSuite;
+
         public void Start()
         {
             LoadPlayers();
@@ -62,6 +69,7 @@ namespace Catan.GameManagement
             Player[] gplayers = new Player[6];
             
             gplayers[0] = new Player(true);
+            gplayers[0].agent = new HasBrosAgent(gplayers[0]);
             gplayers[0].playerColor = new Color(100 / 255f, 100 / 255f, 255 / 255f);
             gplayers[0].primaryUIColor = new Color(190 / 255f, 200 / 255f, 255 / 255f);
             gplayers[0].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
@@ -69,6 +77,7 @@ namespace Catan.GameManagement
             gplayers[0].playerIndex = 0;
 
             gplayers[1] = new Player(true);
+            gplayers[1].agent = new HasBrosAgent(gplayers[1]);
             gplayers[1].playerColor = new Color(255 / 255f, 100 / 255f, 100 / 255f);
             gplayers[1].primaryUIColor = new Color(255 / 255f, 150 / 255f, 150 / 255f);
             gplayers[1].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
@@ -171,6 +180,26 @@ namespace Catan.GameManagement
             nextTurn = true;
         }
 
+        public void OnVictory(Player winner)
+        {
+            Debug.Log("Winner! " + winner.playerName + " has won!");
+
+            if (stats != null)
+            {
+                stats.SaveGame();
+            }
+        }
+
+        public void OnStaleMate()
+        {
+            Debug.Log("Stalemate.");
+
+            if (stats != null)
+            {
+                testSuite.SaveGame();
+            }
+        }
+
         public void ToNextTurn()
         {
             scoreBuilder.CalculateScores(players);
@@ -179,7 +208,13 @@ namespace Catan.GameManagement
             Player winner = players.GetWinner();
             if (winner != null)
             {
-                Debug.Log("Winner! " + winner.playerName + " has won!");
+                OnVictory(winner);
+                return;
+            }
+
+            if (totalTurns > GameSettings.maxTurns)
+            {
+                OnStaleMate();
                 return;
             }
 
@@ -217,15 +252,15 @@ namespace Catan.GameManagement
                 {
                     phase = 0;
                     turn++;
+                    totalTurns += 1;
                 }
 
                 // Reset turn
                 if (turn >= players.Length || turn == -1)
                 {
                     turn = 0;
+                    totalRounds += 1;
                 }
-
-                // AI actions
             }
 
             if (currentPlayer.isAI)

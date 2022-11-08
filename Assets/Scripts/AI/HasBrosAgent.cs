@@ -23,7 +23,7 @@ namespace Catan.AI
     {
         public HasBrosAgent(Player plyr) : base(plyr)
         {
-            agentName = "Random Agent";
+            agentName = "Has Bros Agent";
         }
 
         public override void StartTrading()
