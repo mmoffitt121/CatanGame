@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class TradePhase : MonoBehaviour
 {
+    public GameObject playerSelect;
     public GameObject tradeWindow;
-    public GameObject offerWindow;
     public GameObject portTradeWindow;
+    public GameObject offerWindow;
     public GameObject tradeButton;
     public GameManager gm;
+
+    public void OpenPlayerSelectWindow()
+    {
+
+    }
 
     public void OpenTradeWindow()
     {
