@@ -792,7 +792,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 557908f5c532c0047bc0a2b98dbb5f1c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e0fe161927ceae1468583ff053bafcd5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1168,6 +1168,7 @@ GameObject:
   - component: {fileID: 107588239}
   - component: {fileID: 107588238}
   - component: {fileID: 107588237}
+  - component: {fileID: 107588240}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -1189,7 +1190,7 @@ RectTransform:
   m_Children:
   - {fileID: 1637266063}
   m_Father: {fileID: 1735743383}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1240,14 +1241,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 107588240}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1290,6 +1291,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107588235}
   m_CullTransparentMesh: 1
+--- !u!114 &107588240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107588235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 3
+  change: 1
 --- !u!1 &109570275
 GameObject:
   m_ObjectHideFlags: 0
@@ -2967,10 +2983,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1819985604}
-  - {fileID: 464713232}
-  - {fileID: 1263905197}
   - {fileID: 1926829526}
   - {fileID: 1501980871}
+  - {fileID: 464713232}
+  - {fileID: 1263905197}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4074,10 +4090,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 455765493}
-  - {fileID: 589095396}
-  - {fileID: 1850676369}
   - {fileID: 1935861978}
   - {fileID: 1179516663}
+  - {fileID: 589095396}
+  - {fileID: 1850676369}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4695,13 +4711,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254518080}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 681511388}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6638,7 +6654,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 557908f5c532c0047bc0a2b98dbb5f1c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a177293a905c03946b8d1af2dd78a4aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6668,6 +6684,7 @@ GameObject:
   - component: {fileID: 342940305}
   - component: {fileID: 342940304}
   - component: {fileID: 342940303}
+  - component: {fileID: 342940306}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -6689,7 +6706,7 @@ RectTransform:
   m_Children:
   - {fileID: 564051091}
   m_Father: {fileID: 700044348}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6740,14 +6757,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 342940306}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6790,6 +6807,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 342940301}
   m_CullTransparentMesh: 1
+--- !u!114 &342940306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342940301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 4
+  change: 1
 --- !u!1 &350380074
 GameObject:
   m_ObjectHideFlags: 0
@@ -7033,7 +7065,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2030894210}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7283,7 +7315,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 870008759}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7399,6 +7431,7 @@ GameObject:
   - component: {fileID: 435078525}
   - component: {fileID: 435078524}
   - component: {fileID: 435078523}
+  - component: {fileID: 435078526}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -7420,7 +7453,7 @@ RectTransform:
   m_Children:
   - {fileID: 1210479033}
   m_Father: {fileID: 870008759}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7471,14 +7504,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 435078526}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7521,6 +7554,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 435078521}
   m_CullTransparentMesh: 1
+--- !u!114 &435078526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435078521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 4
+  change: 1
 --- !u!1 &437050846
 GameObject:
   m_ObjectHideFlags: 0
@@ -7552,7 +7600,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2030894210}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8092,6 +8140,7 @@ GameObject:
   - component: {fileID: 464713235}
   - component: {fileID: 464713234}
   - component: {fileID: 464713233}
+  - component: {fileID: 464713236}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -8113,7 +8162,7 @@ RectTransform:
   m_Children:
   - {fileID: 570374233}
   m_Father: {fileID: 176425514}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8164,14 +8213,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 464713236}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8214,6 +8263,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464713231}
   m_CullTransparentMesh: 1
+--- !u!114 &464713236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464713231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 3
+  change: -1
 --- !u!1 &472589202
 GameObject:
   m_ObjectHideFlags: 0
@@ -9628,14 +9692,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1589326962}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 613262579}
+        m_TargetAssemblyTypeName: TradePhasePlayerSelect, Assembly-CSharp
+        m_MethodName: SelectPlayer
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9766,6 +9830,7 @@ GameObject:
   - component: {fileID: 551668074}
   - component: {fileID: 551668073}
   - component: {fileID: 551668072}
+  - component: {fileID: 551668075}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -9787,7 +9852,7 @@ RectTransform:
   m_Children:
   - {fileID: 1843784364}
   m_Father: {fileID: 681511388}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9838,14 +9903,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 551668075}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9888,6 +9953,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 551668070}
   m_CullTransparentMesh: 1
+--- !u!114 &551668075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551668070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 2
+  change: 1
 --- !u!1 &556151646
 GameObject:
   m_ObjectHideFlags: 0
@@ -10189,10 +10269,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1281607031}
-  - {fileID: 2036475447}
-  - {fileID: 1249180529}
   - {fileID: 1189531022}
   - {fileID: 1216443863}
+  - {fileID: 2036475447}
+  - {fileID: 1249180529}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10749,6 +10829,7 @@ GameObject:
   - component: {fileID: 589095399}
   - component: {fileID: 589095398}
   - component: {fileID: 589095397}
+  - component: {fileID: 589095400}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -10770,7 +10851,7 @@ RectTransform:
   m_Children:
   - {fileID: 1205665250}
   m_Father: {fileID: 223809942}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10821,14 +10902,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 589095400}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -10871,6 +10952,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 589095395}
   m_CullTransparentMesh: 1
+--- !u!114 &589095400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589095395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 0
+  change: -1
 --- !u!1 &596085550
 GameObject:
   m_ObjectHideFlags: 0
@@ -10902,7 +10998,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1972504593}
-  m_RootOrder: 8
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11037,7 +11133,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1735743383}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11159,7 +11255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &613262576
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11751,6 +11847,7 @@ GameObject:
   - component: {fileID: 664898213}
   - component: {fileID: 664898212}
   - component: {fileID: 664898211}
+  - component: {fileID: 664898214}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -11772,7 +11869,7 @@ RectTransform:
   m_Children:
   - {fileID: 2005116550}
   m_Father: {fileID: 870008759}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11823,14 +11920,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 664898214}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -11873,6 +11970,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 664898209}
   m_CullTransparentMesh: 1
+--- !u!114 &664898214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664898209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 4
+  change: -1
 --- !u!1 &667851323
 GameObject:
   m_ObjectHideFlags: 0
@@ -11931,7 +12043,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 557908f5c532c0047bc0a2b98dbb5f1c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 53451499766238946b6251546ba9339c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12115,10 +12227,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 110840472}
-  - {fileID: 1147752452}
-  - {fileID: 551668071}
   - {fileID: 1572695063}
   - {fileID: 254518081}
+  - {fileID: 1147752452}
+  - {fileID: 551668071}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12275,10 +12387,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 999282038}
-  - {fileID: 1864470064}
-  - {fileID: 342940302}
   - {fileID: 1771256218}
   - {fileID: 759481900}
+  - {fileID: 1864470064}
+  - {fileID: 342940302}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13065,13 +13177,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1589326962}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 613262579}
+        m_TargetAssemblyTypeName: TradePhasePlayerSelect, Assembly-CSharp
+        m_MethodName: SelectPlayer
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13460,7 +13572,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 700044348}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13717,7 +13829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &801734293
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14398,10 +14510,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1559331933}
-  - {fileID: 664898210}
-  - {fileID: 435078522}
   - {fileID: 1735843989}
   - {fileID: 421454771}
+  - {fileID: 664898210}
+  - {fileID: 435078522}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14865,6 +14977,7 @@ GameObject:
   - component: {fileID: 916883338}
   - component: {fileID: 916883337}
   - component: {fileID: 916883336}
+  - component: {fileID: 916883339}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -14886,7 +14999,7 @@ RectTransform:
   m_Children:
   - {fileID: 313344576}
   m_Father: {fileID: 1615915363}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14937,14 +15050,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 916883339}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -14987,6 +15100,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916883334}
   m_CullTransparentMesh: 1
+--- !u!114 &916883339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916883334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 2
+  change: -1
 --- !u!1 &924424247
 GameObject:
   m_ObjectHideFlags: 0
@@ -15630,6 +15758,7 @@ GameObject:
   - component: {fileID: 982768661}
   - component: {fileID: 982768660}
   - component: {fileID: 982768659}
+  - component: {fileID: 982768662}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -15651,7 +15780,7 @@ RectTransform:
   m_Children:
   - {fileID: 1567565096}
   m_Father: {fileID: 2030894210}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -15702,14 +15831,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 982768662}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -15752,6 +15881,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 982768657}
   m_CullTransparentMesh: 1
+--- !u!114 &982768662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982768657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 1
+  change: 1
 --- !u!1 &985977160
 GameObject:
   m_ObjectHideFlags: 0
@@ -16401,7 +16545,7 @@ RectTransform:
   - {fileID: 579555734}
   - {fileID: 1908871893}
   m_Father: {fileID: 1972504593}
-  m_RootOrder: 12
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -17244,10 +17388,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1783477298}
-  - {fileID: 1954754106}
-  - {fileID: 1911850173}
   - {fileID: 2079953118}
   - {fileID: 1878769346}
+  - {fileID: 1954754106}
+  - {fileID: 1911850173}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18362,6 +18506,7 @@ GameObject:
   - component: {fileID: 1147752455}
   - component: {fileID: 1147752454}
   - component: {fileID: 1147752453}
+  - component: {fileID: 1147752456}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -18383,7 +18528,7 @@ RectTransform:
   m_Children:
   - {fileID: 1921142682}
   m_Father: {fileID: 681511388}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -18434,14 +18579,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 1147752456}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -18484,6 +18629,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147752451}
   m_CullTransparentMesh: 1
+--- !u!114 &1147752456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147752451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 2
+  change: -1
 --- !u!1 &1154004117
 GameObject:
   m_ObjectHideFlags: 0
@@ -18995,7 +19155,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 223809942}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -19234,7 +19394,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 564201714}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -19504,7 +19664,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1735743383}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20120,7 +20280,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 564201714}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20358,7 +20518,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 557908f5c532c0047bc0a2b98dbb5f1c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a71ec769201207042a59f69c7e13e105, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -20388,6 +20548,7 @@ GameObject:
   - component: {fileID: 1249180532}
   - component: {fileID: 1249180531}
   - component: {fileID: 1249180530}
+  - component: {fileID: 1249180533}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -20409,7 +20570,7 @@ RectTransform:
   m_Children:
   - {fileID: 443938869}
   m_Father: {fileID: 564201714}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20460,14 +20621,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 1249180533}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -20510,6 +20671,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249180528}
   m_CullTransparentMesh: 1
+--- !u!114 &1249180533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249180528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 1
+  change: 1
 --- !u!1 &1251526018
 GameObject:
   m_ObjectHideFlags: 0
@@ -20544,7 +20720,7 @@ RectTransform:
   - {fileID: 1930933775}
   - {fileID: 664086837}
   m_Father: {fileID: 1972504593}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20796,6 +20972,7 @@ GameObject:
   - component: {fileID: 1263905200}
   - component: {fileID: 1263905199}
   - component: {fileID: 1263905198}
+  - component: {fileID: 1263905201}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -20817,7 +20994,7 @@ RectTransform:
   m_Children:
   - {fileID: 584760503}
   m_Father: {fileID: 176425514}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20868,14 +21045,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 1263905201}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -20918,6 +21095,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263905196}
   m_CullTransparentMesh: 1
+--- !u!114 &1263905201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263905196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 3
+  change: 1
 --- !u!1 &1275067090
 GameObject:
   m_ObjectHideFlags: 0
@@ -21515,6 +21707,7 @@ GameObject:
   - component: {fileID: 1315330608}
   - component: {fileID: 1315330607}
   - component: {fileID: 1315330606}
+  - component: {fileID: 1315330609}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -21536,7 +21729,7 @@ RectTransform:
   m_Children:
   - {fileID: 1687798229}
   m_Father: {fileID: 1615915363}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21587,14 +21780,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 1315330609}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -21637,6 +21830,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315330604}
   m_CullTransparentMesh: 1
+--- !u!114 &1315330609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315330604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 2
+  change: 1
 --- !u!1 &1332016179
 GameObject:
   m_ObjectHideFlags: 0
@@ -21671,7 +21879,7 @@ RectTransform:
   - {fileID: 892847945}
   - {fileID: 189254391}
   m_Father: {fileID: 1972504593}
-  m_RootOrder: 13
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -21881,7 +22089,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1615915363}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -23367,7 +23575,7 @@ RectTransform:
   m_Children:
   - {fileID: 1940225940}
   m_Father: {fileID: 1972504593}
-  m_RootOrder: 6
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -23563,7 +23771,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 176425514}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -23751,14 +23959,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1589326962}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 613262579}
+        m_TargetAssemblyTypeName: TradePhasePlayerSelect, Assembly-CSharp
+        m_MethodName: SelectPlayer
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -24425,13 +24633,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572695062}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 681511388}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -24725,10 +24933,10 @@ RectTransform:
   m_Father: {fileID: 1263147209}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: -1056, y: -520}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1589326964
 MonoBehaviour:
@@ -24749,7 +24957,6 @@ MonoBehaviour:
   tradeButton: {fileID: 801734292}
   nextButton: {fileID: 122139187}
   gm: {fileID: 1402203379}
-  selectedPlayerIndex: 0
 --- !u!1 &1592743956
 GameObject:
   m_ObjectHideFlags: 0
@@ -24781,7 +24988,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1615915363}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -25104,14 +25311,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1589326962}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 613262579}
+        m_TargetAssemblyTypeName: TradePhasePlayerSelect, Assembly-CSharp
+        m_MethodName: SelectPlayer
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -25185,10 +25392,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 479946728}
-  - {fileID: 916883335}
-  - {fileID: 1315330605}
   - {fileID: 1592743957}
   - {fileID: 1382141658}
+  - {fileID: 916883335}
+  - {fileID: 1315330605}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26344,7 +26551,7 @@ RectTransform:
   - {fileID: 1785781482}
   - {fileID: 2026070236}
   m_Father: {fileID: 1972504593}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -26420,10 +26627,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 746818944}
-  - {fileID: 2018853434}
-  - {fileID: 107588236}
   - {fileID: 611843849}
   - {fileID: 1195655482}
+  - {fileID: 2018853434}
+  - {fileID: 107588236}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26501,7 +26708,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 870008759}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -26850,7 +27057,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1972504593}
-  m_RootOrder: 7
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -26985,7 +27192,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 700044348}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -27992,6 +28199,7 @@ GameObject:
   - component: {fileID: 1850676372}
   - component: {fileID: 1850676371}
   - component: {fileID: 1850676370}
+  - component: {fileID: 1850676373}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -28013,7 +28221,7 @@ RectTransform:
   m_Children:
   - {fileID: 1891178227}
   m_Father: {fileID: 223809942}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -28064,14 +28272,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 1850676373}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -28114,6 +28322,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850676368}
   m_CullTransparentMesh: 1
+--- !u!114 &1850676373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850676368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 0
+  change: 1
 --- !u!1 &1861889056
 GameObject:
   m_ObjectHideFlags: 0
@@ -28204,6 +28427,7 @@ GameObject:
   - component: {fileID: 1864470067}
   - component: {fileID: 1864470066}
   - component: {fileID: 1864470065}
+  - component: {fileID: 1864470068}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -28225,7 +28449,7 @@ RectTransform:
   m_Children:
   - {fileID: 529413047}
   m_Father: {fileID: 700044348}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -28276,14 +28500,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 1864470068}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -28326,6 +28550,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864470063}
   m_CullTransparentMesh: 1
+--- !u!114 &1864470068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864470063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 4
+  change: -1
 --- !u!1 &1867436116
 GameObject:
   m_ObjectHideFlags: 0
@@ -28569,7 +28808,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1070144673}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -29288,6 +29527,7 @@ GameObject:
   - component: {fileID: 1911850176}
   - component: {fileID: 1911850175}
   - component: {fileID: 1911850174}
+  - component: {fileID: 1911850177}
   m_Layer: 5
   m_Name: +
   m_TagString: Untagged
@@ -29309,7 +29549,7 @@ RectTransform:
   m_Children:
   - {fileID: 796275917}
   m_Father: {fileID: 1070144673}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -29360,14 +29600,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 1911850177}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -29410,6 +29650,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911850172}
   m_CullTransparentMesh: 1
+--- !u!114 &1911850177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911850172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 0
+  change: 1
 --- !u!1 &1921142681
 GameObject:
   m_ObjectHideFlags: 0
@@ -29710,7 +29965,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 176425514}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -29980,7 +30235,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 223809942}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -30501,6 +30756,7 @@ GameObject:
   - component: {fileID: 1954754109}
   - component: {fileID: 1954754108}
   - component: {fileID: 1954754107}
+  - component: {fileID: 1954754110}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -30522,7 +30778,7 @@ RectTransform:
   m_Children:
   - {fileID: 1128997366}
   m_Father: {fileID: 1070144673}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -30573,14 +30829,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 1954754110}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -30623,6 +30879,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954754105}
   m_CullTransparentMesh: 1
+--- !u!114 &1954754110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954754105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 0
+  change: -1
 --- !u!1 &1966339440
 GameObject:
   m_ObjectHideFlags: 0
@@ -30795,14 +31066,14 @@ RectTransform:
   - {fileID: 1750287883}
   - {fileID: 1275067091}
   - {fileID: 19488067}
-  - {fileID: 1499342720}
-  - {fileID: 1765919266}
-  - {fileID: 596085551}
   - {fileID: 1251526019}
   - {fileID: 1714226086}
   - {fileID: 2118266300}
   - {fileID: 1017840004}
   - {fileID: 1332016180}
+  - {fileID: 1499342720}
+  - {fileID: 1765919266}
+  - {fileID: 596085551}
   m_Father: {fileID: 1589326963}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31413,6 +31684,7 @@ GameObject:
   - component: {fileID: 2018853437}
   - component: {fileID: 2018853436}
   - component: {fileID: 2018853435}
+  - component: {fileID: 2018853438}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -31434,7 +31706,7 @@ RectTransform:
   m_Children:
   - {fileID: 1673625335}
   m_Father: {fileID: 1735743383}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -31485,14 +31757,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 2018853438}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -31535,6 +31807,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018853433}
   m_CullTransparentMesh: 1
+--- !u!114 &2018853438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018853433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 3
+  change: -1
 --- !u!1 &2024298929
 GameObject:
   m_ObjectHideFlags: 0
@@ -31823,10 +32110,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1574682752}
-  - {fileID: 2033816675}
-  - {fileID: 982768658}
   - {fileID: 437050847}
   - {fileID: 404022254}
+  - {fileID: 2033816675}
+  - {fileID: 982768658}
   m_Father: {fileID: 2118332119}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31885,6 +32172,7 @@ GameObject:
   - component: {fileID: 2033816678}
   - component: {fileID: 2033816677}
   - component: {fileID: 2033816676}
+  - component: {fileID: 2033816679}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -31906,7 +32194,7 @@ RectTransform:
   m_Children:
   - {fileID: 94853926}
   m_Father: {fileID: 2030894210}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -31957,14 +32245,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 2033816679}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -32007,6 +32295,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033816674}
   m_CullTransparentMesh: 1
+--- !u!114 &2033816679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033816674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 1
+  resource: 1
+  change: -1
 --- !u!1 &2036475446
 GameObject:
   m_ObjectHideFlags: 0
@@ -32019,6 +32322,7 @@ GameObject:
   - component: {fileID: 2036475450}
   - component: {fileID: 2036475449}
   - component: {fileID: 2036475448}
+  - component: {fileID: 2036475451}
   m_Layer: 5
   m_Name: '-'
   m_TagString: Untagged
@@ -32040,7 +32344,7 @@ RectTransform:
   m_Children:
   - {fileID: 160958510}
   m_Father: {fileID: 564201714}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -32091,14 +32395,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1402430475}
-        m_TargetAssemblyTypeName: Catan.UI.ResourceSplit, Assembly-CSharp
-        m_MethodName: AddWood
-        m_Mode: 3
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_ObjectArgument: {fileID: 2036475451}
+          m_ObjectArgumentAssemblyTypeName: TradePhaseButtonArgs, Assembly-CSharp
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -32141,6 +32445,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036475446}
   m_CullTransparentMesh: 1
+--- !u!114 &2036475451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036475446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82ad33b53f47214d8e78f0afa8c007f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pY: 0
+  resource: 1
+  change: -1
 --- !u!1 &2036680949
 GameObject:
   m_ObjectHideFlags: 0
@@ -32657,14 +32976,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1589326962}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 613262579}
+        m_TargetAssemblyTypeName: TradePhasePlayerSelect, Assembly-CSharp
+        m_MethodName: SelectPlayer
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -32738,7 +33057,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1070144673}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -33011,7 +33330,7 @@ RectTransform:
   - {fileID: 1886610093}
   - {fileID: 231474619}
   m_Father: {fileID: 1972504593}
-  m_RootOrder: 11
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -33161,6 +33480,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36e41c7371fd464d98d37012222f56f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tradePhase: {fileID: 1589326964}
+  playerXLabel: {fileID: 72007792}
+  playerYLabel: {fileID: 1867436118}
+  offerButton: {fileID: 1055491806}
+  playerXTotalWheatDisplay: {fileID: 1878769347}
+  playerXTotalSheepDisplay: {fileID: 1216443864}
+  playerXTotalWoodDisplay: {fileID: 254518082}
+  playerXTotalBrickDisplay: {fileID: 1195655483}
+  playerXTotalOreDisplay: {fileID: 759481901}
+  playerYTotalWheatDisplay: {fileID: 1179516664}
+  playerYTotalSheepDisplay: {fileID: 404022255}
+  playerYTotalWoodDisplay: {fileID: 1382141659}
+  playerYTotalBrickDisplay: {fileID: 1501980872}
+  playerYTotalOreDisplay: {fileID: 421454772}
+  playerXWheatDisplay: {fileID: 2079953119}
+  playerXSheepDisplay: {fileID: 1189531023}
+  playerXWoodDisplay: {fileID: 1572695064}
+  playerXBrickDisplay: {fileID: 611843850}
+  playerXOreDisplay: {fileID: 1771256219}
+  playerYWheatDisplay: {fileID: 1935861979}
+  playerYSheepDisplay: {fileID: 437050848}
+  playerYWoodDisplay: {fileID: 1592743958}
+  playerYBrickDisplay: {fileID: 1926829527}
+  playerYOreDisplay: {fileID: 1735843990}
 --- !u!1 &2121562258
 GameObject:
   m_ObjectHideFlags: 0

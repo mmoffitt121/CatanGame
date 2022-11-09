@@ -1,4 +1,5 @@
 using Catan.GameManagement;
+using Catan.Players;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class TradePhase : MonoBehaviour
     public GameObject nextButton;
     public GameManager gm;
 
-    public int selectedPlayerIndex;
+    public Player selectedPlayer;
 
     public void OpenPlayerSelectWindow()
     {
@@ -25,6 +26,7 @@ public class TradePhase : MonoBehaviour
     public void OpenTradeWindow()
     {
         CloseTradeWindows();
+        tradeWindow.GetComponent<TradePhaseTradeWindow>().Initialize();
         tradeWindow.SetActive(true);
     }
 
@@ -60,7 +62,7 @@ public class TradePhase : MonoBehaviour
     public void Start()
     {
         playerSelect.GetComponent<TradePhasePlayerSelect>().tradePhase = this;
-        tradeWindow.GetComponent<TradePhaseTradeWindow>();
+        tradeWindow.GetComponent<TradePhaseTradeWindow>().tradePhase = this;
         portTradeWindow.GetComponent<TradePhasePortTrade>();
         offerWindow.GetComponent<TradePhaseTradeOffer>();
     }
