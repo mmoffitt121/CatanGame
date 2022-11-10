@@ -1,6 +1,7 @@
 using Catan.Players;
 using Catan.ResourcePhase;
 using Catan.AI;
+using Catan.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,16 +52,36 @@ namespace Catan.TradePhase
         {
             if (p2.isAI)
             {
-                if (p2.agent.ChooseAcceptTradeDeal(p1, p2, p1Offer, p2Offer))
+                if (p1.isAI)
                 {
-                    Trade(p1, p2, p1Offer, p2Offer);
-                    p1.agent.OfferResultRecieved(true);
+                    if (p2.agent.ChooseAcceptTradeDeal(p1, p2, p1Offer, p2Offer))
+                    {
+                        Trade(p1, p2, p1Offer, p2Offer);
+                        p1.agent.OfferResultRecieved(true);
+                    }
+                    else
+                    {
+                        p1.agent.OfferResultRecieved(false);
+                    }
                 }
-                p1.agent.OfferResultRecieved(false);
+                else
+                {
+                    UI.TradePhase tf = GameObject.Find("UI").transform.GetChild(7).GetComponent<UI.TradePhase>();
+                    if (p2.agent.ChooseAcceptTradeDeal(p1, p2, p1Offer, p2Offer))
+                    {
+                        Trade(p1, p2, p1Offer, p2Offer);
+                        tf.ShowTradeResultWindow(true);
+                    }
+                    else
+                    {
+                        tf.ShowTradeResultWindow(false);
+                    }
+                }
             }
             else
             {
-                UI.TradePhase tf = GameObject.Find("Trade Phase").GetComponent<UI.TradePhase>();
+                Catan.UI.TradePhase tf = GameObject.Find("UI").transform.GetChild(7).GetComponent<UI.TradePhase>();
+                tf.ShowOffer(p1, p2, p1Offer, p2Offer);
             }
         }
     }

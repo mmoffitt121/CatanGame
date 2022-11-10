@@ -39,6 +39,8 @@ namespace Catan.UI
         public GameObject rSplit;
         public GameObject rSteal;
 
+        public GameObject tradePhase;
+
         public void AdvanceTurn()
         {
             if (gameManager.phase == 0 && !gameManager.starting && !gameManager.movingRobber)
@@ -172,6 +174,8 @@ namespace Catan.UI
             brickDisplay.text = gameManager.currentPlayer.resources[3].amount.ToString();
             oreDisplay.text = gameManager.currentPlayer.resources[4].amount.ToString();
 
+            tradePhase.SetActive(false);
+
             if (gameManager.starting)
             {
                 switch (gameManager.phase)
@@ -205,6 +209,7 @@ namespace Catan.UI
                         phaseDisplay.text = "Trade";
                         nextDisplay.text = "End Trading";
                         nextButton.interactable = true;
+                        tradePhase.SetActive(true);
                         break;
                     case 2:
                         phaseDisplay.text = "Build";

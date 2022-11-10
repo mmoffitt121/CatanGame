@@ -34,7 +34,11 @@ namespace Catan.AI
             {
                 Resource[] senderOffer = new Resource[] { player.RandomResource() };
                 Resource[] recieverOffer = new Resource[] { p.RandomResource() };
-                Trader.Request(player, p, senderOffer, recieverOffer, this);
+                Trader.Request(player, p, senderOffer, recieverOffer);
+            }
+            else
+            {
+                OfferResultRecieved(false);
             }
         }
 

@@ -46,11 +46,15 @@ namespace Catan.UI
             offerWindow.SetActive(true);
         }
 
-        public bool Offer(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
+        public void ShowOffer(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
         {
-            bool successful = Trader.Request(p1, p2, p1Offer, p2Offer);
+            offerWindow.GetComponent<TradePhaseTradeOffer>().Initialize(p1, p2, p1Offer, p2Offer);
+            OpenOfferWindow();
+        }
 
-            return successful;
+        public void Offer(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
+        {
+            Trader.Request(p1, p2, p1Offer, p2Offer);
         }
 
         public void ConfirmResult(bool res)
@@ -85,6 +89,7 @@ namespace Catan.UI
 
         public void ShowTradeResultWindow(bool tradeResult)
         {
+            CloseTradeWindows();
             if (tradeResult)
             {
                 acceptedText.text = "Trade Accepted!";
@@ -104,6 +109,8 @@ namespace Catan.UI
             portTradeWindow.SetActive(false);
             tradeButton.SetActive(false);
             nextButton.SetActive(false);
+            acceptedBox.SetActive(false);
+            gm.UIManager.UpdateUI();
         }
 
         public void Start()
@@ -111,7 +118,7 @@ namespace Catan.UI
             playerSelect.GetComponent<TradePhasePlayerSelect>().tradePhase = this;
             tradeWindow.GetComponent<TradePhaseTradeWindow>().tradePhase = this;
             portTradeWindow.GetComponent<TradePhasePortTrade>();
-            offerWindow.GetComponent<TradePhaseTradeOffer>();
+            offerWindow.GetComponent<TradePhaseTradeOffer>().tradePhase = this;
         }
     }
 }

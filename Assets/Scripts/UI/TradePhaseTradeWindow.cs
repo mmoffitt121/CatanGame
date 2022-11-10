@@ -143,13 +143,8 @@ public class TradePhaseTradeWindow : MonoBehaviour
         UpdateUI();
     }
 
-    public async void Offer()
+    public void Offer()
     {
-        bool successful = tradePhase.Offer(x, y, playerXOffer, playerYOffer);
-
-        if (successful)
-        {
-            Debug.Log("success");
-        }
+        tradePhase.Offer(x, y, playerXOffer, playerYOffer);
     }
 }
