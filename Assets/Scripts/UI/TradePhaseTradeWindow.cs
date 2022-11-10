@@ -1,5 +1,7 @@
 using Catan.Players;
 using Catan.ResourcePhase;
+using Catan.TradePhase;
+using Catan.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +46,15 @@ public class TradePhaseTradeWindow : MonoBehaviour
 
     Player x;
     Player y;
+
+    public Resource.ResourceType[] resourceTypes = new Resource.ResourceType[]
+    {
+        Resource.ResourceType.Grain, 
+        Resource.ResourceType.Wool, 
+        Resource.ResourceType.Wood, 
+        Resource.ResourceType.Brick, 
+        Resource.ResourceType.Ore
+    };
 
     public void Initialize()
     {
@@ -107,12 +118,38 @@ public class TradePhaseTradeWindow : MonoBehaviour
         if (args.pY)
         {
             playerYOffer[args.resource].amount += args.change;
+            if (playerYOffer[args.resource].amount < 0) 
+            { 
+                playerYOffer[args.resource].amount = 0;
+            }
+            if (playerYOffer[args.resource].amount > y.resources.Where(r => r.type == resourceTypes[args.resource]).First().amount) 
+            { 
+                playerYOffer[args.resource].amount = y.resources.Where(r => r.type == resourceTypes[args.resource]).First().amount; 
+            }
         }
         else
         {
             playerXOffer[args.resource].amount += args.change;
+            if (playerXOffer[args.resource].amount < 0) 
+            { 
+                playerXOffer[args.resource].amount = 0; 
+            }
+            if (playerXOffer[args.resource].amount > x.resources.Where(r => r.type == resourceTypes[args.resource]).First().amount)
+            {
+                playerXOffer[args.resource].amount = x.resources.Where(r => r.type == resourceTypes[args.resource]).First().amount;
+            }
         }
 
         UpdateUI();
+    }
+
+    public async void Offer()
+    {
+        bool successful = tradePhase.Offer(x, y, playerXOffer, playerYOffer);
+
+        if (successful)
+        {
+            Debug.Log("success");
+        }
     }
 }

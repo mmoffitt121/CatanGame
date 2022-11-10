@@ -2,68 +2,116 @@ using Catan.GameManagement;
 using Catan.Players;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using Catan.ResourcePhase;
+using Catan.TradePhase;
 
-public class TradePhase : MonoBehaviour
+namespace Catan.UI
 {
-    public GameObject playerSelect;
-    public GameObject tradeWindow;
-    public GameObject portTradeWindow;
-    public GameObject offerWindow;
-    public GameObject tradeButton;
-    public GameObject nextButton;
-    public GameManager gm;
-
-    public Player selectedPlayer;
-
-    public void OpenPlayerSelectWindow()
+    public class TradePhase : MonoBehaviour
     {
-        CloseTradeWindows();
-        playerSelect.GetComponent<TradePhasePlayerSelect>().Initialize();
-        playerSelect.SetActive(true);
-    }
+        public GameObject playerSelect;
+        public GameObject tradeWindow;
+        public GameObject portTradeWindow;
+        public GameObject offerWindow;
+        public GameObject tradeButton;
+        public GameObject nextButton;
+        public GameObject acceptedBox;
+        public TextMeshProUGUI acceptedText;
+        public GameManager gm;
 
-    public void OpenTradeWindow()
-    {
-        CloseTradeWindows();
-        tradeWindow.GetComponent<TradePhaseTradeWindow>().Initialize();
-        tradeWindow.SetActive(true);
-    }
+        public Player selectedPlayer;
 
-    public void OpenOfferWindow()
-    {
-        CloseTradeWindows();
-        offerWindow.SetActive(true);
-    }
+        private bool waitingForResult = false;
+        private bool result = false;
 
-    public void OpenPortTradeWindow()
-    {
-        CloseTradeWindows();
-        portTradeWindow.SetActive(true);
-    }
+        public void OpenPlayerSelectWindow()
+        {
+            CloseTradeWindows();
+            playerSelect.GetComponent<TradePhasePlayerSelect>().Initialize();
+            playerSelect.SetActive(true);
+        }
 
-    public void ShowTradeButton()
-    {
-        CloseTradeWindows();
-        tradeButton.SetActive(true);
-        nextButton.SetActive(true);
-    }
+        public void OpenTradeWindow()
+        {
+            CloseTradeWindows();
+            tradeWindow.GetComponent<TradePhaseTradeWindow>().Initialize();
+            tradeWindow.SetActive(true);
+        }
 
-    public void CloseTradeWindows()
-    {
-        playerSelect.SetActive(false);
-        tradeWindow.SetActive(false);
-        offerWindow.SetActive(false);
-        portTradeWindow.SetActive(false);
-        tradeButton.SetActive(false);
-        nextButton.SetActive(false);
-    }
+        public void OpenOfferWindow()
+        {
+            CloseTradeWindows();
+            offerWindow.SetActive(true);
+        }
 
-    public void Start()
-    {
-        playerSelect.GetComponent<TradePhasePlayerSelect>().tradePhase = this;
-        tradeWindow.GetComponent<TradePhaseTradeWindow>().tradePhase = this;
-        portTradeWindow.GetComponent<TradePhasePortTrade>();
-        offerWindow.GetComponent<TradePhaseTradeOffer>();
+        public bool Offer(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
+        {
+            bool successful = Trader.Request(p1, p2, p1Offer, p2Offer);
+
+            return successful;
+        }
+
+        public void ConfirmResult(bool res)
+        {
+            result = res;
+            waitingForResult = false;
+        }
+
+        public bool WaitForOfferResult()
+        {
+            waitingForResult = true;
+            while (waitingForResult)
+            {
+
+            }
+            
+            return result;
+        }
+
+        public void OpenPortTradeWindow()
+        {
+            CloseTradeWindows();
+            portTradeWindow.SetActive(true);
+        }
+
+        public void ShowTradeButton()
+        {
+            CloseTradeWindows();
+            tradeButton.SetActive(true);
+            nextButton.SetActive(true);
+        }
+
+        public void ShowTradeResultWindow(bool tradeResult)
+        {
+            if (tradeResult)
+            {
+                acceptedText.text = "Trade Accepted!";
+            }
+            else
+            {
+                acceptedText.text = "Trade Rejected.";
+            }
+            acceptedBox.SetActive(true);
+        }
+
+        public void CloseTradeWindows()
+        {
+            playerSelect.SetActive(false);
+            tradeWindow.SetActive(false);
+            offerWindow.SetActive(false);
+            portTradeWindow.SetActive(false);
+            tradeButton.SetActive(false);
+            nextButton.SetActive(false);
+        }
+
+        public void Start()
+        {
+            playerSelect.GetComponent<TradePhasePlayerSelect>().tradePhase = this;
+            tradeWindow.GetComponent<TradePhaseTradeWindow>().tradePhase = this;
+            portTradeWindow.GetComponent<TradePhasePortTrade>();
+            offerWindow.GetComponent<TradePhaseTradeOffer>();
+        }
     }
 }

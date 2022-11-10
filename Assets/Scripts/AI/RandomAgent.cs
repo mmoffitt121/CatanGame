@@ -26,20 +26,30 @@ namespace Catan.AI
             agentName = "Random Agent";
         }
 
+        private int trades;
         public override void StartTrading()
         {
-            for (int i = 0; i < maxTrades; i++)
+            Player p = api.Players[UnityEngine.Random.Range(0, api.Players.Length)];
+            if (p.resourceSum > 0 && p.playerIndex != player.playerIndex)
             {
-                Player p = api.Players[UnityEngine.Random.Range(0, api.Players.Length)];
-                if (p.resourceSum > 0 && p.playerIndex != player.playerIndex)
-                {
-                    Resource[] senderOffer = new Resource[] { player.RandomResource() };
-                    Resource[] recieverOffer = new Resource[] { p.RandomResource() };
-                    Trader.Request(player, p, senderOffer, recieverOffer);
-                }
+                Resource[] senderOffer = new Resource[] { player.RandomResource() };
+                Resource[] recieverOffer = new Resource[] { p.RandomResource() };
+                Trader.Request(player, p, senderOffer, recieverOffer, this);
             }
+        }
 
-            base.StartTrading();
+        public override void OfferResultRecieved(bool accepted)
+        {
+            trades++;
+            if (trades >= maxTrades)
+            {
+                trades = 0;
+                base.StartTrading();
+            }
+            else
+            {
+                StartTrading();
+            }
         }
 
         public override void StartBuilding()

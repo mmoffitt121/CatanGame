@@ -206,7 +206,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7636951}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1589326964}
+        m_TargetAssemblyTypeName: Catan.UI.TradePhase, Assembly-CSharp
+        m_MethodName: OpenPlayerSelectWindow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7636951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17048,7 +17060,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1055491807}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2118332122}
+        m_TargetAssemblyTypeName: TradePhaseTradeWindow, Assembly-CSharp
+        m_MethodName: Offer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1055491807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17521,7 +17545,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1091665443}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1589326962}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1091665443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24956,6 +24992,8 @@ MonoBehaviour:
   offerWindow: {fileID: 1187383882}
   tradeButton: {fileID: 801734292}
   nextButton: {fileID: 122139187}
+  acceptedBox: {fileID: 0}
+  acceptedText: {fileID: 0}
   gm: {fileID: 1402203379}
 --- !u!1 &1592743956
 GameObject:
@@ -33393,7 +33431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2118332119
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33504,6 +33542,7 @@ MonoBehaviour:
   playerYWoodDisplay: {fileID: 1592743958}
   playerYBrickDisplay: {fileID: 1926829527}
   playerYOreDisplay: {fileID: 1735843990}
+  resourceTypes: 0200000001000000030000000400000005000000
 --- !u!1 &2121562258
 GameObject:
   m_ObjectHideFlags: 0

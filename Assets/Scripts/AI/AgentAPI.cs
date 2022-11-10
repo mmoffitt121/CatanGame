@@ -66,7 +66,7 @@ namespace Catan.AI
 
         public bool RequestTrade(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
         {
-            return Trader.Request(p1, p2, p1Offer, p2Offer);
+            return Trader.Request(p1, p2, p1Offer, p2Offer).Result;
         }
 
         public bool BuildSettlement(Player p, int i, int j, bool starting = false)

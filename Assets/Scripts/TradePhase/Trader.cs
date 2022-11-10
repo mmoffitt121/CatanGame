@@ -1,8 +1,10 @@
 using Catan.Players;
 using Catan.ResourcePhase;
+using Catan.AI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Catan.TradePhase
@@ -45,21 +47,20 @@ namespace Catan.TradePhase
             }
         }
 
-        public static bool Request(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
+        public static void Request(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
         {
             if (p2.isAI)
             {
                 if (p2.agent.ChooseAcceptTradeDeal(p1, p2, p1Offer, p2Offer))
                 {
                     Trade(p1, p2, p1Offer, p2Offer);
-                    return true;
+                    p1.agent.OfferResultRecieved(true);
                 }
-                return false;
+                p1.agent.OfferResultRecieved(false);
             }
             else
             {
-                // Entry point to accept trade request here
-                return false;
+                UI.TradePhase tf = GameObject.Find("Trade Phase").GetComponent<UI.TradePhase>();
             }
         }
     }
