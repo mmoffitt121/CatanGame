@@ -43,6 +43,7 @@ namespace Catan.UI
         public void OpenOfferWindow()
         {
             CloseTradeWindows();
+            Debug.Log("Opening Offer Window...");
             offerWindow.SetActive(true);
         }
 
@@ -83,6 +84,11 @@ namespace Catan.UI
         public void ShowTradeButton()
         {
             CloseTradeWindows();
+            EnableTradeButton();
+        }
+
+        public void EnableTradeButton()
+        {
             tradeButton.SetActive(true);
             nextButton.SetActive(true);
         }

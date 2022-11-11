@@ -204,6 +204,7 @@ namespace Catan.UI
                         phaseDisplay.text = "Roll Resources";
                         nextDisplay.text = "Roll";
                         nextButton.interactable = true;
+                        nextButton.gameObject.SetActive(true);
                         break;
                     case 1:
                         phaseDisplay.text = "Trade";

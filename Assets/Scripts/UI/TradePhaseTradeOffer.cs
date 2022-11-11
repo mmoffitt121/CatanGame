@@ -112,8 +112,8 @@ namespace Catan.UI
             
             if (playerX.isAI)
             {
-                playerX.agent.OfferResultRecieved(response);
                 tradePhase.ShowTradeButton();
+                playerX.agent.OfferResultRecieved(response);
             }
             else
             {
