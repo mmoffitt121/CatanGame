@@ -119,6 +119,18 @@ namespace Catan.Tests
                 return ((float)StaleMates) / games.Count;
             }
         }
+
+        public int Victories(int player)
+        {
+            return games.Where(g => g.victoryPoints[player] >= 10).Count();
+        }
+
+        public float VictoryPercentage(int player)
+        {
+            if (games == null || games.Count == 0) { return 0; }
+            return games.Where(g => g.victoryPoints[player] >= 10).Count()
+                / (float)games.Count * 100f;
+        }
         #endregion
 
         #region Start
