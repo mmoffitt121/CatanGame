@@ -19,7 +19,7 @@ namespace Catan.Settings
         public static bool animations;
         public static bool quickrolling = true;
 
-        public static bool testing = false;
+        public static bool testing = true;
 
         // Player Settings
         public static Player[] players;

@@ -43,7 +43,6 @@ namespace Catan.UI
         public void OpenOfferWindow()
         {
             CloseTradeWindows();
-            Debug.Log("Opening Offer Window...");
             offerWindow.SetActive(true);
         }
 
@@ -78,6 +77,7 @@ namespace Catan.UI
         public void OpenPortTradeWindow()
         {
             CloseTradeWindows();
+            portTradeWindow.GetComponent<TradePhasePortTrade>().Initialize(gm.currentPlayer);
             portTradeWindow.SetActive(true);
         }
 

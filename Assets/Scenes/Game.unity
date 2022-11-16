@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.181921, g: 0.22760272, b: 0.30741516, a: 1}
+  m_IndirectSpecularColor: {r: 0.18192162, g: 0.22760342, b: 0.3074162, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3353,7 +3353,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 189254393}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Trade
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &189254393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4458,7 +4470,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 231474621}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Trade
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &231474621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11867,10 +11891,22 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 355027812}
   toggleTransition: 1
   graphic: {fileID: 942954852}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 1972504597}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Check
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &664086836
 GameObject:
@@ -11955,7 +11991,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 664086839}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Trade
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &664086839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16984,11 +17032,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1454166278}
   toggleTransition: 1
   graphic: {fileID: 1616489781}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 1972504597}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Check
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &1041751806
 GameObject:
   m_ObjectHideFlags: 0
@@ -17771,13 +17831,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1589326962}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1589326964}
+        m_TargetAssemblyTypeName: Catan.UI.TradePhase, Assembly-CSharp
+        m_MethodName: OpenPortTradeWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -21140,9 +21200,9 @@ RectTransform:
   - {fileID: 756230410}
   - {fileID: 1402430472}
   - {fileID: 588655200}
-  - {fileID: 1676637626}
   - {fileID: 1921215476}
   - {fileID: 1589326963}
+  - {fileID: 1676637626}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22627,11 +22687,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1395067288}
   toggleTransition: 1
   graphic: {fileID: 1277123489}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 1972504597}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Check
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &1402203377
 GameObject:
   m_ObjectHideFlags: 0
@@ -23843,7 +23915,7 @@ GameObject:
   - component: {fileID: 1499342722}
   - component: {fileID: 1499342721}
   m_Layer: 5
-  m_Name: Offer Button
+  m_Name: Back Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23913,7 +23985,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1499342722}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1589326964}
+        m_TargetAssemblyTypeName: Catan.UI.TradePhase, Assembly-CSharp
+        m_MethodName: OpenPlayerSelectWindow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1499342722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25199,7 +25283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1589326963
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25220,7 +25304,7 @@ RectTransform:
   - {fileID: 1187383883}
   - {fileID: 818592270}
   m_Father: {fileID: 1263147209}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -26666,7 +26750,7 @@ RectTransform:
   - {fileID: 1056727682}
   - {fileID: 295959579}
   m_Father: {fileID: 1263147209}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -27803,11 +27887,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1876734524}
   toggleTransition: 1
   graphic: {fileID: 1143288029}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 1972504597}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Check
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &1783477297
 GameObject:
   m_ObjectHideFlags: 0
@@ -29902,7 +29998,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1908871895}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Trade
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1908871895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30393,7 +30501,7 @@ RectTransform:
   m_Children:
   - {fileID: 331524686}
   m_Father: {fileID: 1263147209}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -30957,7 +31065,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Done
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -31601,13 +31709,14 @@ GameObject:
   - component: {fileID: 1972504595}
   - component: {fileID: 1972504594}
   - component: {fileID: 1972504596}
+  - component: {fileID: 1972504597}
   m_Layer: 5
   m_Name: Port Trade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1972504593
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31692,6 +31801,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2dbaa8be6075b409e40609425ba05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggles:
+  - {fileID: 633179188}
+  - {fileID: 1026300416}
+  - {fileID: 1401602789}
+  - {fileID: 2051618102}
+  - {fileID: 1781242213}
+  costs:
+  - {fileID: 1930933776}
+  - {fileID: 1785781483}
+  - {fileID: 1886610094}
+  - {fileID: 579555735}
+  - {fileID: 892847946}
+  amounts:
+  - {fileID: 1997165600}
+  - {fileID: 893221357}
+  - {fileID: 456708460}
+  - {fileID: 297285092}
+  - {fileID: 1154124142}
+  purchaseButtons:
+  - {fileID: 664086838}
+  - {fileID: 2026070237}
+  - {fileID: 231474620}
+  - {fileID: 1908871894}
+  - {fileID: 189254392}
+  portsLabel: {fileID: 2083611682}
+  selectedResource: 0
+  tradePhase: {fileID: 1589326964}
+  board: {fileID: 461662171}
+--- !u!114 &1972504597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972504592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!1 &1986613443
 GameObject:
   m_ObjectHideFlags: 0
@@ -32600,7 +32750,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2026070238}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Trade
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2026070238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33447,11 +33609,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1879970927}
   toggleTransition: 1
   graphic: {fileID: 499145960}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 1972504597}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 1972504596}
+        m_TargetAssemblyTypeName: TradePhasePortTrade, Assembly-CSharp
+        m_MethodName: Check
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &2075232574
 GameObject:
   m_ObjectHideFlags: 0
