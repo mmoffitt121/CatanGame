@@ -179,69 +179,6 @@ namespace Catan.Settings
                     1,
                     1
                 }
-            },
-            // ---
-            // Tiny Preset
-            new BoardPreset()
-            {
-                name = "Tiny",
-                desc = "Small and disjoint, this version of Catan is not recommended for any amount of players.",
-                tileTypes = new Tile.TileType[]
-                {
-                    Tile.TileType.Pasture,
-                    Tile.TileType.Field,
-                    Tile.TileType.Forest,
-                    Tile.TileType.Hills,
-                    Tile.TileType.Mountains,
-                    Tile.TileType.Desert
-                },
-                tileAmounts = new int[]
-                {
-                    2,
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
-                },
-                boardShape = new int[]
-                {
-                    2,
-                    3,
-                    2
-                },
-                diceValues = new int[]
-                {
-                    0,
-                    0,
-                    0,
-                    1,
-                    1,
-                    1,
-                    1,
-                    0,
-                    1,
-                    1,
-                    1,
-                    1,
-                    0
-                },
-                portTypes = new Resource.ResourceType[]
-                {
-                    Resource.ResourceType.Wool,
-                    Resource.ResourceType.Grain,
-                    Resource.ResourceType.Wood,
-                    Resource.ResourceType.Brick,
-                    Resource.ResourceType.Ore,
-                },
-                portAmounts = new int[]
-                {
-                    1,
-                    1,
-                    1,
-                    1,
-                    1
-                }
             }
         };
     }

@@ -641,16 +641,16 @@ namespace Catan.GameBoard
         /// <returns>
         /// A list of ports the specified player controls on the board
         /// </returns>
-        public static Resource.ResourceType[] GetPlayerPorts(this TileVertex[][] tiles, Player player)
+        public static Resource.ResourceType[] GetPlayerPorts(this TileVertex[][] vertices, Player player)
         {
             List<Resource.ResourceType> ports = new List<Resource.ResourceType>();
-            for (int i = 0; i < tiles.Length; i++)
+            for (int i = 0; i < vertices.Length; i++)
             {
-                for (int j = 0; j < tiles[i].Length; j++)
+                for (int j = 0; j < vertices[i].Length; j++)
                 {
-                    if (tiles[i][j].playerIndex == player.playerIndex && tiles[i][j].port != null)
+                    if (vertices[i][j].playerIndex == player.playerIndex && vertices[i][j].port != null)
                     {
-                        ports.Add(tiles[i][j].port.type);
+                        ports.Add(vertices[i][j].port.type);
                     }
                 }
             }
@@ -664,9 +664,9 @@ namespace Catan.GameBoard
         /// <param name="player"></param>
         /// <param name="resource"></param>
         /// <returns></returns>
-        public static bool HasPort(this TileVertex[][] tiles, Player player, Resource.ResourceType resource)
+        public static bool HasPort(this TileVertex[][] vertices, Player player, Resource.ResourceType resource)
         {
-            Resource.ResourceType[] ports = GetPlayerPorts(tiles, player);
+            Resource.ResourceType[] ports = GetPlayerPorts(vertices, player);
 
             foreach (Resource.ResourceType port in ports)
             {

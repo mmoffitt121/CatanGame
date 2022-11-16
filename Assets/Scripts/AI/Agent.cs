@@ -121,6 +121,11 @@ namespace Catan.AI
             api.AdvanceTurn();
         }
 
+        public virtual void OfferResultRecieved(bool accepted)
+        {
+
+        }
+
         public enum Difficulty
         {
             Easy,
