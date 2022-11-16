@@ -26,6 +26,37 @@ namespace Catan.AI
             agentName = "Has Bros Agent";
         }
 
+        public override void PlaceStartingPiece(bool first = false)
+        {
+            int i;
+            int j;
+            while (true)
+            {
+                i = UnityEngine.Random.Range(0, api.board.vertices.Length);
+                j = UnityEngine.Random.Range(0, api.board.vertices[i].Length);
+
+                if (api.BuildSettlement(player, i, j, true)) break;
+            }
+
+            if (first)
+            {
+                api.board.DistributeResourcesFromVertex((i, j));
+            }
+
+            (int, int) road;
+            road = api.board.vertices.RoadAboveVertex(api.board.roads, i, j);
+            if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;
+
+            road = api.board.vertices.RoadBelowVertex(api.board.roads, i, j);
+            if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;
+
+            road = api.board.vertices.RoadLeftOfVertex(api.board.roads, i, j);
+            if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;
+
+            road = api.board.vertices.RoadRightOfVertex(api.board.roads, i, j);
+            if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;
+        }
+
         private int trades;
         public override void StartTrading()
         {
