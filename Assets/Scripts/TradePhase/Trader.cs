@@ -99,7 +99,7 @@ namespace Catan.TradePhase
             }
             else
             {
-                UI.TradePhase tf = GameObject.Find("UI").transform.GetChild(8).GetComponent<UI.TradePhase>();
+                UI.TradePhase tf = GameObject.Find("UI").transform.GetChild(7).GetComponent<UI.TradePhase>();
                 tf.ShowOffer(p1, p2, p1Offer, p2Offer);
             }
         }
