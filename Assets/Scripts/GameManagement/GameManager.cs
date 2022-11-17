@@ -74,30 +74,30 @@ namespace Catan.GameManagement
             gplayers[0].playerColor = new Color(100 / 255f, 100 / 255f, 255 / 255f);
             gplayers[0].primaryUIColor = new Color(190 / 255f, 200 / 255f, 255 / 255f);
             gplayers[0].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            gplayers[0].playerName = "HasBros Agent 1";
+            gplayers[0].playerName = "HasBros Agent";
             gplayers[0].playerIndex = 0;
 
             gplayers[1] = new Player(true);
-            gplayers[1].agent = new HasBrosAgent(gplayers[1]);
+            //gplayers[1].agent = new HasBrosAgent(gplayers[1]);
             gplayers[1].playerColor = new Color(255 / 255f, 100 / 255f, 100 / 255f);
             gplayers[1].primaryUIColor = new Color(255 / 255f, 150 / 255f, 150 / 255f);
             gplayers[1].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            gplayers[1].playerName = "HasBros Agent 2";
+            gplayers[1].playerName = "Player 2";
             gplayers[1].playerIndex = 1;
 
             gplayers[2] = new Player(true);
-            gplayers[2].agent = new HasBrosAgent(gplayers[2]);
+            //gplayers[2].agent = new HasBrosAgent(gplayers[2]);
             gplayers[2].playerColor = new Color(240 / 255f, 240 / 255f, 240 / 255f);
             gplayers[2].primaryUIColor = new Color(250 / 255f, 250 / 255f, 250 / 255f);
             gplayers[2].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            gplayers[2].playerName = "HasBros Agent 3";
+            gplayers[2].playerName = "Player 3";
             gplayers[2].playerIndex = 2;
 
             gplayers[3] = new Player(true);
             gplayers[3].playerColor = new Color(255 / 255f, 150 / 255f, 100 / 255f);
             gplayers[3].primaryUIColor = new Color(255 / 255f, 200 / 255f, 150 / 255f);
             gplayers[3].secondaryUIColor = new Color(10 / 255f, 10 / 255f, 10 / 255f);
-            gplayers[3].playerName = "Random Agent";
+            gplayers[3].playerName = "Player 4";
             gplayers[3].playerIndex = 3;
 
             foreach (Player p in gplayers)
