@@ -38,11 +38,20 @@ namespace Catan.AI
             // Outermost array represents vertex row, middle array represents vertex column, and innermost array represents the expected value of each resource for a given vertex.
             float[][][] EVs = new float[verts.Length][][];
             Resource.ResourceType[][][] resources = new Resource.ResourceType[verts.Length][][];
+            // Ports
+            Resource.ResourceType[][] ports = new Resource.ResourceType[verts.Length][];
+
+            // Lists representing expected values already owned by the player
+            List<float> ownedEVs = new List<float>();
+            List<Resource.ResourceType> ownedResources = new List<Resource.ResourceType>();
+            // Ports
+            Resource.ResourceType[] ownedPorts = api.Vertices.GetPlayerPorts(player);
 
             for (int i = 0; i < verts.Length; i++)
             {
                 EVs[i] = new float[verts[i].Length][];
                 resources[i] = new Resource.ResourceType[verts[i].Length][];
+                ports[i] = new Resource.ResourceType[verts[i].Length];
 
                 for (int j = 0; j < verts[i].Length; j++)
                 {
@@ -52,8 +61,8 @@ namespace Catan.AI
                     (int, int) left = verts.VertexLeftOfVertex(i, j);
                     (int, int) right = verts.VertexRightOfVertex(i, j);
 
-                    if (verts[i][j].development > 0 ||
-                        above.Valid() && verts[above.Item1][above.Item2].development > 0 ||
+                    // Case in which the vertex is not valid to build on
+                    if (above.Valid() && verts[above.Item1][above.Item2].development > 0 ||
                         below.Valid() && verts[below.Item1][below.Item2].development > 0 ||
                         left.Valid() && verts[left.Item1][left.Item2].development > 0 ||
                         right.Valid() && verts[right.Item1][right.Item2].development > 0)
@@ -61,6 +70,27 @@ namespace Catan.AI
                         EVs[i][j] = new float[1] { -10000 };
                         resources[i][j] = new Resource.ResourceType[] { Resource.ResourceType.None };
                         continue;
+                    }
+
+                    // Case in which the vertex is already owned
+                    if (verts[i][j].development > 0 && verts[i][j].playerIndex == player.playerIndex)
+                    {
+                        EVs[i][j] = new float[1] { -10000 };
+                        resources[i][j] = new Resource.ResourceType[] { Resource.ResourceType.None };
+
+                        (Resource.ResourceType, float)[] ownedEV = api.board.CalculateVertexExpectedValues(i, j);
+                        foreach ((Resource.ResourceType, float) ev in ownedEV)
+                        {
+                            ownedEVs.Add(ev.Item2);
+                            ownedResources.Add(ev.Item1);
+                        }
+
+                        continue;
+                    }
+
+                    if (verts[i][j].port != null)
+                    {
+                        ports[i][j] = verts[i][j].port.type;
                     }
 
                     // Calculate expected value of resource
@@ -99,12 +129,7 @@ namespace Catan.AI
                 }
             }
 
-            bool result = api.BuildSettlement(player, highestI, highestJ, true);
-
-            if (!result)
-            {
-                Debug.Log(highestI + " " + highestJ + " failed!");
-            }
+            api.BuildSettlement(player, highestI, highestJ, true);
 
             (int, int) road;
             road = api.board.vertices.RoadAboveVertex(api.board.roads, highestI, highestJ);
@@ -125,34 +150,6 @@ namespace Catan.AI
             }
 
             // Depreciated
-
-            /*int i;
-            int j;
-            while (true)
-            {
-                i = UnityEngine.Random.Range(0, api.board.vertices.Length);
-                j = UnityEngine.Random.Range(0, api.board.vertices[i].Length);
-
-                if (api.BuildSettlement(player, i, j, true)) break;
-            }
-
-            if (first)
-            {
-                api.board.DistributeResourcesFromVertex((i, j));
-            }
-
-            (int, int) road;
-            road = api.board.vertices.RoadAboveVertex(api.board.roads, i, j);
-            if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;
-
-            road = api.board.vertices.RoadBelowVertex(api.board.roads, i, j);
-            if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;
-
-            road = api.board.vertices.RoadLeftOfVertex(api.board.roads, i, j);
-            if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;
-
-            road = api.board.vertices.RoadRightOfVertex(api.board.roads, i, j);
-            if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;*/
         }
 
         private int trades;
