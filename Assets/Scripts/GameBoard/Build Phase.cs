@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-
+/*
 public class BuildPhase : BuildPhase
 {
     private Player [] players;
@@ -99,3 +99,4 @@ public List<LogEvent> GetEventsSince(DateTime time)
 }
 }
 
+*/
