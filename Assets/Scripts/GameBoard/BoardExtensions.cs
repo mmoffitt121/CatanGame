@@ -624,13 +624,14 @@ namespace Catan.GameBoard
         }
 
         /// <summary>
-        /// Returns true if a tuple does not equal (-1, -1). Compliments other functions that search for tiles, vertices, etc.
+        /// Returns true if a tuple doesn't have values less than 0. Compliments other functions that search for tiles, vertices, etc.
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
         public static bool Valid(this (int, int) point)
         {
-            return point != (-1, -1);
+            if (point.Item1 < 0 || point.Item2 < 0) { return false; }
+            return true;
         }
 
         /// <summary>
