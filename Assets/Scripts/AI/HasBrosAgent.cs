@@ -21,11 +21,19 @@ namespace Catan.AI
     /// </summary>
     public class HasBrosAgent : Agent
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="plyr"></param>
         public HasBrosAgent(Player plyr) : base(plyr)
         {
             agentName = "Has Bros Agent";
         }
 
+        /// <summary>
+        /// Override void that controls the placement of the AI player's starting piece
+        /// </summary>
+        /// <param name="first"></param>
         public override void PlaceStartingPiece(bool first = false)
         {
             // Grab vertices from board
@@ -106,31 +114,197 @@ namespace Catan.AI
                 }
             }
 
-            // Calculate space with highest expected value
-            float highest = -10000f;
-            int highestI = 0;
-            int highestJ = 0;
-            for (int i = 0; i < EVs.Length; i++)
-            {
-                for (int j = 0; j < EVs[i].Length; j++)
-                {
-                    float ev = 0;
-                    for (int k = 0; k < EVs[i][j].Length; k++)
-                    {
-                        ev += EVs[i][j][k];
-                    }
+            int baseCost = 4;
+            int grainCost = 4;
+            int sheepCost = 4;
+            int woodCost = 4;
+            int brickCost = 4;
+            int oreCost = 4;
 
-                    if (ev > highest)
-                    {
-                        highest = ev;
-                        highestI = i;
-                        highestJ = j;
-                    }
+            // Calculate initial port costs
+            for (int i = 0; i < ownedPorts.Length; i++)
+            {
+                switch (ownedPorts[i])
+                {
+                    case Resource.ResourceType.Any:
+                        baseCost = 3;
+                        break;
+                    case Resource.ResourceType.Grain:
+                        grainCost = 2;
+                        break;
+                    case Resource.ResourceType.Wool:
+                        sheepCost = 2;
+                        break;
+                    case Resource.ResourceType.Wood:
+                        woodCost = 2;
+                        break;
+                    case Resource.ResourceType.Brick:
+                        brickCost = 2;
+                        break;
+                    case Resource.ResourceType.Ore:
+                        oreCost = 2;
+                        break;
                 }
             }
 
-            api.BuildSettlement(player, highestI, highestJ, true);
+            grainCost = Math.Min(baseCost, grainCost);
+            sheepCost = Math.Min(baseCost, sheepCost);
+            woodCost = Math.Min(baseCost, woodCost);
+            brickCost = Math.Min(baseCost, brickCost);
+            oreCost = Math.Min(baseCost, oreCost);
 
+            // Calculate space with highest expected value
+            List<(int, int)> excluded = new List<(int, int)>();
+            bool buildResult = false;
+            float highest;
+            int highestI = 0;
+            int highestJ = 0;
+
+            float settlementEV;
+            float cityEV;
+            // Keep trying to build until we succeed, in order of value for each vertex
+            while (buildResult == false)
+            {
+                highest = -10000f;
+                highestI = 0;
+                highestJ = 0;
+                for (int i = 0; i < EVs.Length; i++)
+                {
+                    for (int j = 0; j < EVs[i].Length; j++)
+                    {
+                        // If we already tried this one and it failed, continue;
+                        if (excluded.Contains((i, j)))
+                        {
+                            continue;
+                        }
+
+                        // Calculate port costs for this vertex
+                        int baCost = baseCost;
+                        int gCost = grainCost;
+                        int sCost = sheepCost;
+                        int wCost = woodCost;
+                        int bCost = brickCost;
+                        int oCost = oreCost;
+
+                        if (api.board.vertices[i][j].port != null)
+                        {
+                            switch (api.board.vertices[i][j].port.type)
+                            {
+                                case Resource.ResourceType.Any:
+                                    baCost = 3;
+                                    break;
+                                case Resource.ResourceType.Grain:
+                                    gCost = 2;
+                                    break;
+                                case Resource.ResourceType.Wool:
+                                    sCost = 2;
+                                    break;
+                                case Resource.ResourceType.Wood:
+                                    wCost = 2;
+                                    break;
+                                case Resource.ResourceType.Brick:
+                                    bCost = 2;
+                                    break;
+                                case Resource.ResourceType.Ore:
+                                    oCost = 2;
+                                    break;
+                            }
+                        }
+
+                        gCost = Math.Min(baCost, gCost);
+                        sCost = Math.Min(baCost, sCost);
+                        wCost = Math.Min(baCost, wCost);
+                        bCost = Math.Min(baCost, bCost);
+                        oCost = Math.Min(baCost, oCost);
+
+                        float gEV = 0f;
+                        float sEV = 0f;
+                        float wEV = 0f;
+                        float bEV = 0f;
+                        float oEV = 0f;
+
+                        for (int k = 0; k < ownedResources.Count; k++)
+                        {
+                            switch (ownedResources[k])
+                            {
+                                case Resource.ResourceType.Grain:
+                                    gEV += ownedEVs[k];
+                                    break;
+                                case Resource.ResourceType.Wool:
+                                    sEV += ownedEVs[k];
+                                    break;
+                                case Resource.ResourceType.Wood:
+                                    wEV += ownedEVs[k];
+                                    break;
+                                case Resource.ResourceType.Brick:
+                                    bEV += ownedEVs[k];
+                                    break;
+                                case Resource.ResourceType.Ore:
+                                    oEV += ownedEVs[k];
+                                    break;
+                            }
+                        }
+
+                        for (int k = 0; k < resources[i][j].Length; k++)
+                        {
+                            switch (resources[i][j][k])
+                            {
+                                case Resource.ResourceType.Grain:
+                                    gEV += EVs[i][j][k];
+                                    break;
+                                case Resource.ResourceType.Wool:
+                                    sEV += EVs[i][j][k];
+                                    break;
+                                case Resource.ResourceType.Wood:
+                                    wEV += EVs[i][j][k];
+                                    break;
+                                case Resource.ResourceType.Brick:
+                                    bEV += EVs[i][j][k];
+                                    break;
+                                case Resource.ResourceType.Ore:
+                                    oEV += EVs[i][j][k];
+                                    break;
+                            }
+                        }
+                        float WEIGHT_MODIFIER = 2f;
+                        float anyResourceForSettlementEV = (gEV / gCost / WEIGHT_MODIFIER) + (sEV / sCost / WEIGHT_MODIFIER) + (wEV / wCost / WEIGHT_MODIFIER) + (bEV / bCost / WEIGHT_MODIFIER) + (oEV / oCost);
+                        float anyResourceForCityEV = (gEV / gCost / WEIGHT_MODIFIER / 2) + (sEV / sCost) + (wEV / wCost) + (bEV / bCost) + (oEV / oCost / WEIGHT_MODIFIER / 3);
+
+                        // Expected value of building a settlement on this spot
+                        float seEV = (gEV + sEV + wEV + bEV + anyResourceForSettlementEV) / 4;
+                        // Expected value of building a city on this spot
+                        float ciEV = (oEV * 3 + gEV * 2 + anyResourceForCityEV) / 5;
+
+                        Debug.Log(i + " " + j + ":"
+                            + " (Grain EV: " + gEV + ")"
+                            + " (Sheep EV: " + sEV + ")"
+                            + " (Wood EV: " + wEV + ")"
+                            + " (Bricks EV: " + bEV + ")"
+                            + " (Ore EV: " + oEV + ")"
+                            + " " + seEV
+                            + " " + ciEV);
+
+                        if (Math.Max(seEV, ciEV) > highest)
+                        {
+                            highest = Math.Max(seEV, ciEV);
+                            settlementEV = seEV;
+                            cityEV = ciEV;
+                            highestI = i;
+                            highestJ = j;
+                        }
+                    }
+                }
+
+                buildResult = api.BuildSettlement(player, highestI, highestJ, true);
+
+                // If the build fails for whatever reason, add to list of excluded values and continue.
+                if (!buildResult)
+                {
+                    excluded.Add((highestI, highestJ));
+                }
+            }
+
+            // Builds road
             (int, int) road;
             road = api.board.vertices.RoadAboveVertex(api.board.roads, highestI, highestJ);
             if (api.BuildRoad(player, road.Item1, road.Item2, true)) return;
@@ -148,8 +322,6 @@ namespace Catan.AI
             {
                 api.board.DistributeResourcesFromVertex((highestI, highestJ));
             }
-
-            // Depreciated
         }
 
         private int trades;
