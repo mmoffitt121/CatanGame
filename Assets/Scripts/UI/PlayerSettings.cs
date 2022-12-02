@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: PlayerSettings.cs
+/// SPECIFICATION: Changes player settings
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,13 +15,19 @@ using System;
 
 namespace Catan.UI
 {
+    /// <summary>
+    /// UI controller responsible for changing player settings
+    /// </summary>
     public class PlayerSettings : MonoBehaviour
     {
+        // Text objects
         public TextMeshProUGUI playerOrAI;
         public GameObject playerNameInput;
         public GameObject playerName;
         public Image colorPanel;
         public TextMeshProUGUI chooseAgent;
+
+        // Possible player colors
 
         public static readonly Color[] possibleColors = {
             new Color(100 / 255f, 100 / 255f, 255 / 255f),
@@ -43,11 +54,14 @@ namespace Catan.UI
             new Color(10 / 255f, 10 / 255f, 10 / 255f)
         };
 
+        // UI data
         public int index;
         public int color;
         public PlayerMode pMode;
         public string pName = "Player X";
         public AgentType chosenAgent;
+
+        // UI controls
 
         public void OpenNameBox()
         {

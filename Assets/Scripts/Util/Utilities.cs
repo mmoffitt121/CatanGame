@@ -11,8 +11,18 @@ using Catan.Players;
 
 namespace Catan.Util
 {
+    /// <summary>
+    /// Utilities tha thelp with game calculations
+    /// </summary>
     public static class Utilities
     {
+        /// <summary>
+        /// Selects the max value by a specified selector
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="selector"></param>
+        /// <returns></returns>
         public static T SelectMax<T>(this T[] arr, Func<T, int> selector)
         {
             int max = 0;
@@ -29,6 +39,13 @@ namespace Catan.Util
             return arr[maxIndex];
         }
 
+        /// <summary>
+        /// Returns the first value that returns true for a specified condition
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="selector"></param>
+        /// <returns></returns>
         public static T FirstTrue<T>(this T[] arr, Func<T, bool> selector)
         {
             foreach (T item in arr)

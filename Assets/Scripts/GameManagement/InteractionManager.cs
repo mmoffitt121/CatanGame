@@ -13,12 +13,30 @@ using UnityEngine;
 
 namespace Catan.GameManagement
 {
+    /// <summary>
+    /// Manages the player's interaction with the board
+    /// </summary>
     public class InteractionManager : MonoBehaviour
     {
+        /// <summary>
+        /// Game Manager
+        /// </summary>
         public GameManager gameManager;
+        /// <summary>
+        /// Game Board
+        /// </summary>
         public Board board;
 
+        /// <summary>
+        /// Temporary vertex holder
+        /// </summary>
         public (int, int) tempVertex;
+        /// <summary>
+        /// Called when a specific board token is clicked.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
         public void BoardTokenClicked(BoardTokenGameObject obj, int i, int j)
         {
             // Build phase
@@ -61,6 +79,12 @@ namespace Catan.GameManagement
             }
         }
 
+        /// <summary>
+        /// Called when specific tile is clicked
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
         public void TileClicked(TileGameObject obj, int i, int j)
         {
             if (gameManager.movingRobber)
@@ -75,6 +99,11 @@ namespace Catan.GameManagement
             }
         }
 
+        /// <summary>
+        /// For debugging, logs coordinates and information for vertex.
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
         public void DumpVertexInfo(int i, int j)
         {
             Debug.Log("Vertex ( " + board.vertices[i][j].xCoord + " " + board.vertices[i][j].yCoord + " ): "

@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: TradePhasePlayerSelect.cs
+/// SPECIFICATION: Responsible for trade phase player select
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameManagement;
 using Catan.Players;
 using Catan.UI;
@@ -8,19 +13,35 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Responsible for selecting a player during trade phase
+/// </summary>
 public class TradePhasePlayerSelect : MonoBehaviour
 {
+    /// <summary>
+    /// Trade phase
+    /// </summary>
     public TradePhase tradePhase;
 
+    // UI members
     public GameObject[] buttons;
     public Player[] selectablePlayers;
 
+    // UI logic functions
+    
+    /// <summary>
+    /// Selects the specified player to trade with
+    /// </summary>
+    /// <param name="player"></param>
     public void SelectPlayer(int player)
     {
         tradePhase.selectedPlayer = selectablePlayers[player];
         tradePhase.OpenTradeWindow();
     }
 
+    /// <summary>
+    /// Initializes Window
+    /// </summary>
     public void Initialize()
     {
         GameManager gm = tradePhase.gm;

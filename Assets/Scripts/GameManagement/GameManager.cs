@@ -30,7 +30,13 @@ namespace Catan.GameManagement
         /// Player[] containting all players in the current game
         /// </summary>
         public Player[] players;
+        /// <summary>
+        /// Resource icon image array
+        /// </summary>
         public Texture2D[] resourceIcons;
+        /// <summary>
+        /// Returns the player who's turn it currently is
+        /// </summary>
         public Player currentPlayer
         {
             get
@@ -39,29 +45,80 @@ namespace Catan.GameManagement
             }
         }
 
+        /// <summary>
+        /// Current turn
+        /// </summary>
         public int turn = -1;
+        /// <summary>
+        /// Current phase
+        /// </summary>
         public int phase = -1;
+        /// <summary>
+        /// Whether or not the game is in start phase
+        /// </summary>
         public bool starting = true;
+        /// <summary>
+        /// Whether or not the game is in the second part of start phase where the turn order is reversed
+        /// </summary>
         public bool reverseTurnOrder = false;
 
+        /// <summary>
+        /// Whether or not advancement can occur
+        /// </summary>
         public bool nextTurn = false;
 
+        /// <summary>
+        /// Whether or not current player is moving robber
+        /// </summary>
         public bool movingRobber = false;
+        /// <summary>
+        /// Integer tuple representing the location of the robber
+        /// </summary>
         public (int, int) robberLocation;
 
+        /// <summary>
+        /// UI Manager, contains all functions pertaining to the user interface
+        /// </summary>
         public UIManager UIManager;
+        /// <summary>
+        /// Class that initializes the game board
+        /// </summary>
         public BoardInitializer boardInitializer;
+        /// <summary>
+        /// The game board
+        /// </summary>
         public Board board;
 
+        /// <summary>
+        /// Class responsible for calculating scores
+        /// </summary>
         public ScoreBuilder scoreBuilder;
 
+        /// <summary>
+        /// Class responsible for rolling dice
+        /// </summary>
         public GameObject diceRoller;
 
+        /// <summary>
+        /// Whether or not dice animation will be skipped
+        /// </summary>
         public bool quickRolling;
 
+        /// <summary>
+        /// Total turn counter
+        /// </summary>
         public int totalTurns = 0;
+        /// <summary>
+        /// Total round counter
+        /// </summary>
         public int totalRounds = 0;
+        /// <summary>
+        /// Class containing round statistics
+        /// </summary>
         public Statistics stats;
+        /// <summary>
+        /// Class responsible for testing
+        /// </summary>
         public TestSuite testSuite;
 
         public void Start()
@@ -71,6 +128,9 @@ namespace Catan.GameManagement
             boardInitializer.Initialize();
         }
 
+        /// <summary>
+        /// Generates dummy players. Not used in production, only used when game is loaded from the game scene rather than the main menu.
+        /// </summary>
         public void SetDefaultPlayers()
         {
             Player[] gplayers = new Player[4];
@@ -119,6 +179,9 @@ namespace Catan.GameManagement
             GameSettings.players = gplayers;
         }
 
+        /// <summary>
+        /// Loads player info into the game
+        /// </summary>
         public void LoadPlayers()
         {
             if (GameSettings.players == null)
@@ -133,6 +196,10 @@ namespace Catan.GameManagement
             }
         }
 
+        /// <summary>
+        /// Updates the game scores for each player
+        /// </summary>
+        /// <param name="updateUI"></param>
         public void UpdateScores(bool updateUI = true)
         {
             scoreBuilder.CalculateScores(players);
@@ -140,6 +207,9 @@ namespace Catan.GameManagement
             if (updateUI) { UIManager.UpdateUI(); }
         }
 
+        /// <summary>
+        /// Rolls the dice
+        /// </summary>
         public void Roll()
         {
             if (quickRolling)
@@ -153,6 +223,10 @@ namespace Catan.GameManagement
             diceRoller.transform.GetChild(7).GetComponent<DiceCheckZoneScript>().Roll();
         }
 
+        /// <summary>
+        /// Called after a dice rolling is complete
+        /// </summary>
+        /// <param name="result"></param>
         public void Rolled(int result)
         {
             diceRoller.SetActive(false);
@@ -165,16 +239,26 @@ namespace Catan.GameManagement
             UIManager.Rolled();
         }
 
+        /// <summary>
+        /// Is called when a seven is rolled, calls UI manager to split resources
+        /// </summary>
         public void RolledSeven()
         {
             UIManager.SplitResources(new Stack<Player>(ResourceDistributor.GetSplittingPlayers(players)));
         }
 
+        /// <summary>
+        /// Advances the turn
+        /// </summary>
         public void AdvanceTurn()
         {
             nextTurn = true;
         }
 
+        /// <summary>
+        /// Called on victory. If testing, the game restarts.
+        /// </summary>
+        /// <param name="winner"></param>
         public void OnVictory(Player winner)
         {
             Debug.Log("Winner! " + winner.playerName + " has won!");
@@ -190,6 +274,9 @@ namespace Catan.GameManagement
             }
         }
 
+        /// <summary>
+        /// Called on stalemate. If testing, the game restarts.
+        /// </summary>
         public void OnStaleMate()
         {
             Debug.Log("Stalemate.");
@@ -205,12 +292,18 @@ namespace Catan.GameManagement
             }
         }
 
+        /// <summary>
+        /// Resets the game and starts it anew. Used for testing.
+        /// </summary>
         public void ResetGameAndBegin()
         {
             ResetGame();
             UIManager.AdvanceTurn();
         }
 
+        /// <summary>
+        /// Resets and regenerates the game board and players
+        /// </summary>
         public void ResetGame()
         {
             boardInitializer.Reinitialize();
@@ -227,6 +320,9 @@ namespace Catan.GameManagement
             UIManager.ResetUI();
         }
 
+        /// <summary>
+        /// Called when turn advances
+        /// </summary>
         public void ToNextTurn()
         {
             scoreBuilder.CalculateScores(players);
@@ -325,6 +421,9 @@ namespace Catan.GameManagement
             UIManager.UpdateUI();
         }
 
+        /// <summary>
+        /// Advances turn when game is ready to advance.
+        /// </summary>
         public void Update()
         {
             if (nextTurn)

@@ -11,11 +11,29 @@ using UnityEngine;
 
 public class DiceCheckZoneScript : MonoBehaviour
 {
+    /// <summary>
+    /// Dice 1 velocity
+    /// </summary>
     public Vector3 diceVelocity1;
+    /// <summary>
+    /// Dice 2 velocity
+    /// </summary>
     public Vector3 diceVelocity2;
+    /// <summary>
+    /// Dice 1 Number
+    /// </summary>
     public int diceNumber1;
+    /// <summary>
+    /// Dice 2 Number
+    /// </summary>
     public int diceNumber2;
+    /// <summary>
+    /// Dice 1 GameObject
+    /// </summary>
     public GameObject dice1;
+    /// <summary>
+    /// Dice 2 GameObject
+    /// </summary>
     public GameObject dice2;
 
     public int diceValue
@@ -32,12 +50,19 @@ public class DiceCheckZoneScript : MonoBehaviour
         diceVelocity2 = dice2.GetComponent<DiceScript>().diceVelocity;
     }
 
+    /// <summary>
+    /// Rolls the two dice
+    /// </summary>
     public void Roll()
     {
         dice1.GetComponent<DiceScript>().Roll();
         dice2.GetComponent<DiceScript>().Roll();
     }
    
+    /// <summary>
+    /// Function that checks dice values when dice become still.
+    /// </summary>
+    /// <param name="col"></param>
     void OnTriggerStay(Collider col)
     {
         if (diceVelocity1.x == 0f && diceVelocity1.y == 0f && diceVelocity1.z == 0f && diceVelocity2.x == 0f && diceVelocity2.y == 0f && diceVelocity2.z == 0f) 

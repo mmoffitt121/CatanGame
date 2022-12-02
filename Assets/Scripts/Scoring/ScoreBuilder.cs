@@ -15,10 +15,17 @@ using UnityEngine;
 
 namespace Catan.Scoring
 {
+    /// <summary>
+    /// Determines a player's score
+    /// </summary>
     public class ScoreBuilder : MonoBehaviour
     {
         public Board board;
 
+        /// <summary>
+        /// Calculates scores for players
+        /// </summary>
+        /// <param name="players"></param>
         public void CalculateScores(Player[] players)
         {
             foreach (Player p in players)
@@ -113,6 +120,15 @@ namespace Catan.Scoring
             }
         }
 
+        /// <summary>
+        /// Calculates the longest road length for a player
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="vertices"></param>
+        /// <param name="roads"></param>
+        /// <param name="visited"></param>
+        /// <param name="playerIndex"></param>
+        /// <returns></returns>
         public int CalculateRoadLength((int, int) current, TileVertex[][] vertices, Road[][] roads, List<(int, int)> visited, int playerIndex)
         {
             if (current == (-1, -1) || visited.Contains(current))

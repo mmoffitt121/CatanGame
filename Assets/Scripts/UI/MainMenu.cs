@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: MainMenu.cs
+/// SPECIFICATION: Changes player settings
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,14 +13,23 @@ using Catan.Players;
 
 namespace Catan.UI
 {
+    /// <summary>
+    /// Main menu UI controller
+    /// </summary>
     public class MainMenu : MonoBehaviour
     {
+        /// <summary>
+        /// Camera 
+        /// </summary>
         public MainMenuCameraControl cam;
 
+        // UI objects
         public GameObject mainMenu;
         public GameObject boardSettings;
         public GameObject playerSettings;
         public GameObject options;
+
+        // UI navigation functions
 
         public void ToBoardSettings(bool testing)
         {
@@ -62,6 +76,10 @@ namespace Catan.UI
             Application.Quit();
         }
 
+        /// <summary>
+        /// Sets the player data
+        /// </summary>
+        /// <returns></returns>
         public bool SetPlayers()
         {
             Player p0 = GameObject.Find("PlayerPanel0").GetComponent<PlayerSettings>().GetPlayer();
@@ -89,6 +107,10 @@ namespace Catan.UI
             return true;
         }
 
+        /// <summary>
+        /// Updates the UI
+        /// </summary>
+        /// <param name="state"></param>
         public void UpdateUI(MenuState state)
         {
             DisableUI();
@@ -113,6 +135,9 @@ namespace Catan.UI
             }
         }
 
+        /// <summary>
+        /// Disables all UI pieces
+        /// </summary>
         public void DisableUI()
         {
             mainMenu.SetActive(false);
@@ -121,6 +146,9 @@ namespace Catan.UI
             options.SetActive(false);
         }
 
+        /// <summary>
+        /// Menu state enum
+        /// </summary>
         public enum MenuState
         { 
             MainMenu,

@@ -7,6 +7,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script that controls dice behavior
+/// </summary>
 public class DiceScript : MonoBehaviour
 {
     public Rigidbody rb;
@@ -28,6 +31,9 @@ public class DiceScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Rolls the die
+    /// </summary>
     public void Roll()
     {
         float dirX = Random.Range(0, 500);

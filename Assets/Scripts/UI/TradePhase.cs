@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: TradePhase.cs
+/// SPECIFICATION: Responsible for handling Trade Phase
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameManagement;
 using Catan.Players;
 using System.Collections;
@@ -9,8 +14,12 @@ using Catan.TradePhase;
 
 namespace Catan.UI
 {
+    /// <summary>
+    /// Handles Trade phase UI and logic
+    /// </summary>
     public class TradePhase : MonoBehaviour
     {
+        // UI members
         public GameObject playerSelect;
         public GameObject tradeWindow;
         public GameObject portTradeWindow;
@@ -21,10 +30,21 @@ namespace Catan.UI
         public TextMeshProUGUI acceptedText;
         public GameManager gm;
 
+        /// <summary>
+        /// Currently selected player to trade with
+        /// </summary>
         public Player selectedPlayer;
 
+        /// <summary>
+        /// Waiting for trade result
+        /// </summary>
         private bool waitingForResult = false;
+        /// <summary>
+        /// Result
+        /// </summary>
         private bool result = false;
+
+        // UI navigation functions
 
         public void OpenPlayerSelectWindow()
         {

@@ -10,6 +10,9 @@ using UnityEngine;
 
 namespace Catan.GameBoard
 {
+    /// <summary>
+    /// GameObject for the label on each tile object
+    /// </summary>
     public class TileLabelGameObject : MonoBehaviour
     {
         private void OnMouseDown()

@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: Trader.cs
+/// SPECIFICATION: Responsible for trading
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.Players;
 using Catan.ResourcePhase;
 using Catan.AI;
@@ -10,6 +15,9 @@ using UnityEngine;
 
 namespace Catan.TradePhase
 {
+    /// <summary>
+    /// Responsible for moving resource between players
+    /// </summary>
     public static class Trader
     {
         /// <summary>

@@ -21,12 +21,22 @@ namespace Catan.AI
     /// </summary>
     public class RandomAgent : Agent
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="plyr"></param>
         public RandomAgent(Player plyr) : base(plyr)
         {
             agentName = "Random Agent";
         }
 
+        /// <summary>
+        /// The amount of trades the AI has performed
+        /// </summary>
         private int trades;
+        /// <summary>
+        /// Randomly chooses a player to trade one random resource with.
+        /// </summary>
         public override void StartTrading()
         {
             Player p = api.Players[UnityEngine.Random.Range(0, api.Players.Length)];
@@ -42,6 +52,10 @@ namespace Catan.AI
             }
         }
 
+        /// <summary>
+        /// Resumes trading if the max number of trades hasn't been reached.
+        /// </summary>
+        /// <param name="accepted"></param>
         public override void OfferResultRecieved(bool accepted)
         {
             trades++;
@@ -56,6 +70,9 @@ namespace Catan.AI
             }
         }
 
+        /// <summary>
+        /// Builds randomly in order of what the player can build in order: settlements, cities, then roads.
+        /// </summary>
         public override void StartBuilding()
         {
             while (true)

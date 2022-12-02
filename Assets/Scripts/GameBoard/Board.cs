@@ -25,7 +25,13 @@ namespace Catan.GameBoard
     /// </remarks>
     public class Board : MonoBehaviour
     {
+        /// <summary>
+        /// Constant representing the distance a tile should be from the next
+        /// </summary>
         private readonly float H_POS_OFFSET = 2 * Mathf.Sqrt(3);
+        /// <summary>
+        /// Constant representing the distance a tile should be from the next
+        /// </summary>
         private readonly float V_POS_OFFSET = 3;
 
         /// <summary>
@@ -41,14 +47,35 @@ namespace Catan.GameBoard
         /// </summary>
         public Road[][] roads;
 
+        /// <summary>
+        /// Spawnable prefab for hex GameObjects
+        /// </summary>
         public GameObject hexPrefab;
+        /// <summary>
+        /// Spawnable prefab for vertex GameObjects
+        /// </summary>
         public GameObject vertexPrefab;
+        /// <summary>
+        /// Spawnable prefab for road GameObjects
+        /// </summary>
         public GameObject roadPrefab;
 
+        /// <summary>
+        /// Empty GameObject that holds tile GameObjects
+        /// </summary>
         public GameObject tileHolder;
+        /// <summary>
+        /// Empty GameObject that holds vertex GameObjects
+        /// </summary>
         public GameObject vertexHolder;
+        /// <summary>
+        /// Empty GameObject that holds road GameObjects
+        /// </summary>
         public GameObject roadHolder;
 
+        /// <summary>
+        /// Texture2D[] that holds resource textures
+        /// </summary>
         public Texture2D[] resourceIcons;
 
         public void Start()

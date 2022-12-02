@@ -21,7 +21,12 @@ namespace Catan.UI
 {
     public class UIManager : MonoBehaviour
     {
+        /// <summary>
+        /// Game Manager
+        /// </summary>
         public GameManager gameManager;
+
+        // UI members
 
         public TextMeshProUGUI playerDisplay;
         public TextMeshProUGUI phaseDisplay;
@@ -39,8 +44,14 @@ namespace Catan.UI
         public GameObject rSplit;
         public GameObject rSteal;
 
+        /// <summary>
+        /// Trade Phase
+        /// </summary>
         public GameObject tradePhase;
 
+        /// <summary>
+        /// Tells the Game Manager to advance the turn
+        /// </summary>
         public void AdvanceTurn()
         {
             if (gameManager.phase == 0 && !gameManager.starting && !gameManager.movingRobber)
@@ -52,21 +63,34 @@ namespace Catan.UI
             gameManager.AdvanceTurn();
         }
 
+        /// <summary>
+        /// Is called when rolling is complete
+        /// </summary>
         public void Rolled()
         {
             gameManager.AdvanceTurn();
         }
 
+        /// <summary>
+        /// Disables the advancement of the game
+        /// </summary>
         public void DisableAdvancement()
         {
             nextButton.interactable = false;
         }
 
+        /// <summary>
+        /// Enables the advancement of the game
+        /// </summary>
         public void EnableAdvancement()
         {
             nextButton.interactable = true;
         }
 
+        /// <summary>
+        /// Calls the resource splitter to handle players that need their resources split
+        /// </summary>
+        /// <param name="players"></param>
         public void SplitResources(Stack<Player> players)
         {
             if (players.Count > 0)
@@ -82,6 +106,9 @@ namespace Catan.UI
             }
         }
 
+        /// <summary>
+        /// Starts the movement of the robber token
+        /// </summary>
         public void StartMoveRobber()
         {
             DisableAdvancement();
@@ -95,6 +122,10 @@ namespace Catan.UI
             }
         }
 
+        /// <summary>
+        /// Ends the movement of the robber token
+        /// </summary>
+        /// <param name="loc"></param>
         public void EndMoveRobber((int, int) loc)
         {
             gameManager.robberLocation = loc;
@@ -102,6 +133,10 @@ namespace Catan.UI
             StartSteal(loc);
         }
 
+        /// <summary>
+        /// Starts the steal phase
+        /// </summary>
+        /// <param name="loc"></param>
         public void StartSteal((int, int) loc)
         {
             (int, int)[] vertices = gameManager.board.tiles.GetSurroundingVertices(gameManager.board.vertices, loc.Item1, loc.Item2);
@@ -132,6 +167,9 @@ namespace Catan.UI
             stealer.InitializePlayers(gameManager.currentPlayer, players.ToArray());
         }
 
+        /// <summary>
+        /// Ends the steal phase
+        /// </summary>
         public void EndSteal()
         {
             rSteal.SetActive(false);
@@ -139,6 +177,9 @@ namespace Catan.UI
             UpdateUI();
         }
 
+        /// <summary>
+        /// Resets the UI to it's permutation at game starts
+        /// </summary>
         public void ResetUI()
         {
             playerDisplay.text = "Game Start";
@@ -160,6 +201,9 @@ namespace Catan.UI
             vPDisplay.text = "VP: 0";
         }
 
+        /// <summary>
+        /// Updates the UI
+        /// </summary>
         public void UpdateUI()
         {
             playerDisplay.text = gameManager.currentPlayer.playerName;

@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: MainMenuCameraControl.cs
+/// SPECIFICATION: File that controls the camera in the main menu
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,20 +10,21 @@ using Catan.UI;
 
 namespace Catan.Camera
 {
+    /// <summary>
+    /// Class that controls the position of the camera in the main menu
+    /// </summary>
     public class MainMenuCameraControl : MonoBehaviour
     {
+        /// <summary>
+        /// Animator that controls position of the camera
+        /// </summary>
         public Animator animator;
+        /// <summary>
+        /// Value that controls the state of the camera
+        /// </summary>
         public MainMenu.MenuState state;
 
-        public void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Debug.Log("Going");
-                state = (MainMenu.MenuState)(((int)state + 1)%5);
-                UpdateAnimator();
-            }
-        }
+        // Functions that change the state of the camera.
 
         public void ToBoardSettings()
         {

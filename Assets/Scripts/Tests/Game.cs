@@ -1,12 +1,15 @@
-using Mono.Cecil;
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: Game.cs
+/// SPECIFICATION: Responsible for Holding test data
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Catan.UI;
 
 namespace Catan.Tests
 {
+    /// <summary>
+    /// Holds data for a particular game.
+    /// </summary>
     [Serializable]
     public class Game
     {

@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: TradePhaseTradeOffer.cs
+/// SPECIFICATION: Responsible for trade phase trade offer window
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +15,8 @@ namespace Catan.UI
 {
     public class TradePhaseTradeOffer : MonoBehaviour
     {
+        // UI members
+
         public TradePhase tradePhase;
 
         public TextMeshProUGUI offerRecipient;
@@ -29,13 +36,21 @@ namespace Catan.UI
         public TextMeshProUGUI playerYBrick;
         public TextMeshProUGUI playerYOre;
 
+        // Players
         private Player playerX;
         private Player playerY;
 
+        // Resources
         private Resource[] pXOffer;
         private Resource[] pYOffer;
 
-
+        /// <summary>
+        /// Initializes window
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="p1Offer"></param>
+        /// <param name="p2Offer"></param>
         public void Initialize(Player p1, Player p2, Resource[] p1Offer, Resource[] p2Offer)
         {
             offerRecipient.text = "Offer - " + p2.playerName;
@@ -103,6 +118,10 @@ namespace Catan.UI
             pYOffer = p2Offer;
         }
 
+        /// <summary>
+        /// Sends a response (accepted or denied)
+        /// </summary>
+        /// <param name="response"></param>
         public void SendResponse(bool response)
         {
             if (response)
@@ -121,6 +140,9 @@ namespace Catan.UI
             }
         }
 
+        /// <summary>
+        /// Resets the UI
+        /// </summary>
         public void ResetUI()
         {
             playerXWheat.text = "0";

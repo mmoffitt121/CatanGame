@@ -40,6 +40,7 @@ namespace Catan.AI
         /// <returns> Returns a float representing the expected value of that vertex </returns>
         public static (Resource.ResourceType resource, float)[] CalculateVertexExpectedValues(this Board board, int i, int j)
         {
+            // List of expected values per resource
             List<(Resource.ResourceType resource, float)> list = new List<(Resource.ResourceType resource, float)>();
 
             (int, int)[] verts = new (int, int)[4];

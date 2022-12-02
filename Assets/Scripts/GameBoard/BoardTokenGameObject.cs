@@ -11,10 +11,21 @@ using UnityEngine;
 
 namespace Catan.GameBoard
 {
+    /// <summary>
+    /// Game object base class for both roads and vertices
+    /// </summary>
     public class BoardTokenGameObject : MonoBehaviour
     {
+        /// <summary>
+        /// Mesh
+        /// </summary>
         public MeshRenderer meshRenderer;
+        /// <summary>
+        /// Player who owns this token
+        /// </summary>
         public int playerIndex = -1;
+
+        // Coordinates
         public int xIndex;
         public int yIndex;
         public int xCoord;

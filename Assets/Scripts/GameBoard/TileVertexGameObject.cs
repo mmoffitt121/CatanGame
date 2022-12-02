@@ -11,12 +11,28 @@ using Catan.GameManagement;
 
 namespace Catan.GameBoard
 {
+    /// <summary>
+    /// GameObject representing a vertex on the board
+    /// </summary>
     public class TileVertexGameObject : BoardTokenGameObject
     {
+        /// <summary>
+        /// The attached port gameobject
+        /// </summary>
         public GameObject port;
+        /// <summary>
+        /// The attached village gameobject
+        /// </summary>
         public GameObject village;
+        /// <summary>
+        /// The attached city gameobject
+        /// </summary>
         public GameObject city;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="player"></param>
         public override void SetPlayer(Player player)
         {
             base.SetPlayer(player);
@@ -32,6 +48,9 @@ namespace Catan.GameBoard
             UpdateMesh();
         }
 
+        /// <summary>
+        /// Updates the mesh of the vertex based on the values of the vertex
+        /// </summary>
         public void UpdateMesh()
         {
             switch (GameObject.Find("Board").GetComponent<Board>().vertices[xIndex][yIndex].development)
@@ -57,12 +76,14 @@ namespace Catan.GameBoard
         {
             if (GameObject.Find("Board").GetComponent<Board>().vertices[xIndex][yIndex].up)
             {
+                // rotation of settlement, visual only
                 int rotation = Random.Range(0, 3);
                 village.transform.rotation = Quaternion.Euler(0, 60 + rotation * 120, 0);
                 city.transform.rotation = Quaternion.Euler(0, 60 + rotation * 120, 0);
             }
             else
             {
+                // rotation of settlement, visual only
                 int rotation = Random.Range(0, 3);
                 village.transform.rotation = Quaternion.Euler(0, rotation * 120, 0);
                 city.transform.rotation = Quaternion.Euler(0, rotation * 120, 0);

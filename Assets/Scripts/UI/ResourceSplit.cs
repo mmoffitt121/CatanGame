@@ -11,13 +11,19 @@ using UnityEngine.UI;
 
 namespace Catan.UI
 {
+    /// <summary>
+    /// UI responsible for splitting resources
+    /// </summary>
     public class ResourceSplit : MonoBehaviour
     {
+        // Number representing amount of each resource
         public int wheat;
         public int wool;
         public int wood;
         public int brick;
         public int ore;
+
+        // Text objects
 
         public TextMeshProUGUI wheatTXT;
         public TextMeshProUGUI woolTXT;
@@ -34,9 +40,15 @@ namespace Catan.UI
         public TextMeshProUGUI mainLabel;
         public Button submitButton;
 
+        // Data objects
         public Player player;
         public Stack<Player> playerStack;
+        /// <summary>
+        /// Amount to discard
+        /// </summary>
         public int discardAmount;
+
+        // Functions that change amount of each resource to discard
 
         public void AddWool(int toAdd)
         {
@@ -87,6 +99,9 @@ namespace Catan.UI
             submitButton.interactable = (wheat + wool + wood + brick + ore) == discardAmount;
         }
 
+        /// <summary>
+        /// Submits resources to discard
+        /// </summary>
         public void Submit()
         {
             if (wheat + wool + wood + brick + ore == discardAmount)
@@ -105,6 +120,10 @@ namespace Catan.UI
             GameObject.Find("Game Manager").GetComponent<GameManager>().UIManager.SplitResources(playerStack);
         }
 
+        /// <summary>
+        /// Initializes UI
+        /// </summary>
+        /// <param name="plrs"></param>
         public void InitializePlayer(Stack<Player> plrs)
         {
             player = plrs.Pop();

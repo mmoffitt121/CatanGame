@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: GameSettings.cs
+/// SPECIFICATION: Responsible for holding game settings
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameBoard;
 using Catan.Players;
 using Catan.ResourcePhase;

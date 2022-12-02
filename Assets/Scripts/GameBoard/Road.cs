@@ -9,13 +9,20 @@ using UnityEngine;
 
 namespace Catan.GameBoard
 {
+    /// <summary>
+    /// Object representing the roads on the board
+    /// </summary>
     public class Road
     {
+        // Coordinates for the positions of the road on the board in DATA FORM and POSITIONAL FORM
         public int xCoord;
         public int yCoord;
         public int xDataIndex;
         public int yDataIndex;
 
+        /// <summary>
+        /// Index of player who owns the road
+        /// </summary>
         public int playerIndex;
 
         public Road(int x, int y)

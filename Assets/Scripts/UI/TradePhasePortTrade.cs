@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: TradePhasePortTrade.cs
+/// SPECIFICATION: Responsible for trade phase port trade
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameBoard;
 using Catan.Players;
 using Catan.UI;
@@ -10,21 +15,41 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles the UI for players trading with ports
+/// </summary>
 public class TradePhasePortTrade : MonoBehaviour
 {
+    /// <summary>
+    /// The initiating player
+    /// </summary>
     Player player;
 
+    // UI members
     public Toggle[] toggles;
     public TextMeshProUGUI[] costs;
     public TextMeshProUGUI[] amounts;
     public Button[] purchaseButtons;
     public TextMeshProUGUI portsLabel;
 
+    /// <summary>
+    /// Currently selected resource to trade
+    /// </summary>
     public int selectedResource;
 
+    /// <summary>
+    /// Trade phase
+    /// </summary>
     public TradePhase tradePhase;
+    /// <summary>
+    /// Board
+    /// </summary>
     public Board board;
 
+    /// <summary>
+    /// Initilize window
+    /// </summary>
+    /// <param name="player"></param>
     public void Initialize(Player player)
     {
         this.player = player;
@@ -33,12 +58,20 @@ public class TradePhasePortTrade : MonoBehaviour
         Check(0);
     }
 
+    /// <summary>
+    /// What fires when a player checks a check box
+    /// </summary>
+    /// <param name="checkBox"></param>
     public void Check(int checkBox)
     {
         selectedResource = checkBox;
         UpdateUI(checkBox);
     }
 
+    /// <summary>
+    /// Updates the UI
+    /// </summary>
+    /// <param name="selected"></param>
     public void UpdateUI(int selected)
     {
         Resource.ResourceType resource = Resource.ResourceType.None;
@@ -89,6 +122,10 @@ public class TradePhasePortTrade : MonoBehaviour
         amounts[4].text = player.resources.Where(r => r.type == Resource.ResourceType.Ore).First().amount.ToString();
     }
 
+    /// <summary>
+    /// Handles trading resources
+    /// </summary>
+    /// <param name="selected"></param>
     public void Trade(int selected)
     {
         Resource.ResourceType toSell = Resource.ResourceType.None;

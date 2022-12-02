@@ -1,20 +1,34 @@
-using System.Collections;
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: Statistics.cs
+/// SPECIFICATION: Responsible for managing statistics
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using System.Collections.Generic;
 using UnityEngine;
 using Catan.GameManagement;
 using Catan.Settings;
-using Catan.Players;
-using System;
 using System.Linq;
 
 namespace Catan.Tests
 {
+    /// <summary>
+    /// Manages games statistics
+    /// </summary>
     public class Statistics : MonoBehaviour
     {
+        /// <summary>
+        /// Game Manager
+        /// </summary>
         private GameManager gm;
+        /// <summary>
+        /// List of all games tested in this session
+        /// </summary>
         public List<Game> games;
 
         #region Saving
+        /// <summary>
+        /// Saves the games
+        /// </summary>
         public void SaveGame()
         {
             Game game = new Game();
@@ -40,6 +54,8 @@ namespace Catan.Tests
         #endregion
 
         #region Derived Data
+        // Derived data members
+
         public int NumberOfGames
         {
             get
@@ -134,6 +150,9 @@ namespace Catan.Tests
         #endregion
 
         #region Start
+        /// <summary>
+        /// Initilization
+        /// </summary>
         void Start()
         {
             if (GameSettings.testing)

@@ -10,19 +10,39 @@ using UnityEngine;
 
 namespace Catan.GameBoard
 {
+    /// <summary>
+    /// Class representing each vertex on the game board
+    /// </summary>
     public class TileVertex
     {
+        // Coordinates representing the location of the tilevertex
         public int xCoord;
         public int yCoord;
         public int xDataIndex;
         public int yDataIndex;
 
+        /// <summary>
+        /// Development level of vertex
+        /// </summary>
         public Development development;
+        /// <summary>
+        /// Index of player on vertex
+        /// </summary>
         public int playerIndex;
+        /// <summary>
+        /// Switch boolean representing whether a vertex has a road going up out of it, or down out of it.
+        /// </summary>
         public bool up;
 
+        /// <summary>
+        /// Port attached to vertex.
+        /// </summary>
         public Port port;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="isUp"></param>
         public TileVertex(bool isUp)
         {
             up = isUp;
@@ -36,6 +56,9 @@ namespace Catan.GameBoard
             City = 2
         }
 
+        /// <summary>
+        /// Increases development of tile vertex
+        /// </summary>
         public void AdvanceDevelopment()
         {
             switch (development)

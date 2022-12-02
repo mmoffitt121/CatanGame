@@ -8,17 +8,38 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Responsible for stealing a resource from a player
+/// </summary>
 public class ResourceSteal : MonoBehaviour
 {
+    /// <summary>
+    /// Player button prefab
+    /// </summary>
     public GameObject playerButtonPrefab;
 
+    /// <summary>
+    /// Text representing title text
+    /// </summary>
     public TextMeshProUGUI titleText;
 
+    /// <summary>
+    /// Player who is doing the stealing
+    /// </summary>
     public Player stealer;
+    /// <summary>
+    /// Possible players to steal from
+    /// </summary>
     public Player[] candidates;
 
+    /// <summary>
+    /// LIst of locations on UI to put list items
+    /// </summary>
     public static readonly Vector3[] locations = { new Vector3(0, 0, 0), new Vector3(0, -80, 0), new Vector3(0, 80, 0) };
 
+    /// <summary>
+    /// Clears the items in the GUI
+    /// </summary>
     public void ClearItems()
     {
         foreach (Transform child in transform)
@@ -30,6 +51,9 @@ public class ResourceSteal : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds items to GUI
+    /// </summary>
     public void AddItems()
     {
         titleText.text = stealer.playerName + " - Steal A Resource";
@@ -48,6 +72,10 @@ public class ResourceSteal : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Submits person to steal from
+    /// </summary>
+    /// <param name="toStealFrom"></param>
     public void Submit(int toStealFrom)
     {
         Player thief = stealer;
@@ -69,6 +97,11 @@ public class ResourceSteal : MonoBehaviour
         GameObject.Find("Game Manager").GetComponent<GameManager>().UIManager.EndSteal();
     }
 
+    /// <summary>
+    /// Initializes UI
+    /// </summary>
+    /// <param name="initialPlayer"></param>
+    /// <param name="players"></param>
     public void InitializePlayers(Player initialPlayer, Player[] players)
     {
         stealer = initialPlayer;

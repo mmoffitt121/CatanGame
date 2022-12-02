@@ -1,3 +1,9 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: TradePhaseTradeWindow.cs
+/// SPECIFICATION: Responsible for trade phase trade window
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
+
 using Catan.Players;
 using Catan.ResourcePhase;
 using Catan.TradePhase;
@@ -9,10 +15,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles the UI and logic for the trade window
+/// </summary>
 public class TradePhaseTradeWindow : MonoBehaviour
 {
+    /// <summary>
+    /// Trade phase
+    /// </summary>
     public TradePhase tradePhase;
 
+    // UI members
     public TextMeshProUGUI playerXLabel;
     public TextMeshProUGUI playerYLabel;
     public Button offerButton;
@@ -41,12 +54,21 @@ public class TradePhaseTradeWindow : MonoBehaviour
     public TextMeshProUGUI playerYBrickDisplay;
     public TextMeshProUGUI playerYOreDisplay;
 
+    /// <summary>
+    /// Offers
+    /// </summary>
     public Resource[] playerXOffer;
     public Resource[] playerYOffer;
 
+    /// <summary>
+    /// Players
+    /// </summary>
     Player x;
     Player y;
 
+    /// <summary>
+    /// Types of resources
+    /// </summary>
     public Resource.ResourceType[] resourceTypes = new Resource.ResourceType[]
     {
         Resource.ResourceType.Grain, 
@@ -56,6 +78,9 @@ public class TradePhaseTradeWindow : MonoBehaviour
         Resource.ResourceType.Ore
     };
 
+    /// <summary>
+    /// Initializes window
+    /// </summary>
     public void Initialize()
     {
         x = tradePhase.gm.currentPlayer;
@@ -86,6 +111,9 @@ public class TradePhaseTradeWindow : MonoBehaviour
         UpdateUI();
     }
 
+    /// <summary>
+    /// Updates the UI
+    /// </summary>
     public void UpdateUI()
     {
         playerXTotalWheatDisplay.text = x.resources.Where(r => r.type == Resource.ResourceType.Grain).First().amount.ToString();
@@ -113,6 +141,10 @@ public class TradePhaseTradeWindow : MonoBehaviour
         playerYOreDisplay.text = playerYOffer[4].amount.ToString();
     }
 
+    /// <summary>
+    /// Sets values based on passed in arguments
+    /// </summary>
+    /// <param name="args"></param>
     public void SetValue(TradePhaseButtonArgs args)
     {
         if (args.pY)
@@ -143,6 +175,9 @@ public class TradePhaseTradeWindow : MonoBehaviour
         UpdateUI();
     }
 
+    /// <summary>
+    /// Offers a trade
+    /// </summary>
     public void Offer()
     {
         tradePhase.Offer(x, y, playerXOffer, playerYOffer);

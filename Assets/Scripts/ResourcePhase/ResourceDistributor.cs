@@ -68,6 +68,11 @@ public static class ResourceDistributor
         if (right != (-1, -1)) gm.currentPlayer.AddResource(board.tiles[right.Item1][right.Item2].resourceType, 1);
     }
 
+    /// <summary>
+    /// Gets the players who have to split their resources when a 7 is rolled
+    /// </summary>
+    /// <param name="players"></param>
+    /// <returns></returns>
     public static Player[] GetSplittingPlayers(Player[] players)
     {
         List<Player> output = new List<Player>();

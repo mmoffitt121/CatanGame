@@ -1,3 +1,8 @@
+/// AUTHOR: Matthew Moffitt
+/// FILENAME: TestSuite.cs
+/// SPECIFICATION: Responsible for Testing
+/// FOR: CS 3368 Introduction to Artificial Intelligence Section 001
+
 using Catan.GameManagement;
 using Catan.Settings;
 using Catan.Tests;
@@ -7,18 +12,33 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for managing test data
+/// </summary>
 public class TestSuite : MonoBehaviour
 {
+    // UI members
     public GameObject testMenu;
     public GameObject openTestMenuButton;
     public TextMeshProUGUI testStatisticsBox;
     public TextMeshProUGUI playerName;
     public TextMeshProUGUI playerStats;
-    public Statistics stats;
 
+    /// <summary>
+    /// Statistics
+    /// </summary>
+    public Statistics stats;
+    /// <summary>
+    /// Index of currently selected player
+    /// </summary>
     public int selectedPlayer = 0;
 
+    /// <summary>
+    /// Game Manager
+    /// </summary>
     public GameManager gm;
+
+    // Display of test menu functions
 
     public void OpenTestMenu()
     {
@@ -32,12 +52,18 @@ public class TestSuite : MonoBehaviour
         openTestMenuButton.SetActive(true);
     }
 
+    /// <summary>
+    /// Saves the current game
+    /// </summary>
     public void SaveGame()
     {
         stats.SaveGame();
         UpdateStatistics();
     }
 
+    /// <summary>
+    /// Updates the statistics display
+    /// </summary>
     void UpdateStatistics()
     {
         testStatisticsBox.text =
@@ -63,6 +89,10 @@ public class TestSuite : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Switches displayed player
+    /// </summary>
+    /// <param name="change"></param>
     public void ChangePlayer(int change)
     {
         selectedPlayer += change;
@@ -77,6 +107,9 @@ public class TestSuite : MonoBehaviour
         UpdateStatistics();
     }
 
+    /// <summary>
+    /// Initialization
+    /// </summary>
     void Start()
     {
         if (!GameSettings.testing)

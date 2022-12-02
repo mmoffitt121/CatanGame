@@ -9,6 +9,9 @@ using UnityEngine;
 
 namespace Catan.GameBoard
 {
+    /// <summary>
+    /// Game object representing a road on the board.
+    /// </summary>
     public class RoadGameObject : BoardTokenGameObject
     {
 

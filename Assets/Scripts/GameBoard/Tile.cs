@@ -16,15 +16,39 @@ namespace Catan.GameBoard
     /// </summary>
     public class Tile
     {
+        /// <summary>
+        /// The type of tile
+        /// </summary>
         public TileType type;
+        /// <summary>
+        /// The number a dice will roll to generate resources from this tile
+        /// </summary>
         public int diceValue;
+        /// <summary>
+        /// The x coordinate of the tile in DATA FORM
+        /// </summary>
         public int xDataIndex;
+        /// <summary>
+        /// The y coordinate of the tile in DATA FORM
+        /// </summary>
         public int yDataIndex;
+        /// <summary>
+        /// The x coordinate of the tile in POSITIONAL FORM
+        /// </summary>
         public int xCoord;
+        /// <summary>
+        /// The y coordinate of the tile in POSITIONAL FORM
+        /// </summary>
         public int yCoord;
 
+        /// <summary>
+        /// Boolean representing whether or not the robber is on the tile.
+        /// </summary>
         public bool robber;
 
+        /// <summary>
+        /// Returns the resource type of the tile
+        /// </summary>
         public Resource.ResourceType resourceType
         { 
             get
@@ -49,6 +73,9 @@ namespace Catan.GameBoard
             }
         }
 
+        /// <summary>
+        /// Returns the color of the tile (depreciated due to new models)
+        /// </summary>
         public Color color
         {
             get
@@ -73,6 +100,12 @@ namespace Catan.GameBoard
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="tileType"></param>
         public Tile(int x, int y, TileType tileType)
         {
             xDataIndex = x;
@@ -80,6 +113,9 @@ namespace Catan.GameBoard
             type = tileType;
         }
 
+        /// <summary>
+        /// Type of tile enumerated type
+        /// </summary>
         public enum TileType
         {
             Pasture,
@@ -90,6 +126,10 @@ namespace Catan.GameBoard
             Desert
         }
 
+        /// <summary>
+        /// ToString() override function that returns the coordinates of the tile in DATA FORM.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return xDataIndex + ", " + yDataIndex;
