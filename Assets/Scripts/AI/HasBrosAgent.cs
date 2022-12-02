@@ -276,15 +276,6 @@ namespace Catan.AI
                         // Expected value of building a city on this spot
                         float ciEV = (oEV * 3 + gEV * 2 + anyResourceForCityEV) / 5;
 
-                        Debug.Log(i + " " + j + ":"
-                            + " (Grain EV: " + gEV + ")"
-                            + " (Sheep EV: " + sEV + ")"
-                            + " (Wood EV: " + wEV + ")"
-                            + " (Bricks EV: " + bEV + ")"
-                            + " (Ore EV: " + oEV + ")"
-                            + " " + seEV
-                            + " " + ciEV);
-
                         if (Math.Max(seEV, ciEV) > highest)
                         {
                             highest = Math.Max(seEV, ciEV);
