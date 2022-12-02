@@ -21,8 +21,14 @@ using System.Reflection;
 
 namespace Catan.GameManagement
 {
+    /// <summary>
+    /// Responsible for managing and scheduling all game activities
+    /// </summary>
     public class GameManager : MonoBehaviour
     {
+        /// <summary>
+        /// Player[] containting all players in the current game
+        /// </summary>
         public Player[] players;
         public Texture2D[] resourceIcons;
         public Player currentPlayer
