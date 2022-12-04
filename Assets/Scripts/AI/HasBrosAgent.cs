@@ -316,6 +316,202 @@ namespace Catan.AI
             }
         }
 
+        /// <summary>
+        /// Calculates where to place the robber, maximizing the expected value damage done by the placement. If tiles are evalutated to have the same EV, then the result will be chosen randomly between these tiles.
+        /// </summary>
+        public override void ChooseRobberLocation()
+        {
+            // Grab tiles from board
+            Tile[][] tiles = api.board.tiles;
+
+            // First, calculate expected value for every resource for every vertex.
+
+            // Disjointed array of expected values for each vertex
+            float[][] EVs = new float[tiles.Length][];
+
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                EVs[i] = new float[tiles[i].Length];
+
+                for (int j = 0; j < tiles[i].Length; j++)
+                {
+                    (int, int)[] surrounding = tiles.GetSurroundingVertices(api.board.vertices, i, j);
+
+                    float ev = 0;
+
+                    if (tiles[i][j].robber)
+                    {
+                        EVs[i][j] = -1000;
+                        continue;
+                    }
+
+                    for (int k = 0; k < surrounding.Length; k++)
+                    {
+                        float vertexDev = surrounding[k].Valid() ? (int)api.board.vertices[surrounding[k].Item1][surrounding[k].Item2].development : 0;
+
+                        float pModifier = 1;
+                        if (api.board.vertices[surrounding[k].Item1][surrounding[k].Item2].playerIndex == player.playerIndex)
+                        {
+                            pModifier = -2;
+                        }
+
+                        ev += pModifier * vertexDev;
+                    }
+
+                    EVs[i][j] = ev;
+                }
+            }
+
+            float evMax = 0;
+            for (int i = 0; i < EVs.Length; i++)
+            {
+                for (int j = 0; j < EVs[i].Length; j++)
+                {
+                    if (EVs[i][j] > evMax)
+                    {
+                        evMax = EVs[i][j];
+                    }
+                }
+            }
+
+            List<(int, int)> possibleSpots = new List<(int, int)>();
+            for (int i = 0; i < EVs.Length; i++)
+            {
+                for (int j = 0; j < EVs[i].Length; j++)
+                {
+                    if (EVs[i][j] == evMax)
+                    {
+                        possibleSpots.Add((i, j));
+                    }
+                }
+            }
+
+            int randomMaxEV = UnityEngine.Random.Range(0, possibleSpots.Count);
+            api.MoveRobber(possibleSpots[randomMaxEV].Item1, possibleSpots[randomMaxEV].Item2);
+        }
+
+        /// <summary>
+        /// Is called when it is time for the player to discard after having more than 7 cards when a 7 is rolled.
+        /// </summary>
+        /// <param name="discardAmount"></param>
+        /// <returns></returns>
+        public override Resource[] ChooseDiscard(int discardAmount)
+        {
+            Resource[] discard = new Resource[] { new Resource(Resource.ResourceType.Wool, 0)
+            ,new Resource(Resource.ResourceType.Wood, 0)
+            ,new Resource(Resource.ResourceType.Ore, 0)
+            ,new Resource(Resource.ResourceType.Brick, 0)
+            ,new Resource(Resource.ResourceType.Grain, 0)};
+
+            int grain = player.resources.Where(r => r.type == Resource.ResourceType.Grain).First().amount;
+            int wool = player.resources.Where(r => r.type == Resource.ResourceType.Wool).First().amount;
+            int wood = player.resources.Where(r => r.type == Resource.ResourceType.Wood).First().amount;
+            int brick = player.resources.Where(r => r.type == Resource.ResourceType.Brick).First().amount;
+            int ore = player.resources.Where(r => r.type == Resource.ResourceType.Ore).First().amount;
+
+            int count = 0;
+            while (count != discardAmount)
+            {
+                float progressTowardsSettlement = (
+                    grain > 0 ? 1 : 0 +
+                    wool > 0 ? 1 : 0 +
+                    wood > 0 ? 1 : 0 +
+                    brick > 0 ? 1 : 0
+                    ) / 4f;
+                float progressTowardsCity = (
+                    ore < 3 ? ore : 3 +
+                    grain < 2 ? grain : 2
+                    ) / 5f;
+
+                if (progressTowardsSettlement > progressTowardsCity && progressTowardsCity != 0)
+                {
+                    if (grain > ore && grain > 0)
+                    {
+                        grain--;
+                        discard[4].amount++;
+                        count++;
+                        continue;
+                    }
+                    else if (ore > 0)
+                    {
+                        ore--;
+                        discard[2].amount++;
+                        count++;
+                        continue;
+                    }
+                }
+                else if (progressTowardsSettlement < progressTowardsCity && progressTowardsSettlement != 0)
+                {
+                    if (grain > wool && grain > wood && grain > brick && grain > 0)
+                    {
+                        grain--;
+                        discard[4].amount++;
+                        count++;
+                        continue;
+                    }
+                    else if (wool > grain && wool > wood && wool > brick && wool > 0)
+                    {
+                        wool--;
+                        discard[0].amount++;
+                        count++;
+                        continue;
+                    }
+                    else if (wood > grain && wood > wool && wood > brick && wood > 0)
+                    {
+                        wood--;
+                        discard[1].amount++;
+                        count++;
+                        continue;
+                    }
+                    else if (brick > 0)
+                    {
+                        brick--;
+                        discard[3].amount++;
+                        count++;
+                        continue;
+                    }
+                }
+                int rIndex = UnityEngine.Random.Range(0, discard.Length);
+                int rMax = rIndex + discard.Length;
+                for (int i = 0; i < rMax; i++)
+                {
+                    // If we're discarding less of the randomly chosen resource than the player has, add one to the total. Else, continue searching.
+                    if (discard[i % discard.Length].amount < player.resources.Where(r => r.type == discard[i % discard.Length].type).First().amount)
+                    {
+                        discard[i % discard.Length].amount += 1;
+                        count++;
+                        break;
+                    }
+                }
+            }
+
+            return discard;
+        }
+
+        /// <summary>
+        /// Chooses a player to steal from upon rolling a 7.
+        /// </summary>
+        /// <param name="stealFrom"></param>
+        /// <returns> Index of player to steal random resource from </returns>
+        public override int ChooseSteal(Player[] stealFrom)
+        {
+            if (stealFrom == null || stealFrom.Length <= 1) { return 0; }
+
+            int maxIndex = 0;
+            int maxCount = 0;
+
+            for (int i = 0; i < stealFrom.Length; i++)
+            {
+                if (stealFrom[i].resourceSum > maxCount)
+                {
+                    maxIndex = i;
+                    maxCount = stealFrom[i].resourceSum;
+                }
+            }
+
+            return maxIndex;
+        }
+
         private int trades;
         public override void StartTrading()
         {
