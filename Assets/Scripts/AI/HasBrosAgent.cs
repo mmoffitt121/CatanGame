@@ -573,10 +573,10 @@ namespace Catan.AI
 
                             //check how many roads can be added to my longest road - how?
                             if (api.board.GetPossibleRoads(player).Length <= roadsNeeded)
-                                {
-                                    resourcesWanted[0] += roadsNeeded; //brick                                     
-                                    resourcesWanted[2] += roadsNeeded; //wood                                    
-                                }
+                            {
+                                resourcesWanted[0] += roadsNeeded; //brick                                     
+                                resourcesWanted[2] += roadsNeeded; //wood                                    
+                            }
                         }
                     }
                 }
@@ -625,62 +625,60 @@ namespace Catan.AI
                     }
 
                 }
-
                 
-                    Player otherP = api.Players[UnityEngine.Random.Range(0, api.Players.Length)];
-                    if (otherP.resourceSum > 0 && otherP.playerIndex != player.playerIndex)
+                Player otherP = api.Players[UnityEngine.Random.Range(0, api.Players.Length)];
+                if (otherP.resourceSum > 0 && otherP.playerIndex != player.playerIndex)
+                {
+                    Resource[] senderOffer = new Resource[] { player.RandomResource() };
+                    if (wantedResourceFlag == 0)
                     {
-                        Resource[] senderOffer = new Resource[] { player.RandomResource() };
-                        if (wantedResourceFlag == 0)
-                        {
-                            senderOffer = new Resource[] { new Resource(Resource.ResourceType.Brick, 1) };
-                        }
-                        else if (wantedResourceFlag == 1)
-                        {
-                            senderOffer = new Resource[] { new Resource(Resource.ResourceType.Grain, 1) };
-                        }
-                        else if (wantedResourceFlag == 2)
-                        {
-                            senderOffer = new Resource[] { new Resource(Resource.ResourceType.Wood, 1) };
-                        }
-                        else if (wantedResourceFlag == 3)
-                        {
-                            senderOffer = new Resource[] { new Resource(Resource.ResourceType.Ore, 1) };
-                        }
-                        else if (wantedResourceFlag == 4)
-                        {
-                            senderOffer = new Resource[] { new Resource(Resource.ResourceType.Wool, 1) };
-                        }
-
-                        Resource[] recieverOffer = new Resource[] { otherP.RandomResource() };
-                        if (unwantedResourceFlag == 0)
-                        {
-                            recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Brick, 1) };
-                        }
-                        else if (unwantedResourceFlag == 1)
-                        {
-                            recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Grain, 1) };
-                        }
-                        else if (unwantedResourceFlag == 2)
-                        {
-                            recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Wood, 1) };
-                        }
-                        else if (unwantedResourceFlag == 3)
-                        {
-                            recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Ore, 1) };
-                        }
-                        else if (unwantedResourceFlag == 4)
-                        {
-                            recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Wool, 1) };
-                        }
-
-                        Trader.Request(player, otherP, senderOffer, recieverOffer);
+                        senderOffer = new Resource[] { new Resource(Resource.ResourceType.Brick, 1) };
                     }
-                    else
+                    else if (wantedResourceFlag == 1)
                     {
-                        OfferResultRecieved(false);
+                        senderOffer = new Resource[] { new Resource(Resource.ResourceType.Grain, 1) };
                     }
-                
+                    else if (wantedResourceFlag == 2)
+                    {
+                        senderOffer = new Resource[] { new Resource(Resource.ResourceType.Wood, 1) };
+                    }
+                    else if (wantedResourceFlag == 3)
+                    {
+                        senderOffer = new Resource[] { new Resource(Resource.ResourceType.Ore, 1) };
+                    }
+                    else if (wantedResourceFlag == 4)
+                    {
+                        senderOffer = new Resource[] { new Resource(Resource.ResourceType.Wool, 1) };
+                    }
+
+                    Resource[] recieverOffer = new Resource[] { otherP.RandomResource() };
+                    if (unwantedResourceFlag == 0)
+                    {
+                        recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Brick, 1) };
+                    }
+                    else if (unwantedResourceFlag == 1)
+                    {
+                        recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Grain, 1) };
+                    }
+                    else if (unwantedResourceFlag == 2)
+                    {
+                        recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Wood, 1) };
+                    }
+                    else if (unwantedResourceFlag == 3)
+                    {
+                        recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Ore, 1) };
+                    }
+                    else if (unwantedResourceFlag == 4)
+                    {
+                        recieverOffer = new Resource[] { new Resource(Resource.ResourceType.Wool, 1) };
+                    }
+
+                    Trader.Request(player, otherP, senderOffer, recieverOffer);
+                }
+                else
+                {
+                    OfferResultRecieved(false);
+                }
             }
 
             else // need 5 or more points : not possible to win this turn - prioritize settlements, then roads, then cities to maximize resource gain
@@ -716,6 +714,118 @@ namespace Catan.AI
 
         public override void StartBuilding()
         {
+            // Grab vertices from board
+            TileVertex[][] verts = api.board.vertices;
+            Road[][] roads = api.board.roads;
+
+            // First, calculate expected value for every resource for every vertex.
+
+            // Triple disjointed array of floats, and triple disjointed array of Resource Types.
+            // Outermost array represents vertex row, middle array represents vertex column, and innermost array represents the expected value of each resource for a given vertex.
+            float[][][] EVs = new float[verts.Length][][];
+            float[][] seEVs = new float[verts.Length][];
+            Resource.ResourceType[][][] resources = new Resource.ResourceType[verts.Length][][];
+            // Ports
+            Resource.ResourceType[][] ports = new Resource.ResourceType[verts.Length][];
+
+            // Lists representing expected values already owned by the player
+            List<float> ownedEVs = new List<float>();
+            List<Resource.ResourceType> ownedResources = new List<Resource.ResourceType>();
+            // Ports
+            Resource.ResourceType[] ownedPorts = api.Vertices.GetPlayerPorts(player);
+
+            for (int i = 0; i < verts.Length; i++)
+            {
+                EVs[i] = new float[verts[i].Length][];
+                resources[i] = new Resource.ResourceType[verts[i].Length][];
+                ports[i] = new Resource.ResourceType[verts[i].Length];
+                seEVs[i] = new float[verts[i].Length];
+
+                for (int j = 0; j < verts[i].Length; j++)
+                {
+                    // Check base case where building is impossible due to adjacent developed vertex.
+                    (int, int) above = verts.VertexAboveVertex(i, j);
+                    (int, int) below = verts.VertexBelowVertex(i, j);
+                    (int, int) left = verts.VertexLeftOfVertex(i, j);
+                    (int, int) right = verts.VertexRightOfVertex(i, j);
+
+                    // Case in which the vertex is not valid to build on
+                    if (above.Valid() && verts[above.Item1][above.Item2].development > 0 ||
+                        below.Valid() && verts[below.Item1][below.Item2].development > 0 ||
+                        left.Valid() && verts[left.Item1][left.Item2].development > 0 ||
+                        right.Valid() && verts[right.Item1][right.Item2].development > 0)
+                    {
+                        EVs[i][j] = new float[1] { -10000 };
+                        resources[i][j] = new Resource.ResourceType[] { Resource.ResourceType.None };
+                        continue;
+                    }
+
+                    // Case in which the vertex is already owned
+                    if (verts[i][j].development > 0 && verts[i][j].playerIndex == player.playerIndex)
+                    {
+                        EVs[i][j] = new float[1] { -10000 };
+                        resources[i][j] = new Resource.ResourceType[] { Resource.ResourceType.None };
+
+                        (Resource.ResourceType, float)[] ownedEV = api.board.CalculateVertexExpectedValues(i, j);
+                        foreach ((Resource.ResourceType, float) ev in ownedEV)
+                        {
+                            ownedEVs.Add(ev.Item2);
+                            ownedResources.Add(ev.Item1);
+                        }
+
+                        continue;
+                    }
+
+                    if (verts[i][j].port != null)
+                    {
+                        ports[i][j] = verts[i][j].port.type;
+                    }
+
+                    // Calculate expected value of resource
+                    (Resource.ResourceType, float)[] expectedValues = api.board.CalculateVertexExpectedValues(i, j);
+                    EVs[i][j] = new float[expectedValues.Length];
+                    resources[i][j] = new Resource.ResourceType[expectedValues.Length];
+
+                    for (int k = 0; k < expectedValues.Length; k++)
+                    {
+                        EVs[i][j][k] = expectedValues[k].Item2;
+                        resources[i][j][k] = expectedValues[k].Item1;
+                    }
+                    seEVs[i][j] = EVs[i][j].Sum();
+                }
+            }
+
+            float[][] roadEVs = new float[roads.Length][];
+            for (int i = 0; i < roads.Length; i++)
+            {
+                roadEVs[i] = new float[roads[i].Length];
+                for (int j = 0; j < roads[i].Length; j++)
+                {
+                    roadEVs[i][j] = 0;
+                }
+            }
+            // Propagate EV vertex values outwards into roads
+            for (int i = 0; i < seEVs.Length; i++)
+            {
+                roadEVs[i] = new float[roads[i].Length];
+                for (int j = 0; j < seEVs[i].Length; j++)
+                {
+                    if (verts[i][j].playerIndex == player.playerIndex)
+                    {
+                        continue;
+                    }
+                    (int, int) above = verts.RoadAboveVertex(roads, i, j);
+                    (int, int) below = verts.RoadBelowVertex(roads, i, j);
+                    (int, int) left = verts.RoadLeftOfVertex(roads, i, j);
+                    (int, int) right = verts.RoadRightOfVertex(roads, i, j);
+
+                    if (above.Valid()) roadEVs[above.Item1][above.Item2] += seEVs[i][j] * 0.5f;
+                    if (below.Valid()) roadEVs[below.Item1][below.Item2] += seEVs[i][j] * 0.5f;
+                    if (left.Valid()) roadEVs[left.Item1][left.Item2] += seEVs[i][j] * 0.5f;
+                    if (right.Valid()) roadEVs[right.Item1][right.Item2] += seEVs[i][j] * 0.5f;
+                }
+            }
+
             while (true)
             {
                 bool canBuildSettlement = player.HasResource(Resource.ResourceType.Brick)
@@ -733,20 +843,44 @@ namespace Catan.AI
                 (int, int)[] possibleCities = api.board.GetPossibleCities(player);
                 (int, int)[] possibleRoads = api.board.GetPossibleRoads(player);
 
+                (int, int) maxPossibleSettlement = (-1, -1);
+                (int, int) maxPossibleRoad = (-1, -1);
+
                 if (canBuildSettlement && possibleSettlements.Length > 0)
                 {
-                    int i = UnityEngine.Random.Range(0, possibleSettlements.Length);
-                    api.BuildSettlement(player, possibleSettlements[i].Item1, possibleSettlements[i].Item2);
+                    foreach ((int, int) settlement in possibleSettlements)
+                    {
+                        if (!maxPossibleSettlement.Valid() || seEVs[settlement.Item1][settlement.Item2] > seEVs[maxPossibleSettlement.Item1][maxPossibleSettlement.Item2])
+                        {
+                            maxPossibleSettlement = settlement;
+                        }
+                    }
+                    api.BuildSettlement(player, maxPossibleSettlement.Item1, maxPossibleSettlement.Item2);
+                    break;
                 }
                 else if (canBuildCity && possibleCities.Length > 0)
                 {
-                    int i = UnityEngine.Random.Range(0, possibleCities.Length);
-                    api.UpgradeSettlement(player, possibleCities[i].Item1, possibleCities[i].Item2);
+                    foreach ((int, int) city in possibleCities)
+                    {
+                        if (!maxPossibleSettlement.Valid() || seEVs[city.Item1][city.Item2] > seEVs[maxPossibleSettlement.Item1][maxPossibleSettlement.Item2])
+                        {
+                            maxPossibleSettlement = city;
+                        }
+                    }
+                    api.UpgradeSettlement(player, maxPossibleSettlement.Item1, maxPossibleSettlement.Item2);
+                    break;
                 }
                 else if (canBuildRoad && possibleRoads.Length > 0)
                 {
-                    int i = UnityEngine.Random.Range(0, possibleRoads.Length);
-                    api.BuildRoad(player, possibleRoads[i].Item1, possibleRoads[i].Item2);
+                    foreach ((int, int) road in possibleRoads)
+                    {
+                        if (!maxPossibleRoad.Valid() || roadEVs[road.Item1][road.Item2] > roadEVs[maxPossibleRoad.Item1][maxPossibleRoad.Item2])
+                        {
+                            maxPossibleRoad = road;
+                        }
+                    }
+                    api.BuildRoad(player, maxPossibleRoad.Item1, maxPossibleRoad.Item2);
+                    break;
                 }
                 else
                 {
@@ -756,167 +890,5 @@ namespace Catan.AI
 
             base.StartBuilding();
         }
-
-
     }
 }
-// public class BuildPhase :build
-//         {
-//             Player player;
-//             CurrentPlayer currentPlayer;
-//             LongestRoad longestroad;
-
-//             {
-//                 public List <GameObject> deck = new List<GameObject>();
-//                 private List<GameObject> cards = new List<GameObject>();
-//                 private List<GameObject> resource = new List<GameObject>();
-
-//                  private int cardsDealt=0;
-//                  private bool showReset= false;
-//             }
-//             {
-
-//                 double[] dblPlayerScore = new double [6];
-//                 double dblAverageScore=0;
-//                 int intPlayerCount=0;
-//                 double[] dblLongestRoad= new double[8];
-
-//                 InputData(ref strPlayer, ref dblLongestRoad,ref  dblPlayerScore ref strPlayer, );
-//                 DisplayPlayerData(strPlayer, dblPlayerScore, intPlayerCount);
-//                 CalculateAverageScore(dblPlayerScore,intPlayerCount, dblAverageScore );
-//                 Console.ReadLine();
-//             }
-//             static void InputData(ref string[]strPlayer, ref double[] dblPlayerScore, ref int intPlayerCount,ref double[] dblLongestRoad )
-//         }
-
-// //cards
-// namespace SettlersOfCatan
-// {
-//     enum CardType
-//     {
-//         soldier,
-//         yearOfPlenty,
-//         monopoly,
-//         roadBuilding,
-//         victory
-//     }
-
-//     class Card
-//     {
-//         CardType type;
-
-//         public Card(CardType t)
-//         {
-//             type = t;
-//         }
-
-//         public void Use(Player p)
-//         {
-//            StartBuilding();
-//         }
-//     }
-// }
-
-
-// bool isContinue = true;
-// bool isDouble;
-
-// //CONTINUE FROM HERE AND MODIFY BELOW CODE TO OUR GAME
-// do
-
-// {
-
-// Console.Write("Enter Player Name (Q to quit): ");
-
-// strPlayerName[intPlayerCount] = Console.ReadLine();
-
-// //here we check to see if the user asks to stop entering player data. If so, we flip the conditional flag, and continue to the end of the loop.
-
-// if (strPlayerName[intPlayerCount].ToLower() == "q")
-// {
-
-// isContinue = false;
-
-// continue;
-
-// }
-
-// //We are looping the entry for the score to validate the data. We do not want erronious characters present, so we parse the input to check if they are accepted as a double
-
-// do
-
-// {
-
-// Console.Write("Enter the score for {0}: ", strPlayerName[intPlayerCount]);
-
-// //try to parse input as a double. If it is acceptable, it returns a true (boolean) value
-
-// isDouble = double.TryParse(Console.ReadLine(), out dblPlayerScore[intPlayerCount]);
-
-// //if the attempted parse returned a false value, we display an error message and represent the entry for the score
-
-// if (!isDouble)
-
-// {
-
-// Console.Write("You have entered invalid data!\n");
-
-// }
-
-// } while (!isDouble);
-
-// Console.WriteLine();
-
-// //increment the amount of players that were added
-
-// intPlayerCount++;
-
-// } while ((intPlayerCount <= 100) && (isContinue));
-
-// }
-
-// static void DisplayPlayerData(string[] strPlayerName, double[] dblPlayerScore, int intPlayerCount)
-
-// {
-
-// Console.WriteLine("Name\t\t\tScore");
-
-// //loop through each array element that holds data to display the players' names and scores.
-
-// for (int i = 0; i <= intPlayerCount - 1; i++)
-
-// {
-
-// Console.WriteLine("{0}\t\t\t{1}", strPlayerName[i], dblPlayerScore[i]);
-
-// }
-
-// }
-
-// static void CalculateAverageScore(double[] dblPlayerscore, int intPlayerCount, ref double dblAverageScore)
-
-// {
-
-// double dblSumOfScores = 0;
-
-// //loop through each element that holds data to accumulate the sum of all the player scores
-
-// for (int i = 0; i <= intPlayerCount - 1; i++)
-
-// {
-
-// dblSumOfScores += dblPlayerscore[i];
-
-// }
-
-// //calculate the average of all the scores by taking the sum and dividing it by the playercount
-
-// dblAverageScore = dblSumOfScores / Convert.ToDouble(intPlayerCount);
-
-// Console.Write("\nAverage Score: ");
-
-// Console.Write("{0}\n", dblAverageScore);
-
-// }
-
-// static void DisplayBelowAverage(string[] strPlayerName, double[] dblPlayerScore, int intPlayerCount, double dblAverageScore)
