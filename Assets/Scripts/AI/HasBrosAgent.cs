@@ -757,97 +757,166 @@ namespace Catan.AI
             base.StartBuilding();
         }
 
-        /*public class BuildPhase
-        {
-            private Player [] players;
-            private int currentPlayer;
-            private List<LogEvent> log;
 
-            public BuildPhase( IBoard board, List<DevelopmentCard> deck, int[] resourceBank, Player[] players, int currentPlayer, List<LogEvent> log, int longestRoad, int largestArmy)
-            {
-                Board = board;
-                DevelopmentCards = deck == null ? 0 : deck.Count;
-                ResourceBank =  resourceBank == null ? null : resourceBank.ToArray();
-                this.players = players;
-                this.currentPlayer= currrentPlayer;
-                this.log = log;
-                if( players == null) players = new Player[0];
-                AllPlayerIds =  players.Select(p => p.Id). ToArray();
-                LongestRoadId = longestRoad;
-                LargestArmyId = largestArmy;
-            }
-            public IBoard Board 
-            {get; private set;}
-            public int DevelopmentCards {get; private set;}
-            public int [] ResourceBank{ get; private set;}
-            public int [] AllPlayerIds {get; private set;}
-            public int LongestRoadId{get; private set;}
-            public int LargestArmyId{ get; private set;}
-
-            public int GetPlayerScore(int playerId)
-            {
-                int result =0;
-                if (playerId == LargestArmyId) result += 2;
-                if(playerId == LongestRoadId) result += 2;
-                // 2 per city and 1 per settlement
-                Board.GetAllPieces(). Where(p => p.Value.Player == playerId). ForEach(p => result += p.Value.Token == Token.City ? 2 : 1);
-                return result;
-            }
-            public int GetRoundNumber()
-            {
-                return log.OfType<RollLogEvent>() .Where(r.Player == 0). Count();
-
-            }
-            public int GetResourceCount (int playerId)
-            {
-                return players[playerID].Resources.Count;
-    
-            }
-            public int GetKnghtCount(int playerID)
-            {
-                return players[playerID]. PlayedKnights;
-            }
-
-            public int GetSettlementsLeft(int playerID)
-            {
-                return players[playersID].SettlementsLeft;
-            }
-            public int GetCitiesLeft(int playerID)
-            {
-        return players[playerID]. CitiesLeft;
-            }
-            public int GetRoadsLeft (int playerID)
-            {
-                return players[playerID]. RoadsLeft;
-    
-            }
-            public Resource[] GetOwnResources()
-            {
-                return players[currentPlayer].Resources.ToArray();
-    
-            }
-            public DevelopmentCard[] GetOwnDevelopmentCards()
-            {
-                return players[currentPlayer].DevelopmentCards.ToArray();
-
-            }
-            public int GetResourceBank(Resource res)
-            {
-
-            return ResourceBank[(int)res];
-
-            }
-
-            public List<LogEvent> GetLatestEvents (int amount)
-            {
-                return log.Skip(Math.Max(0, log.Count() - amount)). Take(amount).ToList();
-
-            }
-            public List<LogEvent> GetEventsSince(DateTime time)
-            {
-                return log.Where(e => e.TimeStamp. CompareTo(time) > 0).ToList();
-
-            }
-        }*/
     }
 }
+// public class BuildPhase :build
+//         {
+//             Player player;
+//             CurrentPlayer currentPlayer;
+//             LongestRoad longestroad;
+
+//             {
+//                 public List <GameObject> deck = new List<GameObject>();
+//                 private List<GameObject> cards = new List<GameObject>();
+//                 private List<GameObject> resource = new List<GameObject>();
+
+//                  private int cardsDealt=0;
+//                  private bool showReset= false;
+//             }
+//             {
+
+//                 double[] dblPlayerScore = new double [6];
+//                 double dblAverageScore=0;
+//                 int intPlayerCount=0;
+//                 double[] dblLongestRoad= new double[8];
+
+//                 InputData(ref strPlayer, ref dblLongestRoad,ref  dblPlayerScore ref strPlayer, );
+//                 DisplayPlayerData(strPlayer, dblPlayerScore, intPlayerCount);
+//                 CalculateAverageScore(dblPlayerScore,intPlayerCount, dblAverageScore );
+//                 Console.ReadLine();
+//             }
+//             static void InputData(ref string[]strPlayer, ref double[] dblPlayerScore, ref int intPlayerCount,ref double[] dblLongestRoad )
+//         }
+
+// //cards
+// namespace SettlersOfCatan
+// {
+//     enum CardType
+//     {
+//         soldier,
+//         yearOfPlenty,
+//         monopoly,
+//         roadBuilding,
+//         victory
+//     }
+
+//     class Card
+//     {
+//         CardType type;
+
+//         public Card(CardType t)
+//         {
+//             type = t;
+//         }
+
+//         public void Use(Player p)
+//         {
+//            StartBuilding();
+//         }
+//     }
+// }
+
+
+// bool isContinue = true;
+// bool isDouble;
+
+// //CONTINUE FROM HERE AND MODIFY BELOW CODE TO OUR GAME
+// do
+
+// {
+
+// Console.Write("Enter Player Name (Q to quit): ");
+
+// strPlayerName[intPlayerCount] = Console.ReadLine();
+
+// //here we check to see if the user asks to stop entering player data. If so, we flip the conditional flag, and continue to the end of the loop.
+
+// if (strPlayerName[intPlayerCount].ToLower() == "q")
+// {
+
+// isContinue = false;
+
+// continue;
+
+// }
+
+// //We are looping the entry for the score to validate the data. We do not want erronious characters present, so we parse the input to check if they are accepted as a double
+
+// do
+
+// {
+
+// Console.Write("Enter the score for {0}: ", strPlayerName[intPlayerCount]);
+
+// //try to parse input as a double. If it is acceptable, it returns a true (boolean) value
+
+// isDouble = double.TryParse(Console.ReadLine(), out dblPlayerScore[intPlayerCount]);
+
+// //if the attempted parse returned a false value, we display an error message and represent the entry for the score
+
+// if (!isDouble)
+
+// {
+
+// Console.Write("You have entered invalid data!\n");
+
+// }
+
+// } while (!isDouble);
+
+// Console.WriteLine();
+
+// //increment the amount of players that were added
+
+// intPlayerCount++;
+
+// } while ((intPlayerCount <= 100) && (isContinue));
+
+// }
+
+// static void DisplayPlayerData(string[] strPlayerName, double[] dblPlayerScore, int intPlayerCount)
+
+// {
+
+// Console.WriteLine("Name\t\t\tScore");
+
+// //loop through each array element that holds data to display the players' names and scores.
+
+// for (int i = 0; i <= intPlayerCount - 1; i++)
+
+// {
+
+// Console.WriteLine("{0}\t\t\t{1}", strPlayerName[i], dblPlayerScore[i]);
+
+// }
+
+// }
+
+// static void CalculateAverageScore(double[] dblPlayerscore, int intPlayerCount, ref double dblAverageScore)
+
+// {
+
+// double dblSumOfScores = 0;
+
+// //loop through each element that holds data to accumulate the sum of all the player scores
+
+// for (int i = 0; i <= intPlayerCount - 1; i++)
+
+// {
+
+// dblSumOfScores += dblPlayerscore[i];
+
+// }
+
+// //calculate the average of all the scores by taking the sum and dividing it by the playercount
+
+// dblAverageScore = dblSumOfScores / Convert.ToDouble(intPlayerCount);
+
+// Console.Write("\nAverage Score: ");
+
+// Console.Write("{0}\n", dblAverageScore);
+
+// }
+
+// static void DisplayBelowAverage(string[] strPlayerName, double[] dblPlayerScore, int intPlayerCount, double dblAverageScore)
