@@ -513,36 +513,27 @@ namespace Catan.AI
         }
 
         private int trades;
-        public override void StartTrading()
-        {
-            Player p = api.Players[UnityEngine.Random.Range(0, api.Players.Length)];
-            if (p.resourceSum > 0 && p.playerIndex != player.playerIndex)
-            {
-                Resource[] senderOffer = new Resource[] { player.RandomResource() };
-                Resource[] recieverOffer = new Resource[] { p.RandomResource() };
-                Trader.Request(player, p, senderOffer, recieverOffer);
-            }
-            else
-            {
-                OfferResultRecieved(false);
-            }
-        }
+        //public override void StartTrading()
+        //{
+        //    Player p = api.Players[UnityEngine.Random.Range(0, api.Players.Length)];
+        //    if (p.resourceSum > 0 && p.playerIndex != player.playerIndex)
+        //    {
+        //        Resource[] senderOffer = new Resource[] { player.RandomResource() };
+        //        Resource[] recieverOffer = new Resource[] { p.RandomResource() };
+        //        Trader.Request(player, p, senderOffer, recieverOffer);
+        //    }
+        //    else
+        //    {
+        //        OfferResultRecieved(false);
+        //    }
+        //}
 
 
         /// <summary>
         /// Jett's attempt at a non-random function to override random agent's trade function
         /// </summary>
-        public override void StartTradingJett()
+        public override void StartTrading()
         {
-            //first prioritize trades that may win the game. if not possible, prioritize trading for build actions closest (e.g. only need 1 grain for city)
-            //also prioritize longest road if close (1 road away?)
-
-            bool closeToLongestRoad;
-            bool closeToLargestArmy;
-            
-            //we want to find out what resource we need and how much of it:
-            int[] resourceDeficits = { 0, 0, 0, 0 }; //num resources to go for settlement (1VP), city(2VP), dev card(?VP), and road(4VP - maybe), respectively.
-            bool[] resourceNeeded = { 0, 0, 0, 0, 0 }; //brick, grain, lumber, ore, wool, respectively. 0 = not needed, 1 = needed
 
             int grain = player.resources.Where(r => r.type == Resource.ResourceType.Grain).First().amount;
             int wool = player.resources.Where(r => r.type == Resource.ResourceType.Wool).First().amount;
@@ -550,73 +541,131 @@ namespace Catan.AI
             int brick = player.resources.Where(r => r.type == Resource.ResourceType.Brick).First().amount;
             int ore = player.resources.Where(r => r.type == Resource.ResourceType.Ore).First().amount;
 
+            
+            bool[] resourceNeeded = { false, false, false, false, false }; //brick, grain, lumber, ore, wool, respectively
+            int[] resourceAmount = { 0, 0, 0, 0, 0 }; 
+            int vpDeficit = (10 - (player.victoryPoints)); //How close am I to winning?
+            string winCondition;
+
+            //index into this with vpDeficit
+            var winCons = new Dictionary<int, string>();
+
+            int roadsNeeded;
+
+            if (vpDeficit < 5) //need 4 or less points : potentially possible to win through trades
+            {
+                winCons[1] = "settlement"; //settlement
+                winCons[2] = "city"; //city
+                winCons[3] = "army"; //army (not implemented?)
+                winCons[4] = "road"; //road
+                winCondition = winCons[vpDeficit]; //determine what I need to build to win -- note that at higher vp totals there are multiple possibilities
+
+                if (winCondition == "settlement")
+                {
+                    //resourceNeeded = { 1,1,1,0,1}; //brick, grain, lumber, wool - error?
+                    //resourceAmount = { 1,1,1,1,1}; //3 ore, 2 grain - error?
+                }
+
+                if (winCondition == "city")
+                {
+                    //resourceNeeded = { 0,1,0,1,0}; //ore, grain - error?
+                    //resourceAmount = { 0,3,0,2,0}; //3 ore, 2 grain - error?
+                }
+
+                if (winCondition == "road")
+                {
+                    //check if I already have the longest road
+                    if (player.longestRoad == false)
+                    {
+                        //figure out what the longest road is and calculate how many roads I need to overtake it
+                    }
+                    //resourceNeeded = { 0,1,0,1,0}; //ore, grain - error ?
+                }
+
+
+
+            }
+            else // need 5 or more points : not possible to win this turn
+            {
+
+            }
+
+            //------------------------------------------------------------------------------------------------------------------------------------------------------
+            // scrapped first attempt:
+
+
+            //first prioritize trades that may win the game. if not possible, prioritize trading for build actions closest (e.g. only need 1 grain for city)
+            //also prioritize longest road if close (1 road away?)
+
+           
+            
+            //we want to find out what resource we need and how much of it:
+            //int[] resourceDeficits = { 0, 0, 0, 0 }; //num resources to go for settlement (1VP), city(2VP), dev card(?VP), and road(4VP - maybe), respectively.
+           
+            //int lowestDeficit = 2; //lowest amount of resources needed to do something, comes into play if winning is not possible this turn
+
             //settlement
-            int temp;
-            int excess = 0;
-            if (brick > 0) temp++;
-            if (wood > 0) temp++;
-            if (wool > 0) temp++;
-            if (grain > 0) temp++;
-            resourceDeficits[0] = 4 - temp;
-            temp = 0;
+            //int temp;
+            //int excess = 0;
+            //if (brick > 0) temp++;
+            //if (wood > 0) temp++;
+            //if (wool > 0) temp++;
+            //if (grain > 0) temp++;
+            //resourceDeficits[0] = 4 - temp;
+            //if(resourceDeficits[0] < lowestDeficit)
+            //temp = 0;
 
             //city
-            if (ore > 0) {
-                if (ore > 3) excess = ore - 3;
-                temp += (ore - excess);
-            }
-            if (grain > 0)
-            {
-                if (grain > 2) excess = grain - 2;
-                temp += (grain - excess);
-            }
-            resourceDeficits[1] = 5 - temp;
-            temp = 0;
-            excess = 0;
+            //if (ore > 0) {
+            //    if (ore > 3) excess = ore - 3;
+            //    temp += (ore - excess);
+            //}
+            //if (grain > 0)
+            //{
+            //    if (grain > 2) excess = grain - 2;
+            //    temp += (grain - excess);
+            //}
+            //resourceDeficits[1] = 5 - temp;
+            //temp = 0;
+            //excess = 0;
 
             //dev card
-            if (ore > 0) temp++;
-            if (wool > 0) temp++;
-            if (grain > 0) temp++;
-            resourceDeficits[2] = 3 - temp;
-            temp = 0;
+            //if (ore > 0) temp++;
+            //if (wool > 0) temp++;
+            //if (grain > 0) temp++;
+            //resourceDeficits[2] = 3 - temp;
+            //temp = 0;
 
             //road
-            if (brick > 0) temp++;
-            if (wood > 0) temp++;
-            resourceDeficits[3] = 2 - temp;
+            //if (brick > 0) temp++;
+            //if (wood > 0) temp++;
+            //resourceDeficits[3] = 2 - temp;
 
-            int vpDeficit = (10 - (player.victoryPoints));
-            int buildChoice;
-            int resourceChoice;
-            int amtNeeded;
+            
+            //int buildChoice;
+            //int resourceChoice;
+            //int amtNeeded;
 
-            //index into this with vpDeficit, resulting int is index for resourceDeficits array
-            var winCons = new Dictionary<int, int>();
-            winCons[1] = 0; //settlement
-            winCons[2] = 1; //city
-            winCons[3] = 2; //army
-            winCons[4] = 3; //road
-            winCons[5] = 4; //any
-            winCons[6] = 4; //any
-            winCons[7] = 4; //any
-            winCons[8] = 4; //any
-            winCons[9] = 4; //any
-            winCons[10] = 4; //any
+            
 
             //agent will attempt to trade for the resource needed for this build choice
-            buildChoice = winCons[vpDeficit];
+            //buildChoice = winCons[vpDeficit];
 
-            if (buildChoice < 4) {
-                amtNeeded = resourceDeficits[buildChoice]; //e.g. build choice is 0, amtNeeded becomes the resources missing for constructing a settlement
-            }
+            //if (buildChoice < 4) { 
+            //    amtNeeded = resourceDeficits[buildChoice]; //e.g. build choice is 0, amtNeeded becomes the resources missing for constructing a settlement
+            //}
+            //else
+            //{
+
+            //}
 
 
             //array to store the number of any resource needed to perform each action (e.g. if only need 1 ore for city, element = 1)
-            int buildDeficit[4];
+            //int buildDeficit[4];
 
             //if a trade would offer a chance at winning the game, should prioritize that somehow. (e.g. taking longest road, largest army, building at 9 VPs)
 
+            //remove this
             Player p = api.Players[UnityEngine.Random.Range(0, api.Players.Length)];
             if (p.resourceSum > 0 && p.playerIndex != player.playerIndex)
             {
